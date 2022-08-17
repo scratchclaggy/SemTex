@@ -1,5 +1,5 @@
-const ResponseSelector = () => {
-  return <div>ResponseSelector</div>;
+const CommentInput = () => {
+  return <div>CommentInput</div>;
 };
 
-export default ResponseSelector;
+export default CommentInput;

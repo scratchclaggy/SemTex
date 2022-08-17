@@ -1,7 +1,8 @@
 import type { NextPage } from "next";
+import Semtex from "src/components/semtex/Semtex";
 
 const Home: NextPage = () => {
-  return <div>3200 Group Project</div>;
+  return <Semtex />;
 };
 
 export default Home;

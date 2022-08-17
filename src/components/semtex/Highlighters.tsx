@@ -1,5 +1,5 @@
-const NavigationButtons = () => {
-  return <div>NavigationButtons</div>;
+const Highlighters = () => {
+  return <div>Highlighters</div>;
 };
 
-export default NavigationButtons;
+export default Highlighters;

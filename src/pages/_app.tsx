@@ -1,7 +1,12 @@
-import type { AppProps } from 'next/app'
+import { Container } from "@mui/system";
+import type { AppProps } from "next/app";
 
 function MyApp({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />
+  return (
+    <Container maxWidth="lg">
+      <Component {...pageProps} />
+    </Container>
+  );
 }
 
-export default MyApp
+export default MyApp;

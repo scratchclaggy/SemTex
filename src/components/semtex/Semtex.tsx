@@ -1,5 +1,6 @@
 import { Grid, Stack } from "@mui/material";
 import { Box } from "@mui/system";
+import { useDataSet } from "src/hooks";
 import CommentInput from "./CommentInput";
 import Highlighters from "./Highlighters";
 import History from "./History";
@@ -10,6 +11,10 @@ import ResponseSelector from "./response_selector/ResponseSelector";
 import TextSample from "./TextSample";
 
 const Semtex = () => {
+  const { data, error } = useDataSet();
+
+  console.log(data);
+
   return (
     <Box>
       {/* <InstructionModal /> */}

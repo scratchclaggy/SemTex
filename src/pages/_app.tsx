@@ -1,11 +1,14 @@
-import { Container } from "@mui/system";
+import { Container } from "@mui/material";
 import type { AppProps } from "next/app";
-import supabase from "utils/supabase";
+import { useEffect } from "react";
+import useUserStore from "src/hooks/auth";
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const client = supabase;
+  const refreshSession = useUserStore((state) => state.refreshSession);
 
-  console.log(client);
+  useEffect(() => {
+    refreshSession();
+  }, []);
 
   return (
     <Container maxWidth="lg">

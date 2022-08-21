@@ -15,7 +15,6 @@ import useUserStore from "src/hooks/auth";
 type FormInput = {
   email: string;
   password: string;
-  confirmPassword: string;
 };
 
 const SignUp = () => {
@@ -55,6 +54,7 @@ const SignUp = () => {
         marginTop={3}
         width="66vw"
         maxWidth={600}
+        spacing={2}
       >
         <Controller
           name="email"

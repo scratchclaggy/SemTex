@@ -7,6 +7,7 @@ type UserState = {
   session: Session | null;
   error: ApiError | null;
   refreshSession: () => void;
+  signIn: (email: string, password: string) => void;
   signUp: (email: string, password: string) => void;
 };
 
@@ -17,6 +18,13 @@ const useUserStore = create<UserState>((set) => ({
   refreshSession: () => {
     const session = supabase.auth.session();
     set((state) => ({ ...state, session, user: session?.user }));
+  },
+  signIn: async (email, password) => {
+    const res = await supabase.auth.signIn({
+      email,
+      password,
+    });
+    set((state) => ({ ...state, ...res }));
   },
   signUp: async (email, password) => {
     const res = await supabase.auth.signUp({

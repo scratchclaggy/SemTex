@@ -1,6 +1,6 @@
 import { Box, Grid, Stack, Typography } from "@mui/material";
-import { useDataSet } from "src/hooks";
 import useUserStore from "src/hooks/auth";
+import { useDataSet } from "src/hooks/db";
 import CommentInput from "./CommentInput";
 import Highlighters from "./Highlighters";
 import History from "./History";

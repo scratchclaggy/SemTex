@@ -1,6 +1,5 @@
 import { Box, Grid, Stack, Typography } from "@mui/material";
 import useUserStore from "src/hooks/auth";
-import { useDataSet } from "src/hooks/db";
 import CommentInput from "./CommentInput";
 import Highlighters from "./Highlighters";
 import History from "./History";
@@ -11,15 +10,12 @@ import ResponseSelector from "./response_selector/ResponseSelector";
 import TextSample from "./TextSample";
 
 const Semtex = () => {
-  const { data, error } = useDataSet("1");
-  const user = useUserStore((state) => state.user);
-
-  console.log(data);
+  const user = useUserStore((state) => state.user)
 
   return (
     <Box>
-      {user && <Typography variant="h5">{user?.email}</Typography>}
       {/* <InstructionModal /> */}
+      {user && <Typography variant="h5">{user.email}</Typography>}
       <Grid container>
         <Grid item>
           <History />

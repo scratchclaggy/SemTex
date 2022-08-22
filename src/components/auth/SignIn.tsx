@@ -94,7 +94,7 @@ const SignIn = () => {
         >
           Sign In
         </Button>
-        <Link href="sign-up" label="Don't have an account?" />
+        <Link href="sign-up" label="Don't have an account? Sign up" />
       </Stack>
     </Stack>
   );

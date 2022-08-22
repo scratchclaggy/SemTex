@@ -6,6 +6,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import IconButton from '@mui/material/IconButton';
+import HelpIcon from '@mui/icons-material/Help';
 import CloseIcon from '@mui/icons-material/Close';
 import Typography from '@mui/material/Typography';
 
@@ -18,12 +19,76 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   },
 }));
 
+
 export interface DialogTitleProps {
   id: string;
   children?: React.ReactNode;
   onClose: () => void;
 }
+const text= `Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
+dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
+consectetur ac, vestibulum at eros.
 
+Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
+Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
+
+Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus
+magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec
+ullamcorper nulla non metus auctor fringilla.
+ras mattis consectetur purus sit amet fermentum. Cras justo odio,
+dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
+consectetur ac, vestibulum at eros.
+
+Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
+Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
+
+Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus
+magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec
+ullamcorper nulla non metus auctor fringilla.
+ras mattis consectetur purus sit amet fermentum. Cras justo odio,
+dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
+consectetur ac, vestibulum at eros.
+
+Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
+Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
+
+Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus
+magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec
+ullamcorper nulla non metus auctor fringilla.
+ras mattis consectetur purus sit amet fermentum. Cras justo odio,
+dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
+consectetur ac, vestibulum at eros.
+
+Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
+Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
+
+Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus
+magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec
+ullamcorper nulla non metus auctor fringilla.
+
+Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus
+magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec
+ullamcorper nulla non metus auctor fringilla.
+ras mattis consectetur purus sit amet fermentum. Cras justo odio,
+dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
+consectetur ac, vestibulum at eros.
+
+Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
+Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
+
+Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus
+magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec
+ullamcorper nulla non metus auctor fringilla.
+ras mattis consectetur purus sit amet fermentum. Cras justo odio,
+dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
+consectetur ac, vestibulum at eros.
+
+Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
+Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
+
+Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus
+magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec
+ullamcorper nulla non metus auctor fringilla.end`
 const BootstrapDialogTitle = (props: DialogTitleProps) => {
   const { children, onClose, ...other } = props;
 
@@ -60,38 +125,34 @@ export default function CustomizedDialogs() {
 
   return (
     <div>
-      <Button variant="outlined" onClick={handleClickOpen}>
-         Instruction ?
-      </Button>
+
+      <HelpIcon onClick={handleClickOpen}/>
+      
       <BootstrapDialog
+       style={{ overflow: 'scroll' }}
         onClose={handleClose}
         aria-labelledby="customized-dialog-title"
         open={open}
+        fullWidth
+        maxWidth="md" 
+        
       >
         <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
-          Modal title
+          Instructions
         </BootstrapDialogTitle>
-        <DialogContent dividers>
-          <Typography gutterBottom>
-            Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-            dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
-            consectetur ac, vestibulum at eros.
-          </Typography>
-          <Typography gutterBottom>
-            Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
-            Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
-          </Typography>
-          <Typography gutterBottom>
-            Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus
-            magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec
-            ullamcorper nulla non metus auctor fringilla.
-          </Typography>
+        <DialogContent dividers >
+          
+        {
+            text.split("\n").map(
+              (paragraph, i) => <Typography key={i} align='left' paragraph>{paragraph}</Typography> 
+           )
+        }
+      
+         
+
+         
         </DialogContent>
-        <DialogActions>
-          <Button autoFocus onClick={handleClose}>
-            Save changes
-          </Button>
-        </DialogActions>
+        
       </BootstrapDialog>
     </div>
   );

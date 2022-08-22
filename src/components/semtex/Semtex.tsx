@@ -1,6 +1,5 @@
 import { Grid, Stack } from "@mui/material";
 import { Box } from "@mui/system";
-import { useState } from "react";
 import CommentInput from "./CommentInput";
 import Highlighters from "./Highlighters";
 import History from "./History";
@@ -10,14 +9,15 @@ import Progress from "./Progress";
 import ResponseSelector from "./response_selector/ResponseSelector";
 import TextSample from "./TextSample";
 
-const dataset = {
+// TODO: Retrieve the dataset via SWR
+export const dataset = {
   responses: [
     "Bush Fire",
     "Climate Change",
     "Unknown",
-    "AdditionalAdditionalAdditionalAdditionalAdditional A",
-    "Additional B",
-    "Additional C",
+    // "AdditionalAdditionalAdditionalAdditionalAdditional A",
+    // "Additional B",
+    // "Additional C",
   ],
   highlighters: [
     { color: "#e5f5f9", label: "Low emphasis" },
@@ -51,10 +51,6 @@ const dataset = {
 };
 
 const Semtex = () => {
-  // TODO: Update server state for this user response
-  const [currentResponse, setCurrentResponse] = useState<string | null>(null);
-  console.log(currentResponse);
-
   return (
     <Box>
       {/* <InstructionModal /> */}
@@ -66,11 +62,7 @@ const Semtex = () => {
           <Stack>
             <Progress />
             <TextSample samples={dataset.textSamples} />
-            <ResponseSelector
-              responses={dataset.responses}
-              currentResponse={currentResponse}
-              setCurrentResponse={setCurrentResponse}
-            />
+            <ResponseSelector />
             <CommentInput />
             <NavigationButtons />
           </Stack>

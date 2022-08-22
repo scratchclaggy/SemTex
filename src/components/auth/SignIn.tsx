@@ -1,12 +1,5 @@
 import { LockOutlined } from "@mui/icons-material";
-import {
-  Alert,
-  Avatar,
-  Button,
-  Stack,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Avatar, Button, Stack, TextField, Typography } from "@mui/material";
 import { useRouter } from "next/router";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import useUserStore from "src/hooks/auth";
@@ -32,8 +25,6 @@ const SignIn = () => {
     formState: { errors },
   } = useForm<FormInput>();
 
-  const error = useUserStore((state) => state.error);
-
   const signIn = useUserStore((state) => state.signIn);
   const onSubmit: SubmitHandler<FormInput> = async (data: FormInput) => {
     signIn(data.email, data.password);
@@ -47,7 +38,6 @@ const SignIn = () => {
       <Typography component="h1" variant="h5">
         Sign in
       </Typography>
-      {error && <Alert severity="error">{error?.message}</Alert>}
       <Stack
         component="form"
         onSubmit={handleSubmit(onSubmit)}
@@ -104,7 +94,7 @@ const SignIn = () => {
         >
           Sign In
         </Button>
-        <Link href="sign-in" label="Already have an account? Sign in" />
+        <Link href="sign-up" label="Don't have an account?" />
       </Stack>
     </Stack>
   );

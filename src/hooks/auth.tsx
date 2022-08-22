@@ -28,7 +28,6 @@ const UserStore = create<UserState>(
         set({ ...get(), ...res });
       },
       signOut: async () => {
-        console.log("SIGNOUT");
         const { error } = await supabase.auth.signOut();
         set({ ...get(), error, user: null, session: null });
       },

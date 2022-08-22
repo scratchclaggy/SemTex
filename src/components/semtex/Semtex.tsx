@@ -11,7 +11,7 @@ import ResponseSelector from "./response_selector/ResponseSelector";
 import TextSample from "./TextSample";
 
 const Semtex = () => {
-  const { data, error } = useDataSet();
+  const { data, error } = useDataSet("1");
 
   console.log(data);
 

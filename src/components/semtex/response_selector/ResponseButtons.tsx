@@ -10,9 +10,9 @@ import { dataset } from "../Semtex";
 
 const ResponseButtons = () => {
   // TODO: Retrieve the dataset via SWR
-  const responses = dataset.responses;
+  const responseOptions = dataset.responses;
   // TODO: Update server state for this user response
-  const [response, setResponse] = useState<string | null>(null);
+  const [selection, setSelection] = useState<string | null>(null);
 
   return (
     <FormControl>
@@ -20,16 +20,16 @@ const ResponseButtons = () => {
       <RadioGroup
         aria-labelledby="response-radio-label"
         name="response-radio"
-        value={response}
-        onChange={(event) => setResponse(event.target.value)}
+        value={selection}
+        onChange={(event) => setSelection(event.target.value)}
         row
       >
-        {responses.map((response) => (
+        {responseOptions.map((responseOption) => (
           <FormControlLabel
-            key={response}
-            value={response}
+            key={responseOption}
+            value={responseOption}
             control={<Radio />}
-            label={response}
+            label={responseOption}
           />
         ))}
       </RadioGroup>

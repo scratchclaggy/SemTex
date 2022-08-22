@@ -4,9 +4,9 @@ import { dataset } from "../Semtex";
 
 const ResponseDropdown = () => {
   // TODO: Retrieve the dataset via SWR
-  const responses = dataset.responses;
+  const responseOptions = dataset.responses;
   // TODO: Update server state for this user response
-  const [currentResponse, setCurrentResponse] = useState<string | null>(null);
+  const [selection, setSelection] = useState<string | null>(null);
 
   return (
     <FormControl fullWidth>
@@ -14,16 +14,16 @@ const ResponseDropdown = () => {
       <Select
         labelId="response-dropdown-label"
         id="response-dropdown"
-        value={currentResponse ?? ""}
+        value={selection ?? ""}
         label="Response"
         onChange={(event) => {
-          setCurrentResponse(event.target.value);
+          setSelection(event.target.value);
         }}
       >
-        {responses.map((response) => {
+        {responseOptions.map((responseOption) => {
           return (
-            <MenuItem key={response} value={response}>
-              {response}
+            <MenuItem key={responseOption} value={responseOption}>
+              {responseOption}
             </MenuItem>
           );
         })}

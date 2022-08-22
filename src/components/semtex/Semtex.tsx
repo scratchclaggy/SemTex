@@ -54,14 +54,14 @@ const Semtex = () => {
   return (
     <Box>
       {/* <InstructionModal /> */}
-      <Grid container spacing={2}>
+      <Grid container>
         <Grid item>
           <History />
         </Grid>
         <Grid item>
           <Stack>
             <Progress />
-            <TextSample samples={dataset.textSamples} />
+            <TextSample />
             <ResponseSelector />
             <CommentInput />
             <NavigationButtons />

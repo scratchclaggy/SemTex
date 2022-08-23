@@ -1,3 +1,4 @@
+export
 type User = {
     id: string;
     password: string;
@@ -5,12 +6,14 @@ type User = {
     type: string;
 }
 
+export
 type DatasetPermission = {
     id: string;
     userID: string;
     datasetID: string;
 }
 
+export
 type DataSet = {
     id: string;
     instructions: string;
@@ -18,12 +21,14 @@ type DataSet = {
     created: string;
 }
 
+export
 type ResponseOption = {
     id: string;
     label: string;
     datasetID: string;
 }
 
+export
 type HighlightOption = {
     id: string;
     label: string;
@@ -31,19 +36,22 @@ type HighlightOption = {
     datasetID: string;
 }
 
+export
 type TextSample = {
     id: string;
     body: string;
     datasetID: string;
 }
 
+export
 type Highlight = {
     id: string;
     sample: string;
-    highlight_optionID: string;
+    highlightOptionID: string;
     userResponseID: string;
 }
 
+export
 type UserResponse = {
     id: string;
     response: string;
@@ -51,5 +59,3 @@ type UserResponse = {
     userID: string;
     textSampleID: string;
 }
-
-export {};

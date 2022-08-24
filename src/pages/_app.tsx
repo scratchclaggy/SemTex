@@ -8,7 +8,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   const signOut = useUserStore((state) => state.signOut);
 
   return (
-    <Container maxWidth="lg">
+    <Container maxWidth="xl">
       {error && <Alert severity="error">{error?.message}</Alert>}
       {user && (
         <Button

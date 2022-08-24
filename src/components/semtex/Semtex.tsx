@@ -1,5 +1,5 @@
-import { Grid, Stack } from "@mui/material";
-import { Box } from "@mui/system";
+import { Box, Grid, Stack, Typography } from "@mui/material";
+import useUserStore from "src/hooks/auth";
 import CommentInput from "./CommentInput";
 import Highlighters from "./Highlighters";
 import History from "./History";
@@ -51,9 +51,12 @@ export const dataset = {
 };
 
 const Semtex = () => {
+  const user = useUserStore((state) => state.user)
+
   return (
     <Box>
       {/* <InstructionModal /> */}
+      {user && <Typography variant="h5">{user.email}</Typography>}
       <Grid container>
         <Grid item>
           <History />

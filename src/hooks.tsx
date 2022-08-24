@@ -5,11 +5,15 @@ import { DefaultDeserializer } from "v8";
 export const useDataSet = (id: string) => {
   const { data, error } = useSWR("dataset", async () => {
     // Make this function return a single dataset with all of the relevant joins
-    const { data, error } = await supabase.from("dataset").select(`id,
-    highlights:highlight_option(id, label),
-    textSample:text_sample(id, body)
-    `);
-
+    const { data, error } = await supabase
+      .from('dataset')
+      .select(`id,
+      textSamples:text_sample(id, body),
+      highlights:highlight_option(id, label, color),
+      responses:response_option(id, label)
+      `)
+      .eq('id', id)
+      .single();
     return data;
   });
 

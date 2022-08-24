@@ -1,6 +1,7 @@
 import { Grid, Stack } from "@mui/material";
 import { Box } from "@mui/system";
 import { useDataSet } from "src/hooks";
+import supabase from "utils/supabase";
 import CommentInput from "./CommentInput";
 import Highlighters from "./Highlighters";
 import History from "./History";
@@ -11,7 +12,15 @@ import ResponseSelector from "./response_selector/ResponseSelector";
 import TextSample from "./TextSample";
 
 const Semtex = () => {
-  const { data, error } = useDataSet("1");
+  // grabbing from hooks.tsx, placeholder for now until we can grab datasetID.
+  const myfunc = async () => {
+    const { user, error } = await supabase.auth.update({
+      data: { dataset: 'c01a356f-12a1-44f0-bbb7-bb39f560e76e'}
+    });
+    console.log(user);
+  }
+  myfunc();
+  const { data, error } = useDataSet("c01a356f-12a1-44f0-bbb7-bb39f560e76e");
 
   console.log(data);
 

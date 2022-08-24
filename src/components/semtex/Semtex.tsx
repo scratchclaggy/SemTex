@@ -1,6 +1,6 @@
-import { Grid, Stack } from "@mui/material";
-import { Box } from "@mui/system";
-import { useDataSet } from "src/hooks";
+import { Box, Grid, Stack, Typography } from "@mui/material";
+import useUserStore from "src/hooks/auth";
+import { useDataSet } from "src/hooks/db";
 import supabase from "utils/supabase";
 import CommentInput from "./CommentInput";
 import Highlighters from "./Highlighters";
@@ -10,23 +10,28 @@ import NavigationButtons from "./NavigationButtons";
 import Progress from "./Progress";
 import ResponseSelector from "./response_selector/ResponseSelector";
 import TextSample from "./TextSample";
+import { useRouter } from "next/router";
 
 const Semtex = () => {
-  // grabbing from hooks.tsx, placeholder for now until we can grab datasetID.
-  const myfunc = async () => {
-    const { user, error } = await supabase.auth.update({
-      data: { dataset: 'c01a356f-12a1-44f0-bbb7-bb39f560e76e'}
-    });
-    console.log(user);
-  }
-  myfunc();
-  const { data, error } = useDataSet("c01a356f-12a1-44f0-bbb7-bb39f560e76e");
+  const user = useUserStore((state) => state.user);
+  /*const router = useRouter();
+  if (user == null) {
+    router.push('/');
+    return <div/>
+  }*/
 
-  console.log(data);
+  const { data, error } = useDataSet(user?.user_metadata.dataset);
+
+  /*
+  if (data == null) {
+    router.push('/');
+    return <div/>
+  }*/
 
   return (
     <Box>
       {/* <InstructionModal /> */}
+      {user && <Typography variant="h5">{user.email}</Typography>}
       <Grid container>
         <Grid item>
           <History />

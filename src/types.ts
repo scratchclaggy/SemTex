@@ -1,55 +1,53 @@
-type User = {
-    id: "uuid";
-    password: "varchar[40]";
-    email: "varchar[50]";
-    type: "varchar[50]";
-}
+export type User = {
+  id: string;
+  password: string;
+  email: string;
+  type: string;
+};
 
-type DatasetPermission = {
-    id: "uuid";
-    userID: "uuid";
-    datasetID: "uuid";
-}
+export type DatasetPermission = {
+  id: string;
+  userID: string;
+  datasetID: string;
+};
 
-type DataSet = {
-    id: "uuid";
-    instructions: "varchar[1000]";
-    name: "varchar[50]";
-    created: "date";
-}
+export type DataSet = {
+  id: string;
+  instructions: string;
+  name: string;
+  created: string;
+};
 
-type ResponseOption = {
-    id: "uuid";
-    label: "varchar[50]";
-    datasetID: "uuid";
-}
+export type ResponseOption = {
+  id: string;
+  label: string;
+  datasetID: string;
+};
 
-type HighlightOption = {
-    id: "uuid";
-    label: "varchar[50]";
-    color: "varchar[50]";
-    datasetID: "uuid";
-}
+export type HighlightOption = {
+  id: string;
+  label: string;
+  color: string;
+  datasetID: string;
+};
 
-type TextSample = {
-    id: "uuid";
-    body: "text";
-    datasetID: "uuid";
-}
+export type TextSample = {
+  id: string;
+  body: string;
+  datasetID: string;
+};
 
-type Highlight = {
-    id: "uuid";
-    sample: "varchar[50]";
-    highlight_optionID: "uuid";
-    userResponseID: "uuid";
-}
+export type Highlight = {
+  id: string;
+  sample: string;
+  highlightOptionID: string;
+  userResponseID: string;
+};
 
-type UserResponse = {
-    id: "uuid";
-    response: "varchar[50]";
-    comments: "text";
-    userID: "uuid";
-    textSampleID: "uuid";
-}
-
-export {};
+export type UserResponse = {
+  id: string;
+  response: string;
+  comments: string;
+  userID: string;
+  textSampleID: string;
+};

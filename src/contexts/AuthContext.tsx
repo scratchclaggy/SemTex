@@ -9,6 +9,7 @@ interface AuthContextInterface {
   signIn: (email: string, password: string) => void;
   signOut: () => void;
   signUp: (email: string, password: string) => void;
+  setUserMetadata: (data: object) => void;
 }
 
 const AuthContext = React.createContext<AuthContextInterface | null>(null);
@@ -28,25 +29,31 @@ export const AuthProvider = ({ children }: { children: JSX.Element }) => {
   }, []);
 
   const signIn = async (email: string, password: string) => {
-    const data = await supabase.auth.signIn({ email, password });
-    setUser(data.user);
-    setSession(data.session);
-    setAuthError(data.error);
+    const res = await supabase.auth.signIn({ email, password });
+    setUser(res.user);
+    setSession(res.session);
+    setAuthError(res.error);
   };
 
   const signOut = async () => {
-    const data = await supabase.auth.signOut();
+    const res = await supabase.auth.signOut();
     console.log("signed out");
     setUser(null);
     setSession(null);
-    setAuthError(data.error);
+    setAuthError(res.error);
   };
 
   const signUp = async (email: string, password: string) => {
-    const data = await supabase.auth.signUp({ email, password });
-    setUser(data.user);
-    setSession(data.session);
-    setAuthError(data.error);
+    const res = await supabase.auth.signUp({ email, password });
+    setUser(res.user);
+    setSession(res.session);
+    setAuthError(res.error);
+  };
+
+  const setUserMetadata = async (data: object) => {
+    const res = await supabase.auth.update({ data });
+    setUser(res.user);
+    setAuthError(res.error);
   };
 
   const authContext: AuthContextInterface = {
@@ -56,6 +63,7 @@ export const AuthProvider = ({ children }: { children: JSX.Element }) => {
     signIn,
     signOut,
     signUp,
+    setUserMetadata,
   };
 
   return (

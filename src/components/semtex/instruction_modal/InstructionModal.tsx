@@ -1,92 +1,59 @@
 import CloseIcon from "@mui/icons-material/Close";
-import HelpIcon from "@mui/icons-material/Help";
 import { Box, Dialog, DialogContent, DialogTitle } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
-import { styled } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
-import * as React from "react";
+import { atom, useAtom } from "jotai";
 
-const BootstrapDialog = styled(Dialog)(({ theme }) => ({
-  "& .MuiDialogContent-root": {
-    padding: theme.spacing(2),
-  },
-  "& .MuiDialogActions-root": {
-    padding: theme.spacing(1),
-  },
-}));
+export const InstructionModalAtom = atom(false);
 
-export interface DialogTitleProps {
-  id: string;
-  children?: React.ReactNode;
-  onClose: () => void;
-}
 const text = `Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
 dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
 consectetur ac, vestibulum at eros.
 
-j
-asdfjlkjld;
+Also, multiline inputs work now...
 `;
-const BootstrapDialogTitle = (props: DialogTitleProps) => {
-  const { children, onClose, ...other } = props;
 
-  return (
-    <DialogTitle sx={{ m: 0, p: 2 }} {...other}>
-      {children}
-      {onClose ? (
-        <IconButton
-          aria-label="close"
-          onClick={onClose}
-          sx={{
-            position: "absolute",
-            right: 8,
-            top: 8,
-            color: (theme) => theme.palette.grey[500],
-          }}
-        >
-          <CloseIcon />
-        </IconButton>
-      ) : null}
-    </DialogTitle>
-  );
-};
+const InstructionModal = () => {
+  const [isOpen, setIsOpen] = useAtom(InstructionModalAtom);
 
-export default function CustomizedDialogs() {
-  const [open, setOpen] = React.useState(false);
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
+  const onClose = () => {
+    setIsOpen(false);
   };
 
   return (
     <div>
-      <HelpIcon onClick={handleClickOpen} />
-
-      <BootstrapDialog
+      <Dialog
         style={{ overflow: "scroll" }}
-        onClose={handleClose}
-        aria-labelledby="customized-dialog-title"
-        open={open}
+        onClose={onClose}
+        aria-labelledby="instruction-modal"
+        open={isOpen}
         fullWidth
         maxWidth="md"
       >
-        <BootstrapDialogTitle
-          id="customized-dialog-title"
-          onClose={handleClose}
-        >
+        <DialogTitle>
           Instructions
-        </BootstrapDialogTitle>
+          <IconButton
+            aria-label="close"
+            onClick={onClose}
+            sx={{
+              position: "absolute",
+              right: 8,
+              top: 8,
+            }}
+          >
+            <CloseIcon />
+          </IconButton>
+        </DialogTitle>
         <DialogContent dividers>
-          <Box display="flex" justifyContent='center'>
-            <Typography sx={{ backgroundColor: "red" }}>
+          <Box display="flex" justifyContent="center">
+            <Typography>
               <pre style={{ fontFamily: "inherit" }}>{text}</pre>
             </Typography>
           </Box>
         </DialogContent>
-      </BootstrapDialog>
+      </Dialog>
     </div>
   );
-}
+};
+
+export default InstructionModal;

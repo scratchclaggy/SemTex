@@ -8,8 +8,7 @@ const UserCodeBox = () => {
   {
     if(e.key === "Enter"){
       e.preventDefault();
-      console.log(e.target.value)
-      router.push('/semtex')           // Not working yet
+      router.push('/semtex')
     }
   }
 
@@ -35,6 +34,7 @@ const UserCodeBox = () => {
           }}
           >
           </input>
+
         </form>
         <a href="">Don't Have a Code?</a>
         <a href="">Administrator Login</a>

@@ -1,15 +1,14 @@
 import { Stack, Typography } from "@mui/material";
 import {useRouter} from 'next/router';
-
 const UserCodeBox = () => {
   const router = useRouter()
 
-  // I think this isn't the best way to do this, Remember to come back to this
   function handleClick(e: any)
   {
     if(e.key === "Enter"){
       e.preventDefault();
-      router.push('src/components/semtex/Semtex.tsx')
+      console.log(e.target.value)
+      router.push('./')           // Not working yet
     }
   }
 
@@ -23,9 +22,9 @@ const UserCodeBox = () => {
         <form>
           <input 
           type="text"
+          placeholder="Enter Code"
           onKeyPress={handleClick}
-          /*I think I prefer to use px here because it looks better
-            when the input box doesn't scale with viewport? Remember to come back to this*/
+
           style={{        
             width:"450px",
             height:"85px",
@@ -36,8 +35,8 @@ const UserCodeBox = () => {
           >
           </input>
         </form>
-        <button>Don't Have a Code?</button>
-        <button>Administrator Login</button>
+        <a href="">Don't Have a Code?</a>
+        <a href="">Administrator Login</a>
 
 
       </Stack>  

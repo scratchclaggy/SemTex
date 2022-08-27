@@ -3,10 +3,12 @@ import useUserStore from "src/hooks/auth";
 import CommentInput from "./CommentInput";
 import Highlighters from "./Highlighters";
 import History from "./History";
+import InstructionModal from "./instruction_modal/InstructionModal";
 import InstructionModalButton from "./instruction_modal/InstructionModalButton";
 import NavigationButtons from "./NavigationButtons";
 import Progress from "./Progress";
 import ResponseSelector from "./response_selector/ResponseSelector";
+
 import TextSample from "./TextSample";
 
 // TODO: Retrieve the dataset via SWR
@@ -51,11 +53,11 @@ export const dataset = {
 };
 
 const Semtex = () => {
-  const user = useUserStore((state) => state.user)
+  const user = useUserStore((state) => state.user);
 
   return (
     <Box>
-      {/* <InstructionModal /> */}
+      <InstructionModal />
       {user && <Typography variant="h5">{user.email}</Typography>}
       <Grid container>
         <Grid item>

@@ -1,5 +1,6 @@
 import { Stack, Typography } from "@mui/material";
 import {useRouter} from 'next/router';
+
 const UserCodeBox = () => {
   const router = useRouter()
 
@@ -8,7 +9,7 @@ const UserCodeBox = () => {
     if(e.key === "Enter"){
       e.preventDefault();
       console.log(e.target.value)
-      router.push('./')           // Not working yet
+      router.push('/semtex')           // Not working yet
     }
   }
 

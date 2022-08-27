@@ -1,7 +1,8 @@
-import { Box, Grid, Stack } from "@mui/material";
+import { Grid, Stack } from "@mui/material";
 import CommentInput from "./CommentInput";
 import Highlighters from "./Highlighters";
 import History from "./History";
+import InstructionModal from "./instruction_modal/InstructionModal";
 import InstructionModalButton from "./instruction_modal/InstructionModalButton";
 import NavigationButtons from "./NavigationButtons";
 import Progress from "./Progress";
@@ -51,8 +52,8 @@ export const dataset = {
 
 const Semtex = () => {
   return (
-    <Box>
-      {/* <InstructionModal /> */}
+    <>
+      <InstructionModal />
       <Grid container>
         <Grid item>
           <History />
@@ -71,7 +72,7 @@ const Semtex = () => {
         </Grid>
       </Grid>
       <InstructionModalButton />
-    </Box>
+    </>
   );
 };
 

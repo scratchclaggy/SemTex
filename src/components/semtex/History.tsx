@@ -1,4 +1,5 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, Grid } from "@mui/material";
+import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn';
 
 const History = () => {
 
@@ -108,7 +109,6 @@ const History = () => {
 
   return (
   <Box
-  
   sx={{
     margin: "10px",
     width: "250px",
@@ -122,26 +122,37 @@ const History = () => {
     {
       textSamples.map((val, i)=>
       (
-        <Typography
-        onClick={handleClick}
-        noWrap
-        key={i}
+        <Grid
         sx={{
-          padding: "5px",
-          borderBottom: 1,
-          '&:hover':{
-          fontWeight: 'bold',
-          border: 1
-          }
+          display:'flex',
         }}
         >
-        {val.body}
-        </Typography>
+          <Typography
+          onClick={handleClick}
+          noWrap
+          key={i}
+          sx={{
+            padding: "5px",
+            borderBottom: 1,
+            '&:hover':{
+            fontWeight: 'bold',
+            border: 1
+            }
+          }}
+          >
+          {val.body}
+          </Typography>
+          <AssignmentTurnedInIcon
+          style={{
+            color: 'green',
+          }}
+          ></AssignmentTurnedInIcon>
+
+        </Grid>
       ))
     }
-  </div>
+    </div>
   </Box>
-
   )
 };
 

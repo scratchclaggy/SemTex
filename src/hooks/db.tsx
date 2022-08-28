@@ -1,3 +1,4 @@
+import { errorMonitor } from "events";
 import useSWR from "swr";
 import supabase from "utils/supabase";
 import { DefaultDeserializer } from "v8";
@@ -15,9 +16,7 @@ export const useDataSet = (id: string) => {
       .eq('id', id)
       .single();
     if (error) {
-      throw `Error ${error.code}: ${error.message} 
-      ${error.details}
-      ${error.hint && `(hint: ${error.hint})`}`.trim();
+      alert(error.code + ": " + error.message + "\n" + error.details + "\nhint: " + error.hint);
     }
     return data;
   });

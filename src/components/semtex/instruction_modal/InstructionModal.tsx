@@ -3,18 +3,19 @@ import { Box, Dialog, DialogContent, DialogTitle } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import { atom, useAtom } from "jotai";
+import useAuth from "src/contexts/AuthContext";
+import { useDataset } from "src/hooks/db";
 
 export const InstructionModalAtom = atom(false);
 
-const text = `Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
-consectetur ac, vestibulum at eros.
-
-Also, multiline inputs work now...
-`;
-
 const InstructionModal = () => {
   const [isOpen, setIsOpen] = useAtom(InstructionModalAtom);
+  const { user } = useAuth();
+  const { dataset } = useDataset(user?.user_metadata.dataset);
+
+  if (!dataset) {
+    return null;
+  }
 
   const onClose = () => {
     setIsOpen(false);
@@ -47,7 +48,9 @@ const InstructionModal = () => {
         <DialogContent dividers>
           <Box display="flex" justifyContent="center">
             <Typography>
-              <pre style={{ fontFamily: "inherit" }}>{text}</pre>
+              <pre style={{ fontFamily: "inherit", whiteSpace: "pre-wrap" }}>
+                {dataset.instructions}
+              </pre>
             </Typography>
           </Box>
         </DialogContent>

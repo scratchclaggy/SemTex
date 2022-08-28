@@ -1,12 +1,19 @@
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import { useState } from "react";
-import { dataset } from "../Semtex";
+import useAuth from "src/contexts/AuthContext";
+import { useDataset } from "src/hooks/db";
 
 const ResponseDropdown = () => {
-  // TODO: Retrieve the dataset via SWR
+  const { user } = useAuth();
+  const { dataset } = useDataset(user?.user_metadata.dataset);
+  const [selection, setSelection] = useState<string | null>(null);
+
+  if (!dataset) {
+    return null;
+  }
+
   const responseOptions = dataset.responses;
   // TODO: Update server state for this user response
-  const [selection, setSelection] = useState<string | null>(null);
 
   return (
     <FormControl fullWidth>
@@ -22,8 +29,8 @@ const ResponseDropdown = () => {
       >
         {responseOptions.map((responseOption) => {
           return (
-            <MenuItem key={responseOption} value={responseOption}>
-              {responseOption}
+            <MenuItem key={responseOption.id} value={responseOption.label}>
+              {responseOption.label}
             </MenuItem>
           );
         })}

@@ -6,7 +6,7 @@ import supabase from "utils/supabase";
 export const useDataset = (
   id: string
 ): {
-  dataset: Dataset | null | unknown;
+  dataset: Dataset | null;
   isLoading: boolean;
   error: PostgrestError | null;
 } => {
@@ -17,7 +17,8 @@ export const useDataset = (
         `id,
         textSamples:text_sample(id, body),
         highlights:highlight_option(id, label, color),
-        responses:response_option(id, label)`
+        responses:response_option(id, label),
+        instructions`
       )
       .eq("id", id)
       .single();

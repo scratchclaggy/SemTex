@@ -3,23 +3,28 @@ import supabase from "utils/supabase";
 import { DefaultDeserializer } from "v8";
 
 export const useDataSet = (id: string) => {
-  const { data, error } = useSWR("dataset", async () => {
-    // Make this function return a single dataset with all of the relevant joins
+  const { data: dataset, error } = useSWR("dataset", async () => {
     const { data, error } = await supabase
       .from('dataset')
-      .select(`id,
-      textSamples:text_sample(id, body),
-      highlights:highlight_option(id, label, color),
-      responses:response_option(id, label)
+      .select(`
+        id,
+        textSamples:text_sample(id, body),
+        highlights:highlight_option(id, label, color),
+        responses:response_option(id, label)
       `)
       .eq('id', id)
       .single();
+    if (error) {
+      throw `Error ${error.code}: ${error.message} 
+      ${error.details}
+      ${error.hint && `(hint: ${error.hint})`}`.trim();
+    }
     return data;
   });
 
   return {
-    data,
-    isLoading: !error && !data,
+    dataset,
+    isLoading: !error && !dataset,
     error,
   };
 };

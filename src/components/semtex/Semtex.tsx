@@ -11,24 +11,21 @@ import Progress from "./Progress";
 import ResponseSelector from "./response_selector/ResponseSelector";
 import TextSample from "./TextSample";
 import { useRouter } from "next/router";
+import { Alert } from "@mui/material";
 
 const Semtex = () => {
   const user = useUserStore((state) => state.user);
   /*const router = useRouter();
   if (user == null) {
     router.push('/');
-    return <div/>
+    return null
   }*/
 
-  const { data, error } = useDataSet(user?.user_metadata.dataset);
+  const { dataset, error } = useDataSet(user?.user_metadata.dataset);
 
-  /*
-  if (data == null) {
-    router.push('/');
-    return <div/>
-  }*/
+  {error && <Alert severity="error">{error?.message}</Alert>}
 
-  return (
+  {dataset && (
     <Box>
       {/* <InstructionModal /> */}
       {user && <Typography variant="h5">{user.email}</Typography>}
@@ -52,6 +49,7 @@ const Semtex = () => {
       <InstructionModalButton />
     </Box>
   );
+  }
 };
 
 export default Semtex;

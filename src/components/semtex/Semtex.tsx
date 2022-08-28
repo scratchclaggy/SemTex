@@ -1,9 +1,10 @@
-import { Alert, AlertTitle, Box, Grid, Stack, Typography } from "@mui/material";
-import useUserStore from "src/hooks/auth";
+import { Alert, AlertTitle, Grid, Stack, Typography } from "@mui/material";
+import useAuth from "src/contexts/AuthContext";
 import { useDataset } from "src/hooks/db";
 import CommentInput from "./CommentInput";
 import Highlighters from "./Highlighters";
 import History from "./History";
+import InstructionModal from "./instruction_modal/InstructionModal";
 import InstructionModalButton from "./instruction_modal/InstructionModalButton";
 import NavigationButtons from "./NavigationButtons";
 import Progress from "./Progress";
@@ -11,31 +12,22 @@ import ResponseSelector from "./response_selector/ResponseSelector";
 import TextSample from "./TextSample";
 
 const Semtex = () => {
-  const user = useUserStore((state) => state.user);
-  /*const router = useRouter();
-  if (user == null) {
-    router.push('/');
-    return null
-  }*/
-
-  const { dataset, error } = useDataset("3");
-  console.log(dataset);
-  console.log(error);
+  const { user } = useAuth();
+  const { dataset, error } = useDataset(user?.user_metadata.dataset);
 
   return (
     <>
       {error && (
         <Alert severity="error">
           <AlertTitle>Error {error.code}</AlertTitle>
-          {error.message}
-          {error.details}
-          {error.hint && `(hint: ${error.hint})`}
+          <Typography>{error.message}</Typography>
+          {error.details && <Typography>Details: {error.details}</Typography>}
+          {error.hint && <Typography>hint: {error.hint}</Typography>}
         </Alert>
       )}
       {dataset && (
-        <Box>
-          {/* <InstructionModal /> */}
-          {user && <Typography variant="h5">{user.email}</Typography>}
+        <>
+          <InstructionModal />
           <Grid container>
             <Grid item>
               <History />
@@ -54,7 +46,7 @@ const Semtex = () => {
             </Grid>
           </Grid>
           <InstructionModalButton />
-        </Box>
+        </>
       )}
     </>
   );

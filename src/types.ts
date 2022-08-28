@@ -11,7 +11,7 @@ export type DatasetPermission = {
   datasetID: string;
 };
 
-export type DataSet = {
+export type Dataset = {
   id: string;
   instructions: string;
   name: string;

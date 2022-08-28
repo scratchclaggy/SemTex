@@ -123,6 +123,7 @@ const History = () => {
       textSamples.map((val, i)=>
       (
         <Grid
+        key={i}
         sx={{
           display:'flex',
         }}
@@ -130,7 +131,6 @@ const History = () => {
           <Typography
           onClick={handleClick}
           noWrap
-          key={i}
           sx={{
             padding: "5px",
             borderBottom: 1,
@@ -144,7 +144,9 @@ const History = () => {
           </Typography>
           <AssignmentTurnedInIcon
           style={{
+            paddingTop: '5px',
             color: 'green',
+            alignItems: 'center'
           }}
           ></AssignmentTurnedInIcon>
 

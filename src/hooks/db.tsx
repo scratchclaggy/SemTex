@@ -34,7 +34,7 @@ export const useDataset = (
     };
   }
 
-  const { dataset, pgError: pgError } = data.data;
+  const { dataset, pgError } = data.data;
 
   return {
     dataset,

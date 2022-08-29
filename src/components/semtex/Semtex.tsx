@@ -14,7 +14,7 @@ const Semtex = () => {
 
   return (
     <Box>
-      {/* <InstructionModal /> */}
+      
       {user && <Typography variant="h5">{user.email}</Typography>}
       <Grid container>
         <Grid item>
@@ -33,6 +33,7 @@ const Semtex = () => {
           <Highlighters />
         </Grid>
       </Grid>
+    
       <InstructionModalButton />
     </Box>
   );

@@ -2,6 +2,7 @@ import { Box, Typography, Grid, IconButton } from "@mui/material";
 import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn';
 import AssignmentLateIcon from '@mui/icons-material/AssignmentLate';
 import { useState } from 'react';
+import History_Card from "../history/History_Card";
 
 const History = () => {
 
@@ -48,10 +49,6 @@ const History = () => {
     },
   ]
   
-  function handleClick()
-  {
-    console.log("Button pressed!")
-  }
 
   const [clicked, setClicked] = useState(false);
 
@@ -66,54 +63,7 @@ const History = () => {
     overflowY: 'scroll'
   }}
   >
-    <div>
-    {
-      textSamples.map((val, i)=>
-      (
-        <Grid
-        key={i}
-        sx={{
-          display:'flex',
-        }}
-        >
-          <Typography
-          onClick={handleClick}
-          noWrap
-          sx={{
-            padding: "5px",
-            borderBottom: 1,
-            '&:hover':{
-            borderRight: 1
-            }
-          }}
-          >
-          {val.body}
-          </Typography>
-
-          <IconButton onClick={() => setClicked(prevClick => !prevClick)}>
-            {clicked?
-              <AssignmentTurnedInIcon
-              style={{
-                paddingTop: '5px',
-                color: 'green',
-                alignItems: 'center'
-              }}
-              ></AssignmentTurnedInIcon>
-              :
-              <AssignmentLateIcon
-              style={{
-                paddingTop: '5px',
-                color: 'red',
-                alignItems: 'center'
-              }}
-              ></AssignmentLateIcon>
-            }
-          </IconButton>
-
-        </Grid>
-      ))
-    }
-    </div>
+    <History_Card></History_Card>
   </Box>
   )
 };

@@ -2,7 +2,7 @@ import { Box, Grid, Stack, Typography } from "@mui/material";
 import useUserStore from "src/hooks/auth";
 import CommentInput from "./CommentInput";
 import Highlighters from "./Highlighters";
-import History from "./History";
+import History from "./history/History";
 import InstructionModalButton from "./instruction_modal/InstructionModalButton";
 import NavigationButtons from "./NavigationButtons";
 import Progress from "./Progress";

@@ -16,7 +16,7 @@ export type Dataset = {
   instructions: string;
   name: string;
   created: string;
-  responses: ResponseOption[]
+  responses: ResponseOption[];
 };
 
 export type ResponseOption = {

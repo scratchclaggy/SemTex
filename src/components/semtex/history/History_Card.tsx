@@ -33,7 +33,7 @@ const History_Card = (props: any) => {
             }
           }}
           >
-          "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          'Who you jiving with that Cosmik Debris'
           </Typography>
 
           <IconButton onClick={() => setClicked(prevClick => !prevClick)}>

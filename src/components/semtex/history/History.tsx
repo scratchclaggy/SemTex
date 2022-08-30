@@ -48,9 +48,6 @@ const History = () => {
       id: "e34c400f-1553-4c07-8c25-6d9d27175e47",
     },
   ]
-  
-
-  const [clicked, setClicked] = useState(false);
 
   return (
   <Box
@@ -63,7 +60,15 @@ const History = () => {
     overflowY: 'scroll'
   }}
   >
-    <History_Card></History_Card>
+    {
+      textSamples.map((val, i)=>
+      (
+      <History_Card  
+      textSample={val.body}
+      key ={i}
+      />
+      ))
+    }
   </Box>
   )
 };

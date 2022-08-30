@@ -2,16 +2,17 @@ import { Box, Typography, Grid, IconButton } from "@mui/material";
 import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn';
 import AssignmentLateIcon from '@mui/icons-material/AssignmentLate';
 import { useState } from 'react';
-import dataset from "../Semtex";
-
+  
 function handleClick()
   {
     console.log("Button pressed!")
   }
 
-const [clicked, setClicked] = useState(false);
 
-const History_Card = () => {
+const History_Card = (props: any) => {
+
+    const [clicked, setClicked] = useState(false);
+
     return (
     <Box>
     {
@@ -32,7 +33,7 @@ const History_Card = () => {
             }
           }}
           >
-          Testing
+          "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
           </Typography>
 
           <IconButton onClick={() => setClicked(prevClick => !prevClick)}>

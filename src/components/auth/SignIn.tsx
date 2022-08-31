@@ -28,7 +28,7 @@ const SignIn = () => {
     formState: { errors },
   } = useForm<FormInput>();
 
-  const onSubmit: SubmitHandler<FormInput> = async (data: FormInput) => {
+  const onSubmit: SubmitHandler<FormInput> = (data: FormInput) => {
     signIn(data.email, data.password);
   };
 

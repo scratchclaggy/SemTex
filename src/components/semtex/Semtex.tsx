@@ -35,6 +35,7 @@ const Semtex = () => {
         </Alert>
       )}
       {userResponses && <pre>{JSON.stringify(userResponses, null, 4)}</pre>}
+      {dataset && <pre>{JSON.stringify(dataset, null, 4)}</pre>}
       {dataset && (
         <>
           <InstructionModal />

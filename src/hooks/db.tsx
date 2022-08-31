@@ -6,7 +6,7 @@ import supabase from "utils/supabase";
 export const useDataset = (
   datasetID: string
 ): {
-  dataset: Dataset | null;
+  dataset: Omit<Dataset, "name" | "create"> | null;
   isLoading: boolean;
   error: PostgrestError | null;
 } => {
@@ -14,11 +14,13 @@ export const useDataset = (
     const { data, error } = await supabase
       .from("dataset")
       .select(
-        `id,
-        textSamples:text_sample(id, body),
-        highlights:highlight_option(id, label, color),
-        responses:response_option(id, label),
-        instructions`
+        `
+          id,
+          textSamples:text_sample(id, body),
+          highlights:highlight_option(id, label, color),
+          responses:response_option(id, label),
+          instructions
+        `
       )
       .eq("id", datasetID)
       .single();
@@ -46,7 +48,7 @@ export const useDataset = (
 export const useUserResponse = (
   datasetID: string
 ): {
-  userResponses: UserResponse | null;
+  userResponses: UserResponse[] | null;
   isLoading: boolean;
   error: PostgrestError | null;
 } => {
@@ -54,17 +56,16 @@ export const useUserResponse = (
     const { data, error } = await supabase
       .from("user_response")
       .select(
-        ` 
+        `
           id,
           response,
           comments,
           highlights:highlight(
             label:highlight_option(label)
           ),
-          textSample:text_sample(id, datasetID:dataset_id)
+          textSampleID:text_sample_id
         `
       )
-      .eq("textSample.dataset_id", datasetID);
 
     return { data: { userResponses: data, pgError: error } };
   });
@@ -80,7 +81,7 @@ export const useUserResponse = (
   const { userResponses, pgError } = data.data;
 
   return {
-    userResponses: userResponses,
+    userResponses,
     isLoading: !userResponses && !pgError,
     error: pgError,
   };

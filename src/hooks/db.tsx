@@ -1,10 +1,10 @@
 import { PostgrestError } from "@supabase/supabase-js";
-import { Dataset } from "src/types";
+import { Dataset, UserResponse } from "src/types";
 import useSWR from "swr";
 import supabase from "utils/supabase";
 
 export const useDataset = (
-  id: string
+  datasetID: string
 ): {
   dataset: Dataset | null;
   isLoading: boolean;
@@ -20,7 +20,7 @@ export const useDataset = (
         responses:response_option(id, label),
         instructions`
       )
-      .eq("id", id)
+      .eq("id", datasetID)
       .single();
 
     return { data: { dataset: data, pgError: error } };
@@ -39,6 +39,49 @@ export const useDataset = (
   return {
     dataset,
     isLoading: !dataset && !pgError,
+    error: pgError,
+  };
+};
+
+export const useUserResponse = (
+  datasetID: string
+): {
+  userResponses: UserResponse | null;
+  isLoading: boolean;
+  error: PostgrestError | null;
+} => {
+  const { data, error } = useSWR("userResponses", async () => {
+    const { data, error } = await supabase
+      .from("user_response")
+      .select(
+        ` 
+          id,
+          response,
+          comments,
+          highlights:highlight(
+            label:highlight_option(label)
+          ),
+          textSample:text_sample(id, datasetID:dataset_id)
+        `
+      )
+      .eq("textSample.dataset_id", datasetID);
+
+    return { data: { userResponses: data, pgError: error } };
+  });
+
+  if (!data) {
+    return {
+      userResponses: null,
+      isLoading: false,
+      error: error,
+    };
+  }
+
+  const { userResponses, pgError } = data.data;
+
+  return {
+    userResponses: userResponses,
+    isLoading: !userResponses && !pgError,
     error: pgError,
   };
 };

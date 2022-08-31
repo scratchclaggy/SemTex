@@ -1,6 +1,6 @@
 import { Alert, AlertTitle, Grid, Stack, Typography } from "@mui/material";
 import useAuth from "src/contexts/AuthContext";
-import { useDataset } from "src/hooks/db";
+import { useDataset, useUserResponse } from "src/hooks/db";
 import CommentInput from "./CommentInput";
 import Highlighters from "./Highlighters";
 import History from "./History";
@@ -13,18 +13,28 @@ import TextSample from "./TextSample";
 
 const Semtex = () => {
   const { user } = useAuth();
-  const { dataset, error } = useDataset(user?.user_metadata.dataset);
+  const { dataset, error: datasetError } = useDataset(user?.user_metadata.dataset);
+  const { userResponses, error: userResponsesError } = useUserResponse(user?.user_metadata.dataset);
 
   return (
     <>
-      {error && (
+      {datasetError && (
         <Alert severity="error">
-          <AlertTitle>Error {error.code}</AlertTitle>
-          <Typography>{error.message}</Typography>
-          {error.details && <Typography>Details: {error.details}</Typography>}
-          {error.hint && <Typography>hint: {error.hint}</Typography>}
+          <AlertTitle>Error {datasetError.code}</AlertTitle>
+          <Typography>{datasetError.message}</Typography>
+          {datasetError.details && <Typography>Details: {datasetError.details}</Typography>}
+          {datasetError.hint && <Typography>hint: {datasetError.hint}</Typography>}
         </Alert>
       )}
+      {userResponsesError && (
+        <Alert severity="error">
+          <AlertTitle>Error {userResponsesError.code}</AlertTitle>
+          <Typography>{userResponsesError.message}</Typography>
+          {userResponsesError.details && <Typography>Details: {userResponsesError.details}</Typography>}
+          {userResponsesError.hint && <Typography>hint: {userResponsesError.hint}</Typography>}
+        </Alert>
+      )}
+      {userResponses && <pre>{JSON.stringify(userResponses, null, 4)}</pre>}
       {dataset && (
         <>
           <InstructionModal />

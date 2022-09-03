@@ -1,9 +1,16 @@
 import { LockOutlined } from "@mui/icons-material";
-import { Avatar, Button, Stack, TextField, Typography } from "@mui/material";
+import {
+  Alert,
+  Avatar,
+  Button,
+  Stack,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { useRouter } from "next/router";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import Link from "src/components/ui/Link";
-import useUserStore from "src/hooks/auth";
+import useAuth from "src/contexts/AuthContext";
 
 type FormInput = {
   email: string;
@@ -12,12 +19,8 @@ type FormInput = {
 
 const SignUp = () => {
   // Redirect to home page if user already exists
-  const user = useUserStore((state) => state.user);
+  const { user, authError, signUp, setUserMetadata } = useAuth();
   const router = useRouter();
-
-  if (user) {
-    router.push("/");
-  }
 
   const {
     control,
@@ -25,10 +28,17 @@ const SignUp = () => {
     formState: { errors },
   } = useForm<FormInput>();
 
-  const signUp = useUserStore((state) => state.signUp);
-  const onSubmit: SubmitHandler<FormInput> = async (data: FormInput) => {
+  const onSubmit: SubmitHandler<FormInput> = (data: FormInput) => {
     signUp(data.email, data.password);
   };
+
+  if (user) {
+    // HACK: Temporary fix to set the dataset until the Codebox component is complete
+    setUserMetadata({ dataset: "8b5a92ba-aaae-4223-83d2-4eab40e7a22e" });
+
+    router.push("/");
+    return null;
+  }
 
   return (
     <Stack marginTop={8} spacing={2} alignItems="center">
@@ -38,6 +48,7 @@ const SignUp = () => {
       <Typography component="h1" variant="h5">
         Sign up
       </Typography>
+      {authError && <Alert severity="error">{authError?.message}</Alert>}
       <Stack
         component="form"
         onSubmit={handleSubmit(onSubmit)}

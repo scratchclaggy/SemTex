@@ -1,25 +1,25 @@
 import { Stack, Typography } from "@mui/material";
 import { useRouter } from "next/router";
+import React from "react";
 
 const UserCodeBox = () => {
   const router = useRouter();
 
-  const handleClick = (e: any) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      router.push("/semtex");
-    }
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    router.push('/semtex');
   }
 
 
   return (
     <Stack alignItems="center" spacing={1} mt={"40vh"}>
       <Typography>Welcome To SemTex</Typography>
-      <form>
+      <form
+      onSubmit={handleSubmit}
+      >
         <input
           type="text"
           placeholder="Enter Code"
-          onKeyPress={handleClick}
           style={{
             width: "450px",
             height: "85px",

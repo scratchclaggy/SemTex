@@ -13,9 +13,7 @@ return <Box sx={{ display: 'flex', alignItems: 'center' }}>
     <LinearProgress variant="determinate" value={percentage} />
   </Box>
   <Box sx={{ minWidth: 35 }}>
-        <Typography variant="body2" color="text.secondary">{`${Math.round(
-          percentage,
-        )}%`}</Typography>
+        <Typography variant="body2" color="text.secondary">{`${Math.round(percentage,)}%`}</Typography>
       </Box>
 </Box>
 }

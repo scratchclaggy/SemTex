@@ -16,8 +16,8 @@ export type Dataset = {
   instructions: string;
   name: string;
   created: string;
-  responses: ResponseOption[];
-  highlightOptions: HighlightOption[]
+  responseOptions: ResponseOption[];
+  highlightOptions: HighlightOption[];
 };
 
 export type ResponseOption = {
@@ -37,15 +37,14 @@ export type TextSample = {
 };
 
 export type Highlight = {
-  id: string;
   selection: string;
-  highlightOption: Omit<HighlightOption, "id">;
+  highlightOption: HighlightOption;
 };
 
 export type UserResponse = {
   id: string;
-  response: string;
-  comments: string;
-  highlights: Highlight[];
-  textSample: Omit<TextSample, "body">;
+  response?: ResponseOption;
+  comments?: string;
+  highlights?: Highlight[];
+  textSample: { id: string; datasetID: string };
 };

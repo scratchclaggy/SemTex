@@ -13,8 +13,14 @@ import TextSample from "./TextSample";
 
 const Semtex = () => {
   const { user } = useAuth();
-  const { dataset, error: datasetError } = useDataset(user?.user_metadata.dataset);
-  const { userResponses, error: userResponsesError } = useUserResponse(user?.user_metadata.dataset);
+  const { dataset, error: datasetError } = useDataset(
+    user?.user_metadata.dataset
+  );
+  const {
+    userResponses,
+    error: userResponsesError,
+    updateComment,
+  } = useUserResponse(user?.user_metadata.dataset);
 
   return (
     <>
@@ -22,20 +28,41 @@ const Semtex = () => {
         <Alert severity="error">
           <AlertTitle>Error {datasetError.code}</AlertTitle>
           <Typography>{datasetError.message}</Typography>
-          {datasetError.details && <Typography>Details: {datasetError.details}</Typography>}
-          {datasetError.hint && <Typography>hint: {datasetError.hint}</Typography>}
+          {datasetError.details && (
+            <Typography>Details: {datasetError.details}</Typography>
+          )}
+          {datasetError.hint && (
+            <Typography>hint: {datasetError.hint}</Typography>
+          )}
         </Alert>
       )}
       {userResponsesError && (
         <Alert severity="error">
           <AlertTitle>Error {userResponsesError.code}</AlertTitle>
           <Typography>{userResponsesError.message}</Typography>
-          {userResponsesError.details && <Typography>Details: {userResponsesError.details}</Typography>}
-          {userResponsesError.hint && <Typography>hint: {userResponsesError.hint}</Typography>}
+          {userResponsesError.details && (
+            <Typography>Details: {userResponsesError.details}</Typography>
+          )}
+          {userResponsesError.hint && (
+            <Typography>hint: {userResponsesError.hint}</Typography>
+          )}
         </Alert>
       )}
       {userResponses && <pre>{JSON.stringify(userResponses, null, 4)}</pre>}
-      {dataset && <pre>{JSON.stringify(dataset, null, 4)}</pre>}
+      {/* dataset && <pre>{JSON.stringify(dataset, null, 4)}</pre> */}
+      <button
+        onClick={() => {
+          const randInt = Math.random() * 100;
+          console.log(randInt);
+
+          updateComment(
+            "8df338c3-6396-49d1-adf1-4c5c027293b9",
+            randInt.toString()
+          );
+        }}
+      >
+        change comment
+      </button>
       {dataset && (
         <>
           <InstructionModal />

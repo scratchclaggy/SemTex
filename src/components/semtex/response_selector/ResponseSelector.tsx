@@ -11,7 +11,7 @@ const ResponseSelector = () => {
     return null;
   }
 
-  const responses = dataset.responses;
+  const responses = dataset.responseOptions;
 
   return responses.length > 5 ? <ResponseDropdown /> : <ResponseButtons />;
 };

@@ -12,7 +12,7 @@ const ResponseDropdown = () => {
     return null;
   }
 
-  const responseOptions = dataset.responses;
+  const responseOptions = dataset.responseOptions;
   // TODO: Update server state for this user response
 
   return (

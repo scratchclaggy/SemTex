@@ -5,11 +5,10 @@ import Typography from '@mui/material/Typography';
 
 const ProgressBar = () => {
   // TODO: Get user responses from DB
-const    completed= 28;
-    const count= 57
-
-  const percentage = completed / count * 100;
-  return <Box sx={{ display: 'flex', alignItems: 'center' }}>
+const completed= 28;
+const count= 57
+const percentage = completed / count * 100;
+return <Box sx={{ display: 'flex', alignItems: 'center' }}>
   <Box sx={{ width: '100%', mr: 1 }}>
     <LinearProgress variant="determinate" value={percentage} />
   </Box>

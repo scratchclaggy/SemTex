@@ -7,16 +7,13 @@ const UserCodeBox = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    router.push('/semtex');
-  }
-
+    router.push("/semtex");
+  };
 
   return (
     <Stack alignItems="center" spacing={1} mt={"40vh"}>
       <Typography>Welcome To SemTex</Typography>
-      <form
-      onSubmit={handleSubmit}
-      >
+      <form onSubmit={handleSubmit}>
         <input
           type="text"
           placeholder="Enter Code"
@@ -29,7 +26,7 @@ const UserCodeBox = () => {
           }}
         ></input>
       </form>
-      <a href="">Don't Have a Code?</a>
+      <a href="">Dont Have a Code?</a>
       <a href="">Administrator Login</a>
     </Stack>
   );

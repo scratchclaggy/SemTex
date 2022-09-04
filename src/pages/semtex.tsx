@@ -1,8 +1,8 @@
 import type { NextPage } from "next";
-import UserCodeBox from "src/components/semtex/UserCodeBox";
+import Semtex from "src/components/semtex/Semtex";
 
 const Home: NextPage = () => {
-  return <UserCodeBox />;
+  return <Semtex />;
 };
 
 export default Home;

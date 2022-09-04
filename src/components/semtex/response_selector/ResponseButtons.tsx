@@ -6,13 +6,20 @@ import {
   RadioGroup,
 } from "@mui/material";
 import { useState } from "react";
-import { dataset } from "../Semtex";
+import useAuth from "src/contexts/AuthContext";
+import { useDataset } from "src/hooks/db";
 
 const ResponseButtons = () => {
-  // TODO: Retrieve the dataset via SWR
+  const { user } = useAuth();
+  const { dataset } = useDataset(user?.user_metadata.dataset);
+  const [selection, setSelection] = useState<string | null>(null);
+
+  if (!dataset) {
+    return null;
+  }
+
   const responseOptions = dataset.responses;
   // TODO: Update server state for this user response
-  const [selection, setSelection] = useState<string | null>(null);
 
   return (
     <FormControl>
@@ -26,10 +33,10 @@ const ResponseButtons = () => {
       >
         {responseOptions.map((responseOption) => (
           <FormControlLabel
-            key={responseOption}
-            value={responseOption}
+            key={responseOption.id}
+            value={responseOption.label}
             control={<Radio />}
-            label={responseOption}
+            label={responseOption.label}
           />
         ))}
       </RadioGroup>

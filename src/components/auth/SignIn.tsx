@@ -1,8 +1,15 @@
 import { LockOutlined } from "@mui/icons-material";
-import { Avatar, Button, Stack, TextField, Typography } from "@mui/material";
+import {
+  Alert,
+  Avatar,
+  Button,
+  Stack,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { useRouter } from "next/router";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
-import useUserStore from "src/hooks/auth";
+import useAuth from "src/contexts/AuthContext";
 import Link from "../ui/Link";
 
 type FormInput = {
@@ -12,12 +19,8 @@ type FormInput = {
 
 const SignIn = () => {
   // Redirect to home page if user already exists
-  const user = useUserStore((state) => state.user);
   const router = useRouter();
-
-  if (user) {
-    router.push("/");
-  }
+  const { user, authError, signIn } = useAuth();
 
   const {
     control,
@@ -25,10 +28,14 @@ const SignIn = () => {
     formState: { errors },
   } = useForm<FormInput>();
 
-  const signIn = useUserStore((state) => state.signIn);
-  const onSubmit: SubmitHandler<FormInput> = async (data: FormInput) => {
+  const onSubmit: SubmitHandler<FormInput> = (data: FormInput) => {
     signIn(data.email, data.password);
   };
+
+  if (user) {
+    router.push("/");
+    return null;
+  }
 
   return (
     <Stack marginTop={8} spacing={2} alignItems="center">
@@ -38,6 +45,7 @@ const SignIn = () => {
       <Typography component="h1" variant="h5">
         Sign in
       </Typography>
+      {authError && <Alert severity="error">{authError?.message}</Alert>}
       <Stack
         component="form"
         onSubmit={handleSubmit(onSubmit)}

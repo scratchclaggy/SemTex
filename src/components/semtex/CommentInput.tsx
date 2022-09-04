@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, StepContext } from "@mui/material";
 import React, {useState, useEffect} from "react";
 import {useForm} from "react-hook-form";
 import debounce from 'lodash/debounce';
@@ -6,13 +6,15 @@ import debounce from 'lodash/debounce';
 const CommentInput = () => {
 
   const [text, setText] = useState('')
-  
-  const handleChange = (event: React.ChangeEvent<HTMLFormElement>) => {
-    debounce(() =>{
-      console.log("text")
-    }, 1000)
-  
+  // setText(event.target.value) <- console.log below will be replaced with this function
+  const handleInput = debounce((event) => {
+    console.log(event.target.value);
+  }, 300);
+
+  const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    handleInput(event)
   };
+
   return (
     <Box>
       <form>

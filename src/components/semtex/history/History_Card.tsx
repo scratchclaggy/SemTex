@@ -9,7 +9,7 @@ function handleClick()
   }
 
 
-const History_Card = (props: any) => {
+const History_Card = (props: String) => {
 
     const [clicked, setClicked] = useState(false);
 
@@ -33,7 +33,7 @@ const History_Card = (props: any) => {
             }
           }}
           >
-          'Who you jiving with that Cosmik Debris'
+          {props}
           </Typography>
 
           <IconButton onClick={() => setClicked(prevClick => !prevClick)}>

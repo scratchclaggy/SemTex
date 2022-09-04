@@ -13,13 +13,13 @@ import TextSample from "./TextSample";
 
 const Semtex = () => {
   const { user } = useAuth();
-  const { dataset, error: datasetError } = useDataset(
-    user?.user_metadata.dataset
-  );
+  const { dataset, datasetError } = useDataset(user?.user_metadata.dataset);
   const {
     userResponses,
-    error: userResponsesError,
+    userResponsesError,
     updateComment,
+    insertHighlight,
+    updateHighlight,
   } = useUserResponse(user?.user_metadata.dataset);
 
   return (
@@ -62,6 +62,35 @@ const Semtex = () => {
         }}
       >
         change comment
+      </button>
+      <button
+        onClick={() => {
+          const randInt = Math.random() * 100;
+          console.log(randInt);
+
+          insertHighlight(
+            "8df338c3-6396-49d1-adf1-4c5c027293b9",
+            randInt.toString(),
+            dataset!.highlightOptions[0],
+          );
+        }}
+      >
+        new highlight
+      </button>
+      <button
+        onClick={() => {
+          const randInt = Math.random() * 100;
+          console.log(randInt);
+
+          updateHighlight(
+            "8df338c3-6396-49d1-adf1-4c5c027293b9",
+            "5dce3c78-7890-4473-995c-3dd7171a683e",
+            randInt.toString(),
+            dataset!.highlightOptions[0]
+          );
+        }}
+      >
+        update highlight
       </button>
       {dataset && (
         <>

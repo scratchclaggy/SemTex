@@ -37,14 +37,15 @@ export type TextSample = {
 };
 
 export type Highlight = {
+  id: string;
   selection: string;
   highlightOption: HighlightOption;
 };
 
 export type UserResponse = {
   id: string;
-  response?: ResponseOption;
+  responseID: string;
   comments?: string;
-  highlights?: Highlight[];
+  highlights: Highlight[];
   textSample: { id: string; datasetID: string };
 };

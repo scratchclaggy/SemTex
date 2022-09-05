@@ -76,6 +76,7 @@ export const useUserResponse = (
     selection: string,
     highlightOption: HighlightOption
   ) => void;
+  deleteHighlight: (userResponseID: string, highlightID: string) => void;
 } => {
   const {
     data: userResponses,
@@ -261,11 +262,58 @@ export const useUserResponse = (
     );
   };
 
+  const deleteHighlight = (userResponseID: string, highlightID: string) => {
+    const filteredResponses =
+      userResponses?.filter((response) => response.id !== userResponseID) ?? [];
+
+    const updateResponse = userResponses?.find(
+      (response) => response.id === userResponseID
+    );
+
+    if (!updateResponse) return;
+
+    const filteredHighlights =
+      updateResponse.highlights.filter(
+        (highlight) => highlight.id !== highlightID
+      ) ?? [];
+
+    mutate(
+      async () => {
+        const { error } = await supabase
+          .from("highlight")
+          .delete()
+          .eq("id", highlightID)
+          .single();
+
+        if (error) throw error;
+
+        return [
+          ...filteredResponses,
+          {
+            ...updateResponse,
+            highlights: filteredHighlights,
+          },
+        ];
+      },
+      {
+        optimisticData: [
+          ...filteredResponses,
+          {
+            ...updateResponse,
+            highlights: filteredHighlights,
+          },
+        ],
+        rollbackOnError: true,
+      }
+    );
+  };
+
   return {
     userResponses,
     userResponsesError,
     updateComment,
     insertHighlight,
     updateHighlight,
+    deleteHighlight,
   };
 };

@@ -20,6 +20,7 @@ const Semtex = () => {
     updateComment,
     insertHighlight,
     updateHighlight,
+    deleteHighlight,
   } = useUserResponse(user?.user_metadata.dataset);
 
   return (
@@ -71,7 +72,7 @@ const Semtex = () => {
           insertHighlight(
             "8df338c3-6396-49d1-adf1-4c5c027293b9",
             randInt.toString(),
-            dataset!.highlightOptions[0],
+            dataset!.highlightOptions[0]
           );
         }}
       >
@@ -91,6 +92,16 @@ const Semtex = () => {
         }}
       >
         update highlight
+      </button>
+      <button
+        onClick={() => {
+          deleteHighlight(
+            "8df338c3-6396-49d1-adf1-4c5c027293b9",
+            "5dce3c78-7890-4473-995c-3dd7171a683e"
+          );
+        }}
+      >
+        delete highlight
       </button>
       {dataset && (
         <>

@@ -44,7 +44,7 @@ export type Highlight = {
 
 export type UserResponse = {
   id: string;
-  responseID: string;
+  responseOptionID: string;
   comments?: string;
   highlights: Highlight[];
   textSample: { id: string; datasetID: string };

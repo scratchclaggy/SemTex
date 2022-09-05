@@ -77,6 +77,7 @@ export const useUserResponse = (
     highlightOption: HighlightOption
   ) => void;
   deleteHighlight: (userResponseID: string, highlightID: string) => void;
+  updateResponse: (userResponseID: string, responseOptionID: string) => void
 } => {
   const {
     data: userResponses,
@@ -262,6 +263,50 @@ export const useUserResponse = (
     );
   };
 
+  const updateResponse = (userResponseID: string, responseOptionID: string) => {
+    const filteredResponses =
+      userResponses?.filter((response) => response.id !== userResponseID) ?? [];
+
+    const updateResponse = userResponses?.find(
+      (response) => response.id === userResponseID
+    );
+
+    if (!updateResponse) return;
+
+    mutate(
+      async () => {
+        const { data: res, error }: PostgrestSingleResponse<DbHighlight> =
+          await supabase
+            .from("user_response")
+            .update({
+              response_option_id: responseOptionID,
+            })
+            .eq("id", userResponseID)
+            .single();
+
+        if (error) throw error;
+
+        return [
+          ...filteredResponses,
+          {
+            ...updateResponse,
+            responseOptionID: res.user_response_id,
+          },
+        ];
+      },
+      {
+        optimisticData: [
+          ...filteredResponses,
+          {
+            ...updateResponse,
+            responseOptionID: responseOptionID,
+          },
+        ],
+        rollbackOnError: true,
+      }
+    );
+  };
+
   const deleteHighlight = (userResponseID: string, highlightID: string) => {
     const filteredResponses =
       userResponses?.filter((response) => response.id !== userResponseID) ?? [];
@@ -315,5 +360,6 @@ export const useUserResponse = (
     insertHighlight,
     updateHighlight,
     deleteHighlight,
+    updateResponse,
   };
 };

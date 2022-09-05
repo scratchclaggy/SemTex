@@ -21,6 +21,7 @@ const Semtex = () => {
     insertHighlight,
     updateHighlight,
     deleteHighlight,
+    updateResponse,
   } = useUserResponse(user?.user_metadata.dataset);
 
   return (
@@ -102,6 +103,16 @@ const Semtex = () => {
         }}
       >
         delete highlight
+      </button>
+      <button
+        onClick={() => {
+          updateResponse(
+            "8df338c3-6396-49d1-adf1-4c5c027293b9",
+            "f4067846-3493-4345-93bb-5e1bb570153a"
+          );
+        }}
+      >
+        change response option
       </button>
       {dataset && (
         <>

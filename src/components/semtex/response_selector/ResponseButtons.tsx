@@ -7,7 +7,7 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import useAuth from "src/contexts/AuthContext";
-import { useDataset } from "src/hooks/db";
+import useDataset from "src/hooks/dataset";
 
 const ResponseButtons = () => {
   const { user } = useAuth();

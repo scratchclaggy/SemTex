@@ -1,6 +1,7 @@
 import { Alert, AlertTitle, Grid, Stack, Typography } from "@mui/material";
 import useAuth from "src/contexts/AuthContext";
-import { useDataset, useUserResponse } from "src/hooks/db";
+import useDataset from "src/hooks/dataset";
+import useUrHighlights from "src/hooks/user_response/highlights";
 import CommentInput from "./CommentInput";
 import Highlighters from "./Highlighters";
 import History from "./History";
@@ -11,18 +12,19 @@ import Progress from "./Progress";
 import ResponseSelector from "./response_selector/ResponseSelector";
 import TextSample from "./TextSample";
 
+/* TODO:
+ *
+ * - Pass in the text-sample ID rather then the user response ID
+ * - Use ResponseOptions instead of IDs so it behaves like the highlight_options
+ * - Error handling when dataset / other things do not exist
+ *
+ */
+
 const Semtex = () => {
   const { user } = useAuth();
   const { dataset, datasetError } = useDataset(user?.user_metadata.dataset);
-  const {
-    userResponses,
-    userResponsesError,
-    updateComment,
-    insertHighlight,
-    updateHighlight,
-    deleteHighlight,
-    updateResponse,
-  } = useUserResponse(user?.user_metadata.dataset);
+  const { highlights, insertHighlight, updateHighlight, deleteHighlight } =
+    useUrHighlights(dataset?.id, "8df338c3-6396-49d1-adf1-4c5c027293b9");
 
   return (
     <>
@@ -38,43 +40,29 @@ const Semtex = () => {
           )}
         </Alert>
       )}
-      {userResponsesError && (
-        <Alert severity="error">
-          <AlertTitle>Error {userResponsesError.code}</AlertTitle>
-          <Typography>{userResponsesError.message}</Typography>
-          {userResponsesError.details && (
-            <Typography>Details: {userResponsesError.details}</Typography>
-          )}
-          {userResponsesError.hint && (
-            <Typography>hint: {userResponsesError.hint}</Typography>
-          )}
-        </Alert>
-      )}
-      {userResponses && <pre>{JSON.stringify(userResponses, null, 4)}</pre>}
+      {highlights && <pre>{JSON.stringify(highlights, null, 4)}</pre>}
       {/* dataset && <pre>{JSON.stringify(dataset, null, 4)}</pre> */}
+      {
+        // <button
+        // onClick={() => {
+        // const randInt = Math.random() * 100;
+        // console.log(randInt);
+        //
+        // updateComment(
+        //     "8df338c3-6396-49d1-adf1-4c5c027293b9",
+        //     randInt.toString()
+        //     );
+        // }}
+        // >
+        //   change comment
+        //   </button>
+      }
       <button
         onClick={() => {
           const randInt = Math.random() * 100;
           console.log(randInt);
 
-          updateComment(
-            "8df338c3-6396-49d1-adf1-4c5c027293b9",
-            randInt.toString()
-          );
-        }}
-      >
-        change comment
-      </button>
-      <button
-        onClick={() => {
-          const randInt = Math.random() * 100;
-          console.log(randInt);
-
-          insertHighlight(
-            "8df338c3-6396-49d1-adf1-4c5c027293b9",
-            randInt.toString(),
-            dataset!.highlightOptions[0]
-          );
+          insertHighlight(randInt.toString(), dataset!.highlightOptions[0]);
         }}
       >
         new highlight
@@ -85,8 +73,7 @@ const Semtex = () => {
           console.log(randInt);
 
           updateHighlight(
-            "8df338c3-6396-49d1-adf1-4c5c027293b9",
-            "5dce3c78-7890-4473-995c-3dd7171a683e",
+            "3e2b5b53-ac11-4aa0-a5f0-a2ef67bfd8b2",
             randInt.toString(),
             dataset!.highlightOptions[0]
           );
@@ -96,24 +83,23 @@ const Semtex = () => {
       </button>
       <button
         onClick={() => {
-          deleteHighlight(
-            "8df338c3-6396-49d1-adf1-4c5c027293b9",
-            "5dce3c78-7890-4473-995c-3dd7171a683e"
-          );
+          deleteHighlight("3e2b5b53-ac11-4aa0-a5f0-a2ef67bfd8b2");
         }}
       >
         delete highlight
       </button>
-      <button
-        onClick={() => {
-          updateResponse(
-            "8df338c3-6396-49d1-adf1-4c5c027293b9",
-            "f4067846-3493-4345-93bb-5e1bb570153a"
-          );
-        }}
-      >
-        change response option
-      </button>
+      {/* 
+        <button
+          onClick={() => {
+            updateResponse(
+                "8df338c3-6396-49d1-adf1-4c5c027293b9",
+                "f4067846-3493-4345-93bb-5e1bb570153a"
+                );
+          }}
+        >
+          change response option
+          </button>
+          */}
       {dataset && (
         <>
           <InstructionModal />

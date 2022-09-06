@@ -1,16 +1,21 @@
 import { Box, Typography } from "@mui/material";
+import { useState } from "react";
 
 const TextSample = () => {
+  const [text, setText] = useState("Lorem ipsum dolor sit amet consectetur")
+  const test = [<mark>Testing</mark>, <Typography>Second Test</Typography>]
 
   const highlighterHandler = () =>{
-    const selObj = window.getSelection();
-    const selText = selObj.toString();
+    const selObj = window.getSelection()
+    const selText = selObj.toString()
+    
 
     // This will be replaced with a function to export the saved text
+    // Currently this hands out ANY highlighted text, provided you release the mouse
+    // within the range of the Box. 
     console.log(selText);
   }
 
-  const text = "Lorem ipsum dolor sit amet consectetur"
   return (
     <Box
     style={{
@@ -20,7 +25,7 @@ const TextSample = () => {
       padding: '4px'
     }}
     >
-      <Typography onMouseUp={highlighterHandler}>{text}</Typography>
+      <Typography onMouseUp={highlighterHandler}>{test}</Typography>
     </Box>
   );
 };

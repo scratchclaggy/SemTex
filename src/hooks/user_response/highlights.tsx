@@ -5,30 +5,39 @@ import { useSWRConfig } from "swr";
 import supabase from "utils/supabase";
 import useUserResponse from "./user_response";
 
-const useUrHighlights = (datasetID: string | undefined, userResponseID: string) => {
+const useUrHighlights = (
+  datasetID: string | undefined,
+  textSampleID: string | undefined
+) => {
   const { userResponses } = useUserResponse(datasetID);
+  const { mutate } = useSWRConfig();
 
   const updateResponse = userResponses?.find(
-    (response) => response.id === userResponseID
+    (response) => response.textSample.id === textSampleID
   );
 
-  const { mutate } = useSWRConfig();
+  const filteredResponses =
+    userResponses?.filter(
+      (response) => response.textSample.id !== textSampleID
+    ) ?? [];
+
+  if (!userResponses || !updateResponse) {
+    return {
+      highlights: [],
+      insertHighlight: () => {},
+      updateHighlightSelection: () => {},
+      deleteHighlight: () => {},
+    };
+  }
+
   const insertHighlight = (
     selection: string,
     highlightOption: HighlightOption
   ) => {
-    const filteredResponses =
-      userResponses?.filter((response) => response.id !== userResponseID) ?? [];
-
-    const updateResponse = userResponses?.find(
-      (response) => response.id === userResponseID
-    );
-
-    if (!updateResponse) return;
-
-    const updateHighlight = { id: "", selection, highlightOption };
+    const newHighlight = { id: "", selection, highlightOption };
 
     mutate(
+      "userResponses",
       async () => {
         const { data: res, error }: PostgrestSingleResponse<Highlight> =
           await supabase
@@ -36,7 +45,7 @@ const useUrHighlights = (datasetID: string | undefined, userResponseID: string) 
             .insert({
               selection,
               highlight_option: highlightOption.id,
-              user_response_id: userResponseID,
+              user_response_id: updateResponse.id,
             })
             .single();
 
@@ -47,8 +56,8 @@ const useUrHighlights = (datasetID: string | undefined, userResponseID: string) 
           {
             ...updateResponse,
             highlights: [
-              ...updateResponse.highlights,
-              { ...updateHighlight, selection: res.selection },
+              ...(updateResponse.highlights ?? []),
+              { ...newHighlight, selection: res.selection },
             ],
           },
         ];
@@ -58,7 +67,7 @@ const useUrHighlights = (datasetID: string | undefined, userResponseID: string) 
           ...filteredResponses,
           {
             ...updateResponse,
-            highlights: [...updateResponse.highlights, updateHighlight],
+            highlights: [...(updateResponse.highlights ?? []), newHighlight],
           },
         ],
         rollbackOnError: true,
@@ -66,38 +75,29 @@ const useUrHighlights = (datasetID: string | undefined, userResponseID: string) 
     );
   };
 
-  const updateHighlight = (
+  const updateHighlightSelection = (
     highlightID: string,
     selection: string,
-    highlightOption: HighlightOption
   ) => {
-    const filteredResponses =
-      userResponses?.filter((response) => response.id !== userResponseID) ?? [];
-
-    const updateResponse = userResponses?.find(
-      (response) => response.id === userResponseID
-    );
-
-    if (!updateResponse) return;
-
     const filteredHighlights =
-      updateResponse.highlights.filter(
+      updateResponse.highlights?.filter(
         (highlight) => highlight.id !== highlightID
       ) ?? [];
 
-    const updateHighlight = updateResponse.highlights.find(
+    const updateHighlight = updateResponse.highlights?.find(
       (highlight) => highlight.id === highlightID
     );
 
+    if (!updateHighlight) return;
+
     mutate(
+      "userResponses",
       async () => {
         const { data: res, error }: PostgrestSingleResponse<Highlight> =
           await supabase
             .from("highlight")
             .update({
               selection,
-              highlight_option: highlightOption.id,
-              user_response_id: userResponseID,
             })
             .eq("id", highlightID)
             .single();
@@ -120,7 +120,7 @@ const useUrHighlights = (datasetID: string | undefined, userResponseID: string) 
           ...filteredResponses,
           {
             ...updateResponse,
-            highlights: [...filteredHighlights, updateHighlight],
+            highlights: [...filteredHighlights, { ...updateHighlight, selection }],
           },
         ],
         rollbackOnError: true,
@@ -129,27 +129,20 @@ const useUrHighlights = (datasetID: string | undefined, userResponseID: string) 
   };
 
   const deleteHighlight = (highlightID: string) => {
-    const filteredResponses =
-      userResponses?.filter((response) => response.id !== userResponseID) ?? [];
-
-    const updateResponse = userResponses?.find(
-      (response) => response.id === userResponseID
-    );
-
-    if (!updateResponse) return;
-
     const filteredHighlights =
-      updateResponse.highlights.filter(
+      updateResponse.highlights?.filter(
         (highlight) => highlight.id !== highlightID
       ) ?? [];
 
     mutate(
+      "userResponses",
       async () => {
-        const { error } = await supabase
+        const { data: res, error } = await supabase
           .from("highlight")
           .delete()
-          .eq("id", highlightID)
-          .single();
+          .eq("id", highlightID);
+
+        console.log(res, error);
 
         if (error) throw error;
 
@@ -175,10 +168,11 @@ const useUrHighlights = (datasetID: string | undefined, userResponseID: string) 
   };
 
   return {
-    highlights: updateResponse.highlights ?? [],
+    highlights: updateResponse?.highlights ?? [],
     insertHighlight,
-    updateHighlight,
+    updateHighlightSelection,
     deleteHighlight,
   };
 };
+
 export default useUrHighlights;

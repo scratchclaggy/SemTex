@@ -3,12 +3,12 @@ import { UserResponse } from "src/types/client";
 import useSWR, { SWRResponse } from "swr";
 import supabase from "utils/supabase";
 
-const useUserResponse = (datasetID: string) => {
+const useUserResponse = (datasetID: string | undefined) => {
   const {
     data: userResponses,
     error: userResponsesError,
   }: SWRResponse<UserResponse[] | null, PostgrestError | null> = useSWR(
-    "userResponses",
+    datasetID && "userResponses",
     async () => {
       const {
         data,
@@ -21,13 +21,13 @@ const useUserResponse = (datasetID: string) => {
         .select(
           `
             id,
-            response:response_option(id),
+            response:response_option(id, label),
             comments,
             highlights:highlight(id, selection, highlightOption:highlight_option(id, label, color)),
-            textSample:text_sample(id, datsetID:dataset_id)
+            textSample:text_sample!inner(id, datsetID:dataset_id)
           `
         )
-        .eq("textSample.dataset_id", datasetID);
+        .eq("text_sample.dataset_id", datasetID);
 
       if (error) throw error;
 

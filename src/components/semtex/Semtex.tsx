@@ -22,9 +22,11 @@ import TextSample from "./TextSample";
 
 const Semtex = () => {
   const { user } = useAuth();
-  const { dataset, datasetError } = useDataset(user?.user_metadata.dataset);
-  const { highlights, insertHighlight, updateHighlight, deleteHighlight } =
-    useUrHighlights(dataset?.id, "8df338c3-6396-49d1-adf1-4c5c027293b9");
+  const { dataset, datasetError } = useDataset(
+    "8b5a92ba-aaae-4223-83d2-4eab40e7a22e"
+  );
+  const { highlights, insertHighlight, updateHighlightSelection, deleteHighlight } =
+    useUrHighlights(dataset?.id, "8709aa3d-0026-4ea7-9de3-7caae526a9fc");
 
   return (
     <>
@@ -46,7 +48,6 @@ const Semtex = () => {
         // <button
         // onClick={() => {
         // const randInt = Math.random() * 100;
-        // console.log(randInt);
         //
         // updateComment(
         //     "8df338c3-6396-49d1-adf1-4c5c027293b9",
@@ -60,7 +61,6 @@ const Semtex = () => {
       <button
         onClick={() => {
           const randInt = Math.random() * 100;
-          console.log(randInt);
 
           insertHighlight(randInt.toString(), dataset!.highlightOptions[0]);
         }}
@@ -70,12 +70,10 @@ const Semtex = () => {
       <button
         onClick={() => {
           const randInt = Math.random() * 100;
-          console.log(randInt);
 
-          updateHighlight(
-            "3e2b5b53-ac11-4aa0-a5f0-a2ef67bfd8b2",
+          updateHighlightSelection(
+            highlights[0]?.id,
             randInt.toString(),
-            dataset!.highlightOptions[0]
           );
         }}
       >
@@ -83,7 +81,8 @@ const Semtex = () => {
       </button>
       <button
         onClick={() => {
-          deleteHighlight("3e2b5b53-ac11-4aa0-a5f0-a2ef67bfd8b2");
+          console.log(highlights[0]?.id);
+          deleteHighlight(highlights[0]?.id);
         }}
       >
         delete highlight

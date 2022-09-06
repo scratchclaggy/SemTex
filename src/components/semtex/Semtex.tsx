@@ -41,7 +41,7 @@ const Semtex = () => {
                 <NavigationButtons />
               </Stack>
             </Grid>
-            <Grid item>
+            <Grid item justifyContent='flex-end'>
               <Highlighters />
             </Grid>
           </Grid>

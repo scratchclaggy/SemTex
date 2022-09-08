@@ -1,37 +1,43 @@
 import { PostgrestSingleResponse } from "@supabase/supabase-js";
-import { UserResponse } from "src/types/db";
+import { UserResponse } from "src/types/client";
 import { useSWRConfig } from "swr";
 import supabase from "utils/supabase";
 import useUserResponse from "./user_response";
 
-const useUrComment = (datasetID: string, userResponseID: string) => {
+const useUrComment = (
+  datasetID: string | undefined,
+  textSampleID: string | undefined
+) => {
   const { userResponses } = useUserResponse(datasetID);
-
-  const updateResponse = userResponses?.find(
-    (response) => response.id === userResponseID
-  );
-
-  if (!updateResponse) return null;
-
   const { mutate } = useSWRConfig();
 
+  const updateResponse = userResponses?.find(
+    (response) => response.textSample.id === textSampleID
+  );
+
+  if (!userResponses || !updateResponse)
+    return {
+      comment: "",
+      updateComment: () => {},
+    };
+
   const updateComment = (newComment: string) => {
-    const filteredResponses =
-      userResponses?.filter((response) => response.id !== userResponseID) ?? [];
-
-    const updateResponse = userResponses?.find(
-      (response) => response.id === userResponseID
-    );
-
     mutate(
       "userResponses",
-      async () => {
+      async (userResponses: UserResponse[]) => {
+        const filteredResponses =
+          userResponses?.filter(
+            (response) => response.textSample.id !== textSampleID
+          ) ?? [];
+
         const { data: res, error }: PostgrestSingleResponse<UserResponse> =
           await supabase
             .from("user_response")
             .update({ comments: newComment })
-            .eq("id", userResponseID)
+            .eq("id", updateResponse.id)
             .single();
+
+        console.log(updateResponse);
 
         if (error) throw error;
 
@@ -41,16 +47,12 @@ const useUrComment = (datasetID: string, userResponseID: string) => {
         ];
       },
       {
-        optimisticData: [
-          ...filteredResponses,
-          { ...updateResponse, comments: newComment },
-        ],
-        rollbackOnError: true,
+        revalidate: false,
       }
     );
   };
 
-  return { comment: updateComment, updateComment };
+  return { comment: updateResponse.comments, updateComment };
 };
 
-export default useUserResponseComment;
+export default useUrComment;

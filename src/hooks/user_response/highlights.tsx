@@ -75,10 +75,7 @@ const useUrHighlights = (
     );
   };
 
-  const updateHighlightSelection = (
-    highlightID: string,
-    selection: string,
-  ) => {
+  const updateHighlightSelection = (highlightID: string, selection: string) => {
     const filteredHighlights =
       updateResponse.highlights?.filter(
         (highlight) => highlight.id !== highlightID
@@ -120,7 +117,10 @@ const useUrHighlights = (
           ...filteredResponses,
           {
             ...updateResponse,
-            highlights: [...filteredHighlights, { ...updateHighlight, selection }],
+            highlights: [
+              ...filteredHighlights,
+              { ...updateHighlight, selection },
+            ],
           },
         ],
         rollbackOnError: true,

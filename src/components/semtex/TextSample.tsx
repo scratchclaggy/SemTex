@@ -1,5 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import { useState, useEffect } from "react";
+import Highlighter from "react-highlight-words";
 
 const TextSample = () => {
   const text = "Lorem ipsum dolor sit amet consectetur"
@@ -56,7 +57,7 @@ const TextSample = () => {
       padding: '4px'
     }}
     >
-      <Typography onMouseUp={highlighterHandler}>{markup}</Typography>
+       <Typography onMouseUp={highlighterHandler}>{markup}</Typography>
     </Box>
   );
 };

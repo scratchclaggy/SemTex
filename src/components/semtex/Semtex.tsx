@@ -1,5 +1,5 @@
 import { Alert, AlertTitle, Grid, Stack, Typography } from "@mui/material";
-import useAuth from "src/contexts/AuthContext";
+import { useRouter } from "next/router";
 import useDataset from "src/hooks/dataset";
 import CommentInput from "./CommentInput";
 import Highlighters from "./Highlighters";
@@ -12,8 +12,10 @@ import ResponseSelector from "./response_selector/ResponseSelector";
 import TextSample from "./TextSample";
 
 const Semtex = () => {
-  const { user } = useAuth();
-  const { dataset, datasetError } = useDataset(user?.user_metadata.dataset);
+  const router = useRouter();
+  const { dataset, datasetError } = useDataset(
+    router.query.datasetID as string | undefined
+  );
 
   return (
     <>

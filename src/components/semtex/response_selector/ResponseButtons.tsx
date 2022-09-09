@@ -5,13 +5,15 @@ import {
   Radio,
   RadioGroup,
 } from "@mui/material";
+import { useRouter } from "next/router";
 import { useState } from "react";
-import useAuth from "src/contexts/AuthContext";
 import useDataset from "src/hooks/dataset";
 
 const ResponseButtons = () => {
-  const { user } = useAuth();
-  const { dataset } = useDataset(user?.user_metadata.dataset);
+  const router = useRouter();
+  const { dataset, datasetError } = useDataset(
+    router.query.datasetID as string | undefined
+  );
   const [selection, setSelection] = useState<string | null>(null);
 
   if (!dataset) {

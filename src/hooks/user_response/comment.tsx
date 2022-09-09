@@ -15,7 +15,10 @@ const useUrComment = (
     (response) => response.textSample.id === textSampleID
   );
 
-  if (!userResponses || !updateResponse)
+  console.log("useurcomment", datasetID, textSampleID);
+  console.log(userResponses, updateResponse);
+
+  if (!updateResponse)
     return {
       comment: "",
       updateComment: () => {},
@@ -37,7 +40,7 @@ const useUrComment = (
             .eq("id", updateResponse.id)
             .single();
 
-            console.log("UPDATE", res, error)
+        console.log("UPDATE", res, error);
 
         if (error) throw error;
 

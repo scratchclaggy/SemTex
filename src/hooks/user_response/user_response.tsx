@@ -35,6 +35,9 @@ const useUserResponse = (datasetID: string | undefined) => {
     }
   );
 
+
+  console.log("USER RESPONSES", userResponses)
+
   return {
     userResponses,
     userResponsesError,

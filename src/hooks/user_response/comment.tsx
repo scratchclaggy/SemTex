@@ -37,6 +37,8 @@ const useUrComment = (
             .eq("id", updateResponse.id)
             .single();
 
+            console.log("UPDATE", res, error)
+
         if (error) throw error;
 
         return [

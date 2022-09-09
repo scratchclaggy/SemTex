@@ -1,4 +1,5 @@
 import { Alert, AlertTitle, Grid, Stack, Typography } from "@mui/material";
+import { atom, useSetAtom } from "jotai";
 import { useRouter } from "next/router";
 import useDataset from "src/hooks/dataset";
 import CommentInput from "./CommentInput";
@@ -11,11 +12,16 @@ import Progress from "./Progress";
 import ResponseSelector from "./response_selector/ResponseSelector";
 import TextSample from "./TextSample";
 
+export const textSampleIdAtom = atom("");
+
 const Semtex = () => {
   const router = useRouter();
   const { dataset, datasetError } = useDataset(
     router.query.datasetID as string | undefined
   );
+  const setTextSampleID = useSetAtom(textSampleIdAtom);
+
+  setTextSampleID("5cf7a58d-4c06-43d2-935e-e6779be659a2");
 
   return (
     <>

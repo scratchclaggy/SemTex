@@ -19,7 +19,7 @@ type FormInput = {
 
 const SignUp = () => {
   // Redirect to home page if user already exists
-  const { user, authError, signUp } = useAuth();
+  const { user, authError, signUp, setUserMetadata } = useAuth();
   const router = useRouter();
 
   const {
@@ -28,11 +28,14 @@ const SignUp = () => {
     formState: { errors },
   } = useForm<FormInput>();
 
-  const onSubmit: SubmitHandler<FormInput> = async (data: FormInput) => {
+  const onSubmit: SubmitHandler<FormInput> = (data: FormInput) => {
     signUp(data.email, data.password);
   };
 
   if (user) {
+    // HACK: Temporary fix to set the dataset until the Codebox component is complete
+    setUserMetadata({ dataset: "8b5a92ba-aaae-4223-83d2-4eab40e7a22e" });
+
     router.push("/");
     return null;
   }

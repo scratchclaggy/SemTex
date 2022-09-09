@@ -1,6 +1,6 @@
 export type UserResponse = {
   id: string;
-  response: string;
+  response_option_id: string;
   comments: string;
   user_id: string;
   text_sample_id: string;

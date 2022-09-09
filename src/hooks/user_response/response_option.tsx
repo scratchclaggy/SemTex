@@ -1,37 +1,49 @@
 import { PostgrestSingleResponse } from "@supabase/supabase-js";
-import { Highlight } from "src/types/db";
+import {
+  ResponseOption,
+  UserResponse as ClientUserResponse,
+} from "src/types/client";
+import { UserResponse as DbUserResponse } from "src/types/db";
 import { useSWRConfig } from "swr";
 import supabase from "utils/supabase";
 import useUserResponse from "./user_response";
 
-const useUrResponseOption = (datasetID: string, userResponseID: string) => {
+const useUrResponseOption = (
+  datasetID: string | undefined,
+  textSampleID: string | undefined
+) => {
   const { userResponses } = useUserResponse(datasetID);
-
-  const updateResponse = userResponses?.find(
-    (response) => response.id === userResponseID
-  );
-
-  if (!updateResponse) return null;
-
   const { mutate } = useSWRConfig();
 
-  const updateResponseOption = (responseOptionID: string) => {
-    const filteredResponses =
-      userResponses?.filter((response) => response.id !== userResponseID) ?? [];
+  const updateResponse = userResponses?.find(
+    (response) => response.textSample.id === textSampleID
+  );
 
-    if (!updateResponse) return;
+  if (!updateResponse)
+    return { responseOption: null, updateResponseOption: () => {} };
+  console.log("UPDATE RESPONSE", updateResponse);
+
+  const updateResponseOption = (responseOption: ResponseOption | undefined) => {
+    if (!responseOption) return;
 
     mutate(
       "userResponses",
-      async () => {
-        const { data: res, error }: PostgrestSingleResponse<Highlight> =
+      async (userResponses: ClientUserResponse[]) => {
+        const filteredResponses =
+          userResponses?.filter(
+            (response) => response.textSample.id !== textSampleID
+          ) ?? [];
+
+        const { data: res, error }: PostgrestSingleResponse<DbUserResponse> =
           await supabase
             .from("user_response")
             .update({
-              response_option_id: responseOptionID,
+              response_option_id: responseOption.id,
             })
-            .eq("id", userResponseID)
+            .eq("id", updateResponse.id)
             .single();
+
+        console.log("RES", res);
 
         if (error) throw error;
 
@@ -39,26 +51,23 @@ const useUrResponseOption = (datasetID: string, userResponseID: string) => {
           ...filteredResponses,
           {
             ...updateResponse,
-            responseOptionID: res.user_response_id,
+            response: {
+              id: res.response_option_id,
+              label: responseOption.label,
+            },
           },
         ];
       },
       {
-        optimisticData: [
-          ...filteredResponses,
-          {
-            ...updateResponse,
-            responseOptionID: responseOptionID,
-          },
-        ],
-        rollbackOnError: true,
+        revalidate: false,
       }
     );
   };
 
   return {
-    responseOptionID: updateResponse.responseOptionID,
+    responseOption: updateResponse.response,
     updateResponseOption,
   };
 };
+
 export default useUrResponseOption;

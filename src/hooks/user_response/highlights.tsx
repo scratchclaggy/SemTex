@@ -16,11 +16,6 @@ const useUrHighlights = (
     (response) => response.textSample.id === textSampleID
   );
 
-  const filteredResponses =
-    userResponses?.filter(
-      (response) => response.textSample.id !== textSampleID
-    ) ?? [];
-
   if (!userResponses || !updateResponse) {
     return {
       highlights: [],
@@ -29,6 +24,11 @@ const useUrHighlights = (
       deleteHighlight: () => {},
     };
   }
+
+  const filteredResponses =
+    userResponses?.filter(
+      (response) => response.textSample.id !== textSampleID
+    ) ?? [];
 
   const insertHighlight = (
     selection: string,

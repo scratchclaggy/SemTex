@@ -3,6 +3,7 @@ import useAuth from "src/contexts/AuthContext";
 import useDataset from "src/hooks/dataset";
 import useUrComment from "src/hooks/user_response/comment";
 import useUrHighlights from "src/hooks/user_response/highlights";
+import useUrResponseOption from "src/hooks/user_response/response_option";
 import CommentInput from "./CommentInput";
 import Highlighters from "./Highlighters";
 import History from "./History";
@@ -36,6 +37,11 @@ const Semtex = () => {
     dataset?.id,
     "8709aa3d-0026-4ea7-9de3-7caae526a9fc"
   );
+  const { responseOption, updateResponseOption } = useUrResponseOption(
+    dataset?.id,
+    "8709aa3d-0026-4ea7-9de3-7caae526a9fc"
+  );
+  console.log(responseOption);
 
   return (
     <>
@@ -53,15 +59,14 @@ const Semtex = () => {
       )}
       {highlights && <pre>{JSON.stringify(highlights, null, 4)}</pre>}
       {comment && <pre>{JSON.stringify(comment, null, 4)}</pre>}
+      {responseOption && <pre>{JSON.stringify(responseOption, null, 4)}</pre>}
       {/* dataset && <pre>{JSON.stringify(dataset, null, 4)}</pre> */}
 
       <button
         onClick={() => {
           const randInt = Math.random() * 100;
 
-          updateComment(
-            randInt.toString()
-          );
+          updateComment(randInt.toString());
         }}
       >
         change comment
@@ -93,18 +98,15 @@ const Semtex = () => {
       >
         delete highlight
       </button>
-      {/* 
-        <button
-          onClick={() => {
-            updateResponse(
-                "8df338c3-6396-49d1-adf1-4c5c027293b9",
-                "f4067846-3493-4345-93bb-5e1bb570153a"
-                );
-          }}
-        >
-          change response option
-          </button>
-          */}
+
+      <button
+        onClick={() => {
+          updateResponseOption(dataset?.responseOptions[0]);
+        }}
+      >
+        change response option
+      </button>
+
       {dataset && (
         <>
           <InstructionModal />

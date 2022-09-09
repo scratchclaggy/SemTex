@@ -9,17 +9,14 @@ import { textSampleIdAtom } from "./Semtex";
 const CommentInput = () => {
   const router = useRouter();
   const textSampleID = useAtomValue(textSampleIdAtom);
-  console.log(textSampleID);
   const { comment, updateComment } = useUrComment(
     router.query.datasetID as string | undefined,
     textSampleID
   );
-  console.log("COMMENT", comment, updateComment);
 
   const [inputComment, setInputComment] = useState(comment);
 
   const handleInput = debounce((event) => {
-    console.log(inputComment);
     updateComment(event.target.value);
   }, 300);
 

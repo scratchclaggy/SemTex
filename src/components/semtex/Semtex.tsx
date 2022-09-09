@@ -2,7 +2,7 @@ import { Alert, AlertTitle, Grid, Stack, Typography } from "@mui/material";
 import { atom, useSetAtom } from "jotai";
 import { useRouter } from "next/router";
 import useDataset from "src/hooks/dataset";
-import { useUserResponses } from "src/hooks/user_response";
+import { useUserResponse } from "src/hooks/user_response";
 import CommentInput from "./CommentInput";
 import Highlighters from "./Highlighters";
 import History from "./History";
@@ -20,8 +20,7 @@ const Semtex = () => {
   const { dataset, datasetError } = useDataset(
     router.query.datasetID as string | undefined
   );
-
-  const { userResponses, userResponsesError } = useUserResponses(
+  const { userResponses, userResponsesError } = useUserResponse(
     router.query.datasetID as string | undefined
   );
 

@@ -15,9 +15,6 @@ const useUrComment = (
     (response) => response.textSample.id === textSampleID
   );
 
-  console.log("useurcomment", datasetID, textSampleID);
-  console.log(userResponses, updateResponse);
-
   if (!updateResponse)
     return {
       comment: "",
@@ -39,8 +36,6 @@ const useUrComment = (
             .update({ comments: newComment })
             .eq("id", updateResponse.id)
             .single();
-
-        console.log("UPDATE", res, error);
 
         if (error) throw error;
 

@@ -1,6 +1,6 @@
 import { Alert, AlertTitle, Grid, Stack, Typography } from "@mui/material";
 import useAuth from "src/contexts/AuthContext";
-import { useDataset } from "src/hooks/db";
+import useDataset from "src/hooks/dataset";
 import CommentInput from "./CommentInput";
 import Highlighters from "./Highlighters";
 import History from "./History";
@@ -13,16 +13,20 @@ import TextSample from "./TextSample";
 
 const Semtex = () => {
   const { user } = useAuth();
-  const { dataset, error } = useDataset(user?.user_metadata.dataset);
+  const { dataset, datasetError } = useDataset(user?.user_metadata.dataset);
 
   return (
     <>
-      {error && (
+      {datasetError && (
         <Alert severity="error">
-          <AlertTitle>Error {error.code}</AlertTitle>
-          <Typography>{error.message}</Typography>
-          {error.details && <Typography>Details: {error.details}</Typography>}
-          {error.hint && <Typography>hint: {error.hint}</Typography>}
+          <AlertTitle>Error {datasetError.code}</AlertTitle>
+          <Typography>{datasetError.message}</Typography>
+          {datasetError.details && (
+            <Typography>Details: {datasetError.details}</Typography>
+          )}
+          {datasetError.hint && (
+            <Typography>hint: {datasetError.hint}</Typography>
+          )}
         </Alert>
       )}
       {dataset && (

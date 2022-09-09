@@ -37,7 +37,6 @@ export const AuthProvider = ({ children }: { children: JSX.Element }) => {
 
   const signOut = async () => {
     const res = await supabase.auth.signOut();
-    console.log("signed out");
     setUser(null);
     setSession(null);
     setAuthError(res.error);

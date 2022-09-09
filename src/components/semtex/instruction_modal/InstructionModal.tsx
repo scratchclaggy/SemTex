@@ -4,7 +4,7 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import { atom, useAtom } from "jotai";
 import useAuth from "src/contexts/AuthContext";
-import { useDataset } from "src/hooks/db";
+import useDataset from "src/hooks/dataset";
 
 export const InstructionModalAtom = atom(false);
 

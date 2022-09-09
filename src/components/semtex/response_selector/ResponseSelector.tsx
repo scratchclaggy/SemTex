@@ -1,5 +1,5 @@
 import useAuth from "src/contexts/AuthContext";
-import { useDataset } from "src/hooks/db";
+import useDataset from "src/hooks/dataset";
 import ResponseButtons from "./ResponseButtons";
 import ResponseDropdown from "./ResponseDropdown";
 
@@ -11,7 +11,7 @@ const ResponseSelector = () => {
     return null;
   }
 
-  const responses = dataset.responses;
+  const responses = dataset.responseOptions;
 
   return responses.length > 5 ? <ResponseDropdown /> : <ResponseButtons />;
 };

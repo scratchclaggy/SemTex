@@ -3,15 +3,17 @@ import { Box, Dialog, DialogContent, DialogTitle } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import { atom, useAtom } from "jotai";
-import useAuth from "src/contexts/AuthContext";
-import { useDataset } from "src/hooks/db";
+import { useRouter } from "next/router";
+import useDataset from "src/hooks/dataset";
 
 export const InstructionModalAtom = atom(false);
 
 const InstructionModal = () => {
   const [isOpen, setIsOpen] = useAtom(InstructionModalAtom);
-  const { user } = useAuth();
-  const { dataset } = useDataset(user?.user_metadata.dataset);
+  const router = useRouter();
+  const { dataset, datasetError } = useDataset(
+    router.query.datasetID as string | undefined
+  );
 
   if (!dataset) {
     return null;

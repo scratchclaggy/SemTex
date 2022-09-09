@@ -19,9 +19,9 @@ const useUrResponseOption = (
     (response) => response.textSample.id === textSampleID
   );
 
-  if (!updateResponse)
+  if (!updateResponse) {
     return { responseOption: null, updateResponseOption: () => {} };
-  console.log("UPDATE RESPONSE", updateResponse);
+  }
 
   const updateResponseOption = (responseOption: ResponseOption | undefined) => {
     if (!responseOption) return;
@@ -42,8 +42,6 @@ const useUrResponseOption = (
             })
             .eq("id", updateResponse.id)
             .single();
-
-        console.log("RES", res);
 
         if (error) throw error;
 

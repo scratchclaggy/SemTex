@@ -137,12 +137,10 @@ const useUrHighlights = (
     mutate(
       "userResponses",
       async () => {
-        const { data: res, error } = await supabase
+        const { error } = await supabase
           .from("highlight")
           .delete()
           .eq("id", highlightID);
-
-        console.log(res, error);
 
         if (error) throw error;
 

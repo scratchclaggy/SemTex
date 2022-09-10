@@ -1,8 +1,8 @@
 import { Box } from "@mui/material";
 import { useAtomValue } from "jotai";
-import debounce from "lodash/debounce";
+import { throttle } from "lodash";
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useUrComment } from "src/hooks/user_response";
 import { textSampleIdAtom } from "./Semtex";
 
@@ -16,13 +16,24 @@ const CommentInput = () => {
 
   const [inputComment, setInputComment] = useState(comment);
 
-  const handleInput = debounce((event) => {
-    updateComment(event.target.value);
-  }, 300);
+  useEffect(() => {
+    setInputComment(comment ?? "");
+  }, [comment]);
+
+  const debounceInput = useMemo(() => {
+    return throttle(
+      (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+        console.log("AHH");
+        updateComment(event.target.value);
+      },
+      1000,
+      {leading: false, trailing: true}
+    );
+  }, []);
 
   const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setInputComment(event.target.value);
-    handleInput(event);
+    debounceInput(event);
   };
 
   return (

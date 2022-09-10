@@ -32,7 +32,8 @@ const useUserResponse = (datasetID: string | undefined) => {
       if (error) throw error;
 
       return data;
-    }
+    },
+    {}
   );
 
   return {

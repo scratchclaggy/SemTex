@@ -15,7 +15,7 @@ const useUrComment = (
     (response) => response.textSample.id === textSampleID
   );
 
-  if (!userResponses || !updateResponse)
+  if (!updateResponse)
     return {
       comment: "",
       updateComment: () => {},

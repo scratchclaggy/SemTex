@@ -16,7 +16,7 @@ const useUrHighlights = (
     (response) => response.textSample.id === textSampleID
   );
 
-  if (!userResponses || !updateResponse) {
+  if (!updateResponse) {
     return {
       highlights: [],
       insertHighlight: () => {},

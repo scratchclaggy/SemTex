@@ -1,14 +1,11 @@
-import { Box, Typography, Grid, IconButton } from "@mui/material";
-import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn';
-import AssignmentLateIcon from '@mui/icons-material/AssignmentLate';
-import { useState } from 'react';
-
-
+import AssignmentLateIcon from "@mui/icons-material/AssignmentLate";
+import AssignmentTurnedInIcon from "@mui/icons-material/AssignmentTurnedIn";
+import { Box, Grid, IconButton, Typography } from "@mui/material";
+import { useState } from "react";
 
 const History_Card = (history: any) => {
-
   function handleClick() {
-    console.log(console.log("Button Pressed"))
+    console.log(console.log("Button Pressed"));
   }
 
   const [clicked, setClicked] = useState(false);
@@ -16,47 +13,45 @@ const History_Card = (history: any) => {
   return (
     <Box>
       {
-        (
-          <Grid
+        <Grid
+          sx={{
+            display: "flex",
+          }}
+        >
+          <Typography
+            onClick={handleClick}
+            noWrap
             sx={{
-              display: 'flex',
+              padding: "5px",
+              borderBottom: 1,
+              "&:hover": {
+                borderRight: 1,
+              },
             }}
           >
-            <Typography
-              onClick={handleClick}
-              noWrap
-              sx={{
-                padding: "5px",
-                borderBottom: 1,
-                '&:hover': {
-                  borderRight: 1
-                }
-              }}
-            >{history.data.body}
-            </Typography>
+            {history.data.body}
+          </Typography>
 
-            <IconButton onClick={() => setClicked(prevClick => !prevClick)}>
-              {clicked ?
-                <AssignmentTurnedInIcon
-                  style={{
-                    paddingTop: '5px',
-                    color: 'green',
-                    alignItems: 'center'
-                  }}
-                ></AssignmentTurnedInIcon>
-                :
-                <AssignmentLateIcon
-                  style={{
-                    paddingTop: '5px',
-                    color: 'red',
-                    alignItems: 'center'
-                  }}
-                ></AssignmentLateIcon>
-              }
-            </IconButton>
-
-          </Grid>
-        )
+          <IconButton onClick={() => setClicked((prevClick) => !prevClick)}>
+            {clicked ? (
+              <AssignmentTurnedInIcon
+                style={{
+                  paddingTop: "5px",
+                  color: "green",
+                  alignItems: "center",
+                }}
+              ></AssignmentTurnedInIcon>
+            ) : (
+              <AssignmentLateIcon
+                style={{
+                  paddingTop: "5px",
+                  color: "red",
+                  alignItems: "center",
+                }}
+              ></AssignmentLateIcon>
+            )}
+          </IconButton>
+        </Grid>
       }
     </Box>
   );

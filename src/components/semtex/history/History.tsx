@@ -1,11 +1,7 @@
-import { Box, Typography, Grid, IconButton } from "@mui/material";
-import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn';
-import AssignmentLateIcon from '@mui/icons-material/AssignmentLate';
-import { useState } from 'react';
+import { Box } from "@mui/material";
 import History_Card from "../history/History_Card";
 
 const History = () => {
-
   const textSamples = [
     {
       body: "Sed a bibendum ex, nec venenatis magna. Nunc sagittis tincidunt dui, at posuere nisi. Etiam hendrerit nec dolor eu blandit. Maecenas turpis.",
@@ -55,26 +51,24 @@ const History = () => {
       body: "Maecenas nec mauris sit amet mauris efficitur viverra. Phasellus sodales est est, a venenatis dui dignissim id. Sed ut lacus vitae pharetra.",
       id: "4c640cc9-f466-4377-9bec-f8ad6f622751",
     },
-  ]
+  ];
 
   return (
-  <Box
-  sx={{
-    margin: "10px",
-    width: "250px",
-    maxHeight: "80vh",
-    border: 1,
-    overflow: 'hidden',
-    overflowY: 'scroll'
-  }}
-  >
-    {
-      textSamples.map((history)=>(
-      <History_Card data={history} />
-      ))
-    }
-  </Box>
-  )
+    <Box
+      sx={{
+        margin: "10px",
+        width: "250px",
+        maxHeight: "80vh",
+        border: 1,
+        overflow: "hidden",
+        overflowY: "scroll",
+      }}
+    >
+      {textSamples.map((history, i) => (
+        <History_Card data={history} key={i} />
+      ))}
+    </Box>
+  );
 };
 
 export default History;

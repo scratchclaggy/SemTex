@@ -2,7 +2,7 @@ import { Alert, AlertTitle, Grid, Stack, Typography } from "@mui/material";
 import { useRouter } from "next/router";
 import useDataset from "src/hooks/dataset";
 import CommentInput from "./CommentInput";
-import Highlighters from "./Highlighters";
+import Highlighters from "./highlighters/Highlighters";
 import History from "./History";
 import InstructionModal from "./instruction_modal/InstructionModal";
 import InstructionModalButton from "./instruction_modal/InstructionModalButton";

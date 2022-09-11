@@ -1,4 +1,5 @@
 import { Box } from "@mui/material";
+import type {TextSample} from "src/types/client";
 import History_Card from "../history/History_Card";
 
 const History = () => {
@@ -65,7 +66,7 @@ const History = () => {
       }}
     >
       {textSamples.map((history, i) => (
-        <History_Card data={history} key={i} />
+        <History_Card body={history.body} id={history.id} key={i} />
       ))}
     </Box>
   );

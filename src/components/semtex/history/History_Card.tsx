@@ -1,9 +1,12 @@
 import AssignmentLateIcon from "@mui/icons-material/AssignmentLate";
 import AssignmentTurnedInIcon from "@mui/icons-material/AssignmentTurnedIn";
+import type {TextSample} from "src/types/client";
 import { Box, Grid, IconButton, Typography } from "@mui/material";
 import { useState } from "react";
 
-const History_Card = (history: any) => {
+const History_Card = (history: TextSample) => {
+  
+  // This function will change the text sample being displayed on screen
   function handleClick() {
     console.log(console.log("Button Pressed"));
   }
@@ -29,7 +32,7 @@ const History_Card = (history: any) => {
               },
             }}
           >
-            {history.data.body}
+            {history.body}
           </Typography>
 
           <IconButton onClick={() => setClicked((prevClick) => !prevClick)}>

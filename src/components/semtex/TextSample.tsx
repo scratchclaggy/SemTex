@@ -1,26 +1,24 @@
 import { Box, Typography } from "@mui/material";
-import { useState, useEffect } from "react";
-import Highlighter from "react-highlight-words";
+import { useState } from "react";
 
 const TextSample = () => {
   const text = "Lorem ipsum dolor sit amet consectetur"
   const [markup, setMarkup] = useState(text)
-  const [selection, setSelection] = useState('')
-  const [beforeSelection, setBeforeSelection] = useState('')
-  const [afterSelection, setAfterSelection] = useState('')
+  
+  const output: any = []
+  
+  // Function checks the location of the downclick to find 
+  // which child element we begin in.
+  const downClickHandler = (el: any) =>{
+    const i = output.from(el.parentNode.children).indexOf(el)
+    console.log(i)
+  }
 
-
-  const output: any = [] 
-
-  useEffect(() => {
-      
-  }, [afterSelection])
-
-
-
-
+  // Function handles the highlighted text, highlighting it 
+  // and updating the necessary variables. 
   const highlighterHandler = () =>{
     const selObj = window.getSelection()
+    
     if(selObj != null){
       let start: number = selObj.anchorOffset
       let end: number = selObj.focusOffset
@@ -36,16 +34,13 @@ const TextSample = () => {
       const after = text.substring(end, text.length)
       const select = selObj.toString()
 
-      setBeforeSelection(before)
-      setAfterSelection(after)
-      setSelection(select)
+      output.push(<span>{before}</span>)
+      output.push(<mark>{select}</mark>)
+      output.push(<span>{after}</span>)
       
+      setMarkup(output)
+    
     }
-    output.push(beforeSelection)
-    output.push(<mark>{selection}</mark>)
-    output.push(afterSelection)
-
-    setMarkup(output)
   }
 
   return (
@@ -57,7 +52,7 @@ const TextSample = () => {
       padding: '4px'
     }}
     >
-       <Typography onMouseUp={highlighterHandler}>{markup}</Typography>
+       <Typography onMouseDown={downClickHandler} onMouseUp={highlighterHandler}>{markup}</Typography>
     </Box>
   );
 };

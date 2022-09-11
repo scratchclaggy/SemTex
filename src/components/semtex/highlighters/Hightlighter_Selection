@@ -1,7 +1,0 @@
-const Highlighter_Selection = () => {
-  return (
-  <div>HighlighterSelection</div>
-  )
-};
-
-export default Highlighter_Selection;

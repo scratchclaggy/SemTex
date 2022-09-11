@@ -1,6 +1,5 @@
 import { Box, Stack } from "@mui/material";
-import {HighlightOption} from "src/types/client";
-
+import Highlighter_Selection from "./Highlighter_Selection";
 const Highlighters = () => {
 
   const HighlightOptions = [
@@ -37,7 +36,14 @@ const Highlighters = () => {
     }}
     >
       <Stack>
-        
+        {HighlightOptions.map((highlighters) =>(
+          <Highlighter_Selection 
+          key={highlighters.id} 
+          id={highlighters.id}
+          label={highlighters.label} 
+          color={highlighters.color}
+          />
+        ))}
       </Stack>
     </Box>
   );

@@ -5,24 +5,32 @@ import {
   Radio,
   RadioGroup,
 } from "@mui/material";
+import { useAtomValue } from "jotai";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import useDataset from "src/hooks/dataset";
+import { useUserResponse } from "src/hooks/user_response";
+import { responseOptionDbAccess } from "src/utils";
+import { textSampleIdAtom } from "../Semtex";
 
 const ResponseButtons = () => {
   const router = useRouter();
-  const { dataset, datasetError } = useDataset(
-    router.query.datasetID as string | undefined
-  );
-  const [selection, setSelection] = useState<string | null>(null);
+  const datasetID = router.query.datasetID as string | undefined;
+  const { dataset } = useDataset(datasetID);
+  const { userResponses, mutate } = useUserResponse(datasetID);
 
-  if (!dataset) {
+  const textSampleID = useAtomValue(textSampleIdAtom);
+  const { responseOption, updateResponseOption } = useMemo(
+    () => responseOptionDbAccess(userResponses, textSampleID, mutate),
+    [userResponses, textSampleID]
+  );
+  const [selection, setSelection] = useState<string>(responseOption?.id ?? "");
+
+  if (dataset === undefined || dataset === null) {
     return null;
   }
 
   const responseOptions = dataset.responseOptions;
-  // TODO: Update server state for this user response
-
   return (
     <FormControl>
       <FormLabel id="response-radio-label">Response</FormLabel>
@@ -30,13 +38,16 @@ const ResponseButtons = () => {
         aria-labelledby="response-radio-label"
         name="response-radio"
         value={selection}
-        onChange={(event) => setSelection(event.target.value)}
+        onChange={(event) => {
+          setSelection(event.target.value);
+          updateResponseOption(event.target.value);
+        }}
         row
       >
         {responseOptions.map((responseOption) => (
           <FormControlLabel
             key={responseOption.id}
-            value={responseOption.label}
+            value={responseOption.id}
             control={<Radio />}
             label={responseOption.label}
           />

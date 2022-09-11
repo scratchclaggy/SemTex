@@ -54,14 +54,15 @@ const Semtex = () => {
       )}
       <button
         onClick={() => {
-          updateResponseOption(dataset?.responseOptions[0]);
+          updateResponseOption(dataset?.responseOptions[1]);
         }}
       >
         updateResponse
       </button>
       <button
         onClick={() => {
-          insertHighlight("", dataset?.highlightOptions[0]);
+          const hl = insertHighlight("", dataset?.highlightOptions[0]);
+          console.log(hl);
         }}
       >
         addHighlight

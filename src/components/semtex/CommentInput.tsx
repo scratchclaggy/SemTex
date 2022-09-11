@@ -1,54 +1,47 @@
-import { Box } from "@mui/material";
+import { TextField } from "@mui/material";
 import { useAtomValue } from "jotai";
-import { throttle } from "lodash";
+import { debounce } from "lodash";
 import { useRouter } from "next/router";
-import { useEffect, useMemo, useState } from "react";
-import { useUrComment } from "src/hooks/user_response";
+import { useMemo, useState } from "react";
+import { useUserResponse } from "src/hooks/user_response";
+import { commentDbAccess } from "src/utils";
 import { textSampleIdAtom } from "./Semtex";
 
 const CommentInput = () => {
   const router = useRouter();
-  const textSampleID = useAtomValue(textSampleIdAtom);
-
-  const { comment, updateComment } = useUrComment(
-    router.query.datasetID as string | undefined,
-    textSampleID
+  const { userResponses, mutate } = useUserResponse(
+    router.query.datasetID as string | undefined
   );
-  const [inputComment, setInputComment] = useState(comment);
-  useEffect(() => {
-    setInputComment(comment ?? "");
-  }, [comment]);
+
+  const textSampleID = useAtomValue(textSampleIdAtom);
+  const { comment, updateComment } = useMemo(
+    () => commentDbAccess(userResponses, textSampleID, mutate),
+    [userResponses, textSampleID]
+  );
+  const [textFieldVal, setTextFieldVal] = useState(comment);
 
   const debounceInput = useMemo(() => {
-    return throttle(
+    return debounce(
       (event: React.ChangeEvent<HTMLTextAreaElement>) => {
         updateComment(event.target.value);
       },
-      1000,
+      500,
       { leading: false, trailing: true }
     );
   }, []);
 
   const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setInputComment(event.target.value);
+    setTextFieldVal(event.target.value);
     debounceInput(event);
   };
 
   return (
-    <Box>
-      <form>
-        <textarea
-          onChange={handleChange}
-          value={inputComment}
-          style={{
-            width: "800px",
-            height: "200px",
-            fontSize: "15px",
-            resize: "none",
-          }}
-        ></textarea>
-      </form>
-    </Box>
+    <TextField
+      onChange={handleChange}
+      value={textFieldVal}
+      multiline
+      fullWidth
+    />
   );
 };
 

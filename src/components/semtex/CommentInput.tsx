@@ -9,13 +9,12 @@ import { textSampleIdAtom } from "./Semtex";
 const CommentInput = () => {
   const router = useRouter();
   const textSampleID = useAtomValue(textSampleIdAtom);
+
   const { comment, updateComment } = useUrComment(
     router.query.datasetID as string | undefined,
     textSampleID
   );
-
   const [inputComment, setInputComment] = useState(comment);
-
   useEffect(() => {
     setInputComment(comment ?? "");
   }, [comment]);
@@ -23,11 +22,10 @@ const CommentInput = () => {
   const debounceInput = useMemo(() => {
     return throttle(
       (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-        console.log("AHH");
         updateComment(event.target.value);
       },
       1000,
-      {leading: false, trailing: true}
+      { leading: false, trailing: true }
     );
   }, []);
 

@@ -1,79 +1,109 @@
-import { PostgrestSingleResponse } from "@supabase/supabase-js";
-import { HighlightOption } from "src/types/client";
-import { Highlight } from "src/types/db";
-import { useSWRConfig } from "swr";
+import { PostgrestError, PostgrestSingleResponse } from "@supabase/supabase-js";
+import { useCallback } from "react";
+import { Highlight, HighlightOption, UserResponse } from "src/types/client";
+import { partitionUserResponse } from "src/utils";
+import useSWR, { SWRResponse, useSWRConfig } from "swr";
 import supabase from "utils/supabase";
-import useUserResponse from "./user_response";
+
+const partitionHighlight = (highlights: Highlight[], highlightID: string) => {
+  const matchingHighlight = highlights.find(
+    (highlight) => highlight.id === highlightID
+  );
+
+  const filteredHighlights =
+    highlights.filter((highlight) => highlight.id !== highlightID) ?? [];
+
+  return { matchingHighlight, filteredHighlights };
+};
 
 const useUrHighlights = (
   datasetID: string | undefined,
   textSampleID: string | undefined
 ) => {
-  const { userResponses } = useUserResponse(datasetID);
+  const {
+    data: userResponses,
+  }: SWRResponse<UserResponse[] | null, PostgrestError | null> = useSWR(
+    datasetID && "userResponses",
+    async () => {
+      const {
+        data,
+        error,
+      }: {
+        data: UserResponse[] | null;
+        error: PostgrestError | null;
+      } = await supabase
+        .from("user_response")
+        .select(
+          `
+            id,
+            response:response_option(id, label),
+            comments,
+            highlights:highlight(id, selection, highlightOption:highlight_option(id, label, color)),
+            textSample:text_sample!inner(id, datsetID:dataset_id)
+          `
+        )
+        .eq("text_sample.dataset_id", datasetID);
+
+      if (error) throw error;
+
+      return data;
+    }
+  );
   const { mutate } = useSWRConfig();
 
-  const updateResponse = userResponses?.find(
-    (response) => response.textSample.id === textSampleID
+  const { matchingResponse, filteredResponses } = partitionUserResponse(
+    userResponses,
+    textSampleID
   );
 
-  if (!updateResponse) {
-    return {
-      highlights: [],
-      insertHighlight: () => {},
-      updateHighlightSelection: () => {},
-      deleteHighlight: () => {},
-    };
-  }
+  const insertHighlight = useCallback(
+    (selection: string, highlightOption: HighlightOption) => {
+      if (matchingResponse === undefined) return;
+      const newHighlight = { id: "", selection, highlightOption };
 
-  const filteredResponses =
-    userResponses?.filter(
-      (response) => response.textSample.id !== textSampleID
-    ) ?? [];
+      mutate(
+        "userResponses",
+        async () => {
+          const { data: res, error }: PostgrestSingleResponse<Highlight> =
+            await supabase
+              .from("highlight")
+              .insert({
+                selection,
+                highlight_option: highlightOption.id,
+                user_response_id: matchingResponse.id,
+              })
+              .single();
 
-  const insertHighlight = (
-    selection: string,
-    highlightOption: HighlightOption
-  ) => {
-    const newHighlight = { id: "", selection, highlightOption };
+          if (error) throw error;
 
-    mutate(
-      "userResponses",
-      async () => {
-        const { data: res, error }: PostgrestSingleResponse<Highlight> =
-          await supabase
-            .from("highlight")
-            .insert({
-              selection,
-              highlight_option: highlightOption.id,
-              user_response_id: updateResponse.id,
-            })
-            .single();
-
-        if (error) throw error;
-
-        return [
-          ...filteredResponses,
-          {
-            ...updateResponse,
-            highlights: [
-              ...(updateResponse.highlights ?? []),
-              { ...newHighlight, selection: res.selection },
-            ],
-          },
-        ];
-      },
-      {
-        optimisticData: [
-          ...filteredResponses,
-          {
-            ...updateResponse,
-            highlights: [...(updateResponse.highlights ?? []), newHighlight],
-          },
-        ],
-        rollbackOnError: true,
-      }
-    );
-  };
+          return [
+            ...filteredResponses,
+            {
+              ...matchingResponse,
+              highlights: [
+                ...(matchingResponse.highlights ?? []),
+                { ...newHighlight, selection: res.selection },
+              ],
+            },
+          ];
+        },
+        {
+          optimisticData: [
+            ...filteredResponses,
+            {
+              ...matchingResponse,
+              highlights: [
+                ...(matchingResponse.highlights ?? []),
+                newHighlight,
+              ],
+            },
+          ],
+          rollbackOnError: true,
+        }
+      );
+    },
+    [userResponses]
+  );
 
   const updateHighlightSelection = (highlightID: string, selection: string) => {
     const filteredHighlights =
@@ -129,10 +159,10 @@ const useUrHighlights = (
   };
 
   const deleteHighlight = (highlightID: string) => {
-    const filteredHighlights =
-      updateResponse.highlights?.filter(
-        (highlight) => highlight.id !== highlightID
-      ) ?? [];
+    const filteredHighlights = partitionHighlight(
+      matchingResponse!.highlights ?? [],
+      highlightID
+    );
 
     mutate(
       "userResponses",
@@ -147,7 +177,7 @@ const useUrHighlights = (
         return [
           ...filteredResponses,
           {
-            ...updateResponse,
+            ...matchingResponse,
             highlights: filteredHighlights,
           },
         ];
@@ -156,7 +186,7 @@ const useUrHighlights = (
         optimisticData: [
           ...filteredResponses,
           {
-            ...updateResponse,
+            ...matchingResponse,
             highlights: filteredHighlights,
           },
         ],
@@ -166,7 +196,7 @@ const useUrHighlights = (
   };
 
   return {
-    highlights: updateResponse?.highlights ?? [],
+    highlights: matchingResponse?.highlights ?? [],
     insertHighlight,
     updateHighlightSelection,
     deleteHighlight,

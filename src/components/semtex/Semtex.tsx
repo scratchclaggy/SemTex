@@ -28,7 +28,7 @@ const Semtex = () => {
   const { userResponses, userResponsesError } = useUserResponse(
     router.query.datasetID as string | undefined
   );
-  const { insertHighlight } = useUrHighlights(
+  const { insertHighlight, deleteHighlight } = useUrHighlights(
     router.query.datasetID as string | undefined,
     "5cf7a58d-4c06-43d2-935e-e6779be659a2"
   );
@@ -49,11 +49,9 @@ const Semtex = () => {
 
   return (
     <>
-      {
-        //   matchingResponse && (
-        //   <pre>{JSON.stringify(matchingResponse, null, 4)}</pre>
-        // )
-      }
+      {matchingResponse && (
+        <pre>{JSON.stringify(matchingResponse, null, 4)}</pre>
+      )}
       <button
         onClick={() => {
           updateResponseOption(dataset?.responseOptions[0]);
@@ -67,6 +65,13 @@ const Semtex = () => {
         }}
       >
         addHighlight
+      </button>
+      <button
+        onClick={() => {
+          deleteHighlight(matchingResponse?.highlights[0].id ?? "");
+        }}
+      >
+        deleteHighlight
       </button>
       {datasetError && (
         <Alert severity="error">

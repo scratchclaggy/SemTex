@@ -57,12 +57,6 @@ const History = () => {
     },
   ]
 
-  const [body, setBody] = useState('');
-
-  const callback = (body: String) => {
-    setBody(body);
-  }
-
   return (
   <Box
   sx={{
@@ -74,14 +68,9 @@ const History = () => {
     overflowY: 'scroll'
   }}
   >
-    <Typography>{textSamples[1].body}</Typography>
     {
-      textSamples.map((val, i)=>
-      (
-      
-      <History_Card  
-      body={textSamples[1].body}
-      />
+      textSamples.map((history)=>(
+      <History_Card data={history} />
       ))
     }
   </Box>

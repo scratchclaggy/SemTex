@@ -5,11 +5,12 @@ import { useState } from 'react';
 
 
 
-const History_Card = (body: String) => {
+const History_Card = (history: any) => {
 
   function handleClick() {
     console.log(console.log("Button Pressed"))
   }
+
   const [clicked, setClicked] = useState(false);
 
   return (
@@ -31,7 +32,7 @@ const History_Card = (body: String) => {
                   borderRight: 1
                 }
               }}
-            >
+            >{history.data.body}
             </Typography>
 
             <IconButton onClick={() => setClicked(prevClick => !prevClick)}>

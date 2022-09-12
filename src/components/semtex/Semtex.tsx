@@ -7,6 +7,7 @@ import CommentInput from "./CommentInput";
 import Highlighters from "./Highlighters";
 import History from "./history/History";
 import InstructionModalButton from "./instruction_modal/InstructionModal";
+import InstructionModal from "./instruction_modal/InstructionModal";
 import NavigationButtons from "./NavigationButtons";
 import Progress from "./Progress";
 import ResponseSelector from "./response_selector/ResponseSelector";
@@ -55,7 +56,7 @@ const Semtex = () => {
       )}
       {dataset && (
         <>
-          <InstructionModalButton />
+          <InstructionModal />
           <Grid container>
             <Grid item>
               <History />

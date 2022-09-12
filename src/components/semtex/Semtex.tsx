@@ -2,11 +2,11 @@ import { Alert, AlertTitle, Grid, Stack, Typography } from "@mui/material";
 import { atom, useSetAtom } from "jotai";
 import { useRouter } from "next/router";
 import useDataset from "src/hooks/dataset";
-import { useUserResponse } from "src/hooks/user_response";
+import { useUserResponses } from "src/hooks/user_response";
 import CommentInput from "./CommentInput";
 import Highlighters from "./Highlighters";
 import History from "./history/History";
-import InstructionModal from "./instruction_modal/InstructionModal";
+import InstructionModalButton from "./instruction_modal/InstructionModal";
 import NavigationButtons from "./NavigationButtons";
 import Progress from "./Progress";
 import ResponseSelector from "./response_selector/ResponseSelector";
@@ -19,7 +19,7 @@ const Semtex = () => {
   const { dataset, datasetError } = useDataset(
     router.query.datasetID as string | undefined
   );
-  const { userResponses, userResponsesError } = useUserResponse(
+  const { userResponses, userResponsesError } = useUserResponses(
     router.query.datasetID as string | undefined
   );
 
@@ -55,7 +55,7 @@ const Semtex = () => {
       )}
       {dataset && (
         <>
-          <InstructionModal />
+          <InstructionModalButton />
           <Grid container>
             <Grid item>
               <History />
@@ -73,7 +73,7 @@ const Semtex = () => {
               <Highlighters />
             </Grid>
           </Grid>
-          <InstructionModal />
+          <InstructionModalButton />
         </>
       )}
     </>

@@ -40,7 +40,6 @@ const History_Card = (history: TextSample) => {
               <AssignmentTurnedInIcon
                 style={{
                   paddingTop: "5px",
-                  color: "green",
                   alignItems: "center",
                 }}
               ></AssignmentTurnedInIcon>
@@ -48,7 +47,6 @@ const History_Card = (history: TextSample) => {
               <AssignmentLateIcon
                 style={{
                   paddingTop: "5px",
-                  color: "red",
                   alignItems: "center",
                 }}
               ></AssignmentLateIcon>

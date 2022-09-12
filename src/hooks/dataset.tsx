@@ -1,7 +1,7 @@
 import { PostgrestError } from "@supabase/supabase-js";
 import { Dataset } from "src/types/client";
 import useSWR from "swr";
-import supabase from "utils/supabase";
+import supabase from "src/utils/supabase";
 
 type SingleDataSet = Omit<Dataset, "name" | "created">;
 

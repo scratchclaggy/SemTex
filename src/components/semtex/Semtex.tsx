@@ -2,12 +2,8 @@ import { Alert, AlertTitle, Grid, Stack, Typography } from "@mui/material";
 import { atom, useSetAtom } from "jotai";
 import { useRouter } from "next/router";
 import useDataset from "src/hooks/dataset";
-import {
-  useUrHighlights,
-  useUrResponseOption,
-  useUserResponse,
-} from "src/hooks/user_response";
-import { partitionUserResponse } from "src/utils";
+import useUserResponses from "src/hooks/user_responses";
+import { findMatchingResponse } from "src/utils/user_response";
 import CommentInput from "./CommentInput";
 import Highlighters from "./Highlighters";
 import History from "./History";
@@ -25,24 +21,15 @@ const Semtex = () => {
   const { dataset, datasetError } = useDataset(
     router.query.datasetID as string | undefined
   );
-  const { userResponses, userResponsesError } = useUserResponse(
+  const { userResponses, userResponsesError } = useUserResponses(
     router.query.datasetID as string | undefined
-  );
-  const { insertHighlight, deleteHighlight } = useUrHighlights(
-    router.query.datasetID as string | undefined,
-    "5cf7a58d-4c06-43d2-935e-e6779be659a2"
   );
 
   const setTextSampleID = useSetAtom(textSampleIdAtom);
 
   setTextSampleID("5cf7a58d-4c06-43d2-935e-e6779be659a2");
 
-  const { updateResponseOption } = useUrResponseOption(
-    router.query.datasetID as string | undefined,
-    "5cf7a58d-4c06-43d2-935e-e6779be659a2"
-  );
-
-  const { matchingResponse } = partitionUserResponse(
+  const matchingResponse = findMatchingResponse(
     userResponses,
     "5cf7a58d-4c06-43d2-935e-e6779be659a2"
   );
@@ -52,28 +39,6 @@ const Semtex = () => {
       {matchingResponse && (
         <pre>{JSON.stringify(matchingResponse, null, 4)}</pre>
       )}
-      <button
-        onClick={() => {
-          updateResponseOption(dataset?.responseOptions[1]);
-        }}
-      >
-        updateResponse
-      </button>
-      <button
-        onClick={() => {
-          const hl = insertHighlight("", dataset?.highlightOptions[0]);
-          console.log(hl);
-        }}
-      >
-        addHighlight
-      </button>
-      <button
-        onClick={() => {
-          deleteHighlight(matchingResponse?.highlights[0].id ?? "");
-        }}
-      >
-        deleteHighlight
-      </button>
       {datasetError && (
         <Alert severity="error">
           <AlertTitle>Error {datasetError.code}</AlertTitle>

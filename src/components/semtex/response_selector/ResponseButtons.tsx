@@ -9,20 +9,20 @@ import { useAtomValue } from "jotai";
 import { useRouter } from "next/router";
 import { useMemo, useState } from "react";
 import useDataset from "src/hooks/dataset";
-import { useUserResponse } from "src/hooks/user_response";
-import { responseOptionDbAccess } from "src/utils";
+import useUserResponses from "src/hooks/user_responses";
+import { responseOptionDbAccess } from "src/utils/user_response";
 import { textSampleIdAtom } from "../Semtex";
 
 const ResponseButtons = () => {
   const router = useRouter();
   const datasetID = router.query.datasetID as string | undefined;
   const { dataset } = useDataset(datasetID);
-  const { userResponses, mutate } = useUserResponse(datasetID);
+  const { userResponses, mutate } = useUserResponses(datasetID);
 
   const textSampleID = useAtomValue(textSampleIdAtom);
   const { responseOption, updateResponseOption } = useMemo(
     () => responseOptionDbAccess(userResponses, textSampleID, mutate),
-    [userResponses, textSampleID]
+    [userResponses, textSampleID, mutate]
   );
   const [selection, setSelection] = useState<string>(responseOption?.id ?? "");
 

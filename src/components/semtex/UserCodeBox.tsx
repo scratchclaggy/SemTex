@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import useAuth from "src/contexts/AuthContext";
-import supabase from "utils/supabase";
+import supabase from "src/utils/supabase";
 
 type Inputs = {
   passKey: string;

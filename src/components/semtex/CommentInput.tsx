@@ -3,20 +3,20 @@ import { useAtomValue } from "jotai";
 import { debounce } from "lodash";
 import { useRouter } from "next/router";
 import { useMemo, useState } from "react";
-import { useUserResponse } from "src/hooks/user_response";
-import { commentDbAccess } from "src/utils";
+import useUserResponses from "src/hooks/user_responses";
+import { commentDbAccess } from "src/utils/user_response";
 import { textSampleIdAtom } from "./Semtex";
 
 const CommentInput = () => {
   const router = useRouter();
-  const { userResponses, mutate } = useUserResponse(
+  const { userResponses, mutate } = useUserResponses(
     router.query.datasetID as string | undefined
   );
 
   const textSampleID = useAtomValue(textSampleIdAtom);
   const { comment, updateComment } = useMemo(
     () => commentDbAccess(userResponses, textSampleID, mutate),
-    [userResponses, textSampleID]
+    [userResponses, textSampleID, mutate]
   );
   const [textFieldVal, setTextFieldVal] = useState(comment);
 
@@ -28,7 +28,7 @@ const CommentInput = () => {
       500,
       { leading: false, trailing: true }
     );
-  }, []);
+  }, [updateComment]);
 
   const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setTextFieldVal(event.target.value);

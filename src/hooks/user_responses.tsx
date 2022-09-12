@@ -1,9 +1,9 @@
 import { PostgrestError } from "@supabase/supabase-js";
 import { UserResponse } from "src/types/client";
 import useSWR from "swr";
-import supabase from "utils/supabase";
+import supabase from "src/utils/supabase";
 
-const useUserResponse = (datasetID: string | undefined) => {
+const useUserResponses = (datasetID: string | undefined) => {
   const { data, error, mutate } = useSWR(
     datasetID && "userResponses",
     async () => {
@@ -33,4 +33,4 @@ const useUserResponse = (datasetID: string | undefined) => {
   };
 };
 
-export default useUserResponse;
+export default useUserResponses;

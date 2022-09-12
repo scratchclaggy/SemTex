@@ -5,15 +5,9 @@ import ResponseDropdown from "./ResponseDropdown";
 
 const ResponseSelector = () => {
   const router = useRouter();
-  const { dataset, datasetError } = useDataset(
-    router.query.datasetID as string | undefined
-  );
+  const { dataset } = useDataset(router.query.datasetID as string | undefined);
 
-  if (!dataset) {
-    return null;
-  }
-
-  const responses = dataset.responseOptions;
+  const responses = dataset?.responseOptions ?? [];
 
   return responses.length > 5 ? <ResponseDropdown /> : <ResponseButtons />;
 };

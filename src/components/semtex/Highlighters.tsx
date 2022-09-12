@@ -4,10 +4,7 @@ import { useRouter } from "next/router";
 import { useMemo } from "react";
 import useDataset from "src/hooks/dataset";
 import useUserResponses from "src/hooks/user_responses";
-import {
-  findMatchingResponse,
-  highlightsDbAccess,
-} from "src/utils/user_response";
+import { highlightsDbAccess } from "src/utils/user_response";
 import { textSampleIdAtom } from "./Semtex";
 
 const Highlighters = () => {
@@ -24,12 +21,6 @@ const Highlighters = () => {
     );
 
   // Demo buttons showing use of the different highlight functions
-  const lastHighlight = findMatchingResponse(
-    userResponses,
-    textSampleID
-  )?.highlights?.at(-1)!;
-  // ---
-
   return (
     <Stack spacing={2} padding={4}>
       <Button
@@ -43,7 +34,7 @@ const Highlighters = () => {
       <Button
         variant="outlined"
         onClick={() => {
-          updateHighlightSelection(lastHighlight.id, Math.random().toString());
+          updateHighlightSelection("highlightID", Math.random().toString());
         }}
       >
         Change Highlight Selection
@@ -51,7 +42,7 @@ const Highlighters = () => {
       <Button
         variant="outlined"
         onClick={() => {
-          deleteHighlight(lastHighlight.id);
+          deleteHighlight("highlightID");
         }}
       >
         Delete Highlight

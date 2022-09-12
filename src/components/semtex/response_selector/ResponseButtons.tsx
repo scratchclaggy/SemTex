@@ -26,11 +26,8 @@ const ResponseButtons = () => {
   );
   const [selection, setSelection] = useState<string>(responseOption?.id ?? "");
 
-  if (dataset === undefined || dataset === null) {
-    return null;
-  }
+  const responseOptions = dataset?.responseOptions ?? [];
 
-  const responseOptions = dataset.responseOptions;
   return (
     <FormControl>
       <FormLabel id="response-radio-label">Response</FormLabel>

@@ -1,8 +1,8 @@
-import { KeyedMutator } from "swr";
-import supabase from "src/utils/supabase";
 import { Highlight, HighlightOption, UserResponse } from "src/types/client";
+import supabase from "src/utils/supabase";
+import { KeyedMutator } from "swr";
 
-export const findMatchingResponse = (
+const findMatchingResponse = (
   userResponses: UserResponse[] | null | undefined,
   textSampleID: string | undefined
 ) => {
@@ -61,17 +61,6 @@ export const responseOptionDbAccess = (
   };
 
   return { responseOption, updateResponseOption };
-};
-
-const partitionHighlight = (highlights: Highlight[], highlightID: string) => {
-  const matchingHighlight = highlights.find(
-    (highlight) => highlight.id === highlightID
-  );
-
-  const filteredHighlights =
-    highlights.filter((highlight) => highlight.id !== highlightID) ?? [];
-
-  return { matchingHighlight, filteredHighlights };
 };
 
 export const highlightsDbAccess = (

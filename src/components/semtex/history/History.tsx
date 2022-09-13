@@ -11,11 +11,13 @@ const History = () => {
   return (
     <List
       sx={{
+        padding: "5px",
         margin: "10px",
         width: "250px",
         maxHeight: "80vh",
         overflow: "hidden",
         overflowY: "scroll",
+        scrollbarWidth: "none"
       }}
     >
       {textSamples.map((history) => (

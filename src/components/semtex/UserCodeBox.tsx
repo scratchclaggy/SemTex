@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import useAuth from "src/contexts/AuthContext";
-import supabase from "utils/supabase";
+import supabase from "src/utils/supabase";
 
 type Inputs = {
   passKey: string;
@@ -18,7 +18,7 @@ const UserCodeBox = () => {
 
   const onSubmit: SubmitHandler<Inputs> = async (formData) => {
     const { data, error } = await supabase.rpc("check_dataset_passkey", {
-      user_id: user?.id,
+      userid: user?.id,
       dataset_passkey: formData.passKey,
     });
 

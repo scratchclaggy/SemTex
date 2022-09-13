@@ -11,7 +11,7 @@ const LoginGuard = ({ children }: { children: JSX.Element }) => {
     return <>{children}</>;
   }
 
-  router.push('/sign-in')
+  router.push("/sign-in");
 
   return null;
 };

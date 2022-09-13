@@ -1,5 +1,4 @@
-import { Alert, AlertTitle, Grid, Stack, Typography } from "@mui/material";
-import { Box } from "@mui/system";
+import { Alert, AlertTitle, Box, Grid, Stack, Typography } from "@mui/material";
 import { atom, useAtomValue, useSetAtom } from "jotai";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
@@ -8,10 +7,8 @@ import useUserResponses from "src/hooks/user_responses";
 import CommentInput from "./CommentInput";
 import Highlighters from "./Highlighters";
 import History from "./history/History";
-import {
-  default as InstructionModal,
-  default as InstructionModalButton,
-} from "./instruction_modal/InstructionModal";
+import InstructionModal from "./instruction_modal/InstructionModal";
+import InstructionModalButton from "./instruction_modal/InstructionModalButton";
 import NavigationButtons from "./NavigationButtons";
 import Progress from "./Progress";
 import ResponseSelector from "./response_selector/ResponseSelector";
@@ -31,7 +28,7 @@ const Semtex = () => {
 
   useEffect(() => {
     setTextSampleID(dataset?.textSamples?.at(textSampleIndex)?.id ?? "");
-  }, [textSampleIndex, dataset]);
+  }, [textSampleIndex, dataset, setTextSampleID]);
 
   return (
     <>

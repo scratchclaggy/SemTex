@@ -6,14 +6,8 @@ import useAuth from "src/contexts/AuthContext";
 const UserHeader = () => {
   const { user, signOut } = useAuth();
   return (
-    <Stack
-     direction="row" 
-     justifyContent="end" 
-     spacing={2}
-     sx={{
-      backgroundColor: "palette.background.default",
-      padding: "15px",
-     }}
+    <Stack direction="row" justifyContent="end" spacing={2}
+     sx={{backgroundColor: "palette.background.default",padding: "15px",}}
      >
       <Typography variant="h6">{user!.email}</Typography>
       <Button variant="outlined" onClick={signOut}>
@@ -25,7 +19,9 @@ const UserHeader = () => {
 
 const AnonymousHeader = () => {
   return (
-    <Stack direction="row" justifyContent="end" spacing={2}>
+    <Stack direction="row" justifyContent="end" spacing={2}
+    sx={{backgroundColor: "palette.background.default",padding: "15px",}}
+    >
       <Link href="/sign-up">
         <Button variant="outlined">Sign Up</Button>
       </Link>

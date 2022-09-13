@@ -1,3 +1,4 @@
+import { Palette } from "@mui/icons-material";
 import { Alert, Box, Button, Stack, Typography } from "@mui/material";
 import Link from "next/link";
 import useAuth from "src/contexts/AuthContext";
@@ -10,7 +11,7 @@ const UserHeader = () => {
      justifyContent="end" 
      spacing={2}
      sx={{
-      backgroundColor: "#e7f7fe",
+      backgroundColor: "palette.background.default",
       padding: "15px",
      }}
      >

@@ -1,4 +1,4 @@
-import { Typography } from "@mui/material";
+import { Typography, Box } from "@mui/material";
 import { useAtomValue } from "jotai";
 import { useRouter } from "next/router";
 import useDataset from "src/hooks/dataset";
@@ -11,7 +11,17 @@ const TextSample = () => {
 
   const textSample = dataset?.textSamples[textSampleIndex]?.body ?? "";
 
-  return <Typography sx={{backgroundColor:"white"}}>{textSample}</Typography>;
+  return (
+    <Box
+    sx={{
+      backgroundColor:"white",
+      height: "40vh",
+      borderRadius: '16px',
+      padding: "10px"
+      }}>
+      <Typography>{textSample}</Typography>
+    </Box>
+  )
 };
 
 export default TextSample;

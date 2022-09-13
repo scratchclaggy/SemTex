@@ -44,7 +44,8 @@ const CommentInput = () => {
       multiline
       fullWidth
       sx={{
-        backgroundColor:"white"
+        backgroundColor:"white",
+        borderRadius:"16px"
       }}
     />
   );

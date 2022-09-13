@@ -12,7 +12,7 @@ const theme = createTheme({
       main: "#99e4ee"
     },
     background:{
-      default: "#e7f7fe"
+      default: "#90caf9"
     }
   }
 })
@@ -20,7 +20,7 @@ const theme = createTheme({
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ThemeProvider theme={theme}>
-      <CssBaseline />
+      <CssBaseline enableColorScheme/>
       <AuthProvider>
         <LoginGuard>
           <>

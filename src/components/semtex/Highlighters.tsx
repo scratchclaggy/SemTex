@@ -22,7 +22,7 @@ const Highlighters = () => {
 
   // Demo buttons showing use of the different highlight functions
   return (
-    <Stack spacing={2} padding={4}>
+    <Stack spacing={2} padding={4} sx={{backgroundColor: "white"}}>
       <Button
         variant="outlined"
         onClick={() => {

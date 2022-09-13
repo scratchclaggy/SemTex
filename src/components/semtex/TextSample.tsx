@@ -11,7 +11,7 @@ const TextSample = () => {
 
   const textSample = dataset?.textSamples[textSampleIndex]?.body ?? "";
 
-  return <Typography>{textSample}</Typography>;
+  return <Typography sx={{backgroundColor:"white"}}>{textSample}</Typography>;
 };
 
 export default TextSample;

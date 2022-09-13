@@ -16,7 +16,7 @@ const ProgressBar = () => {
   const percentage = count ? (completed / count) * 100 : 0;
 
   return (
-    <Box sx={{ display: "flex", alignItems: "center" }}>
+    <Box sx={{ display: "flex", alignItems: "center", color: "background" }}>
       <Box sx={{ width: "100%", mr: 1 }}>
         <LinearProgress variant="determinate" value={percentage} />
       </Box>

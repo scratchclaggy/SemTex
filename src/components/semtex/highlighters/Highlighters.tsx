@@ -1,5 +1,4 @@
-import { Box, Stack } from "@mui/material";
-import { Button } from "@mui/material";
+import { Box, Stack, Button } from "@mui/material";
 import Highlighter_Selection from "./Highlighter_Selection";
 const Highlighters = () => {
 
@@ -25,12 +24,12 @@ const Highlighters = () => {
       color: "orange"
     },
     {
-      id: "7ae1e36a-e574-4c03-9852-25dfa52d1830",
+      id: "dc623d01-096d-4334-92f2-0de85d183336",
       label: "Happy",
       color: "gold"
     },
     {
-      id: "7ae1e36a-e574-4c03-9852-25dfa52d1830",
+      id: "2a1d0f07-dd1a-4f0b-ab50-3d2a2f6618d0",
       label: "Loving",
       color: "fuchsia"
     }
@@ -55,20 +54,22 @@ const Highlighters = () => {
       }}
       >
         {HighlightOptions.map((highlighters) =>(
-          <Button
-          fullWidth
-          sx={{
-            color: "white",
-            textShadow: "1px 0 0 black, 0 -1px 0 black, 0 1px 0 black, -1px 0 0 black",
-            background: highlighters.color,
-            "&:active":{
-              background: "purple"
-            }
-            
-          }}
-          >{highlighters.label}
-          </Button>
+          <Highlighter_Selection
+          id={highlighters.id}
+          label={highlighters.label}
+          color={highlighters.color}
+          key={highlighters.id}
+          />
         ))}
+        <Button
+        fullWidth
+        sx={{
+          border: "solid",
+          borderColor: "black",
+          color: "white",
+          textShadow: "1px 0 0 black, 0 -1px 0 black, 0 1px 0 black, -1px 0 0 black",
+        }}
+        >Delete Highlight</Button>
       </Stack>
     </Box>
   );

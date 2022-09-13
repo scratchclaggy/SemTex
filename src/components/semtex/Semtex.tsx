@@ -65,22 +65,22 @@ const Semtex = () => {
             </Grid>
             <Grid item xs={5}>
               <Stack justifyContent="space-between" height="80vh">
-                <Box>
+                <Box mt={2}>
                   <Progress />
                   <TextSample />
+                  <NavigationButtons />
                 </Box>
                 <Box>
                   <ResponseSelector />
                   <CommentInput />
-                  <NavigationButtons />
                 </Box>
               </Stack>
             </Grid>
             <Grid item xs={2}>
               <Highlighters />
+              <InstructionModalButton />
             </Grid>
           </Grid>
-          <InstructionModalButton />
         </>
       )}
     </>

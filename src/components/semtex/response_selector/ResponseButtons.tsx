@@ -33,12 +33,16 @@ const ResponseButtons = () => {
   const responseOptions = dataset?.responseOptions ?? [];
 
   return (
-    <FormControl>
-      <FormLabel id="response-radio-label">Response</FormLabel>
+    <FormControl >
+      <FormLabel id="response-radio-label" style={{marginLeft:"8vw"}}>Select Most Accurate Response</FormLabel>
       <RadioGroup
         aria-labelledby="response-radio-label"
         name="response-radio"
         value={selection}
+        style={{
+          marginLeft: "5vw"
+        }}
+        
         onChange={(event) => {
           setSelection(event.target.value);
           updateResponseOption(event.target.value);

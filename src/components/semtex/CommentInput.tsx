@@ -43,9 +43,13 @@ const CommentInput = () => {
       value={textFieldVal}
       multiline
       fullWidth
+      variant="standard"
+      size="medium"
       sx={{
         backgroundColor:"white",
-        borderRadius:"16px"
+        borderRadius:"16px",
+        height:"15vh",
+        padding: "10px"
       }}
     />
   );

@@ -43,8 +43,14 @@ const CommentInput = () => {
       value={textFieldVal}
       multiline
       fullWidth
+      placeholder="additional comments"
       variant="standard"
       size="medium"
+      minRows={6}
+      maxRows={6}
+      InputProps={{
+        disableUnderline: true
+      }}
       sx={{
         backgroundColor:"white",
         borderRadius:"16px",

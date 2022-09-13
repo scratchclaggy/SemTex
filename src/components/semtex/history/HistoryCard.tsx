@@ -43,7 +43,7 @@ const HistoryCard = (textSample: TextSample) => {
 
   const handleClick = () => {
     const textSampleIndex = dataset?.textSamples.findIndex(
-      (textSample) => textSample.id === textSample.id
+      (sample) => sample.id === textSample.id
     );
 
     if (textSampleIndex !== undefined) {

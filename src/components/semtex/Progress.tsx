@@ -1,12 +1,20 @@
 import Box from "@mui/material/Box";
 import LinearProgress from "@mui/material/LinearProgress";
 import Typography from "@mui/material/Typography";
+import { useRouter } from "next/router";
+import useUserResponses from "src/hooks/user_responses";
 
 const ProgressBar = () => {
-  // TODO: Get user responses from DB
-  const completed = 28;
-  const count = 57;
-  const percentage = (completed / count) * 100;
+  const router = useRouter();
+  const { userResponses } = useUserResponses(
+    router.query.datasetID as string | undefined
+  );
+
+  const completed =
+    userResponses?.filter((response) => response.response !== null).length ?? 0;
+  const count = userResponses?.length ?? 0;
+  const percentage = count ? (completed / count) * 100 : 0;
+
   return (
     <Box sx={{ display: "flex", alignItems: "center" }}>
       <Box sx={{ width: "100%", mr: 1 }}>

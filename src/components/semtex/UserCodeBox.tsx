@@ -18,7 +18,7 @@ const UserCodeBox = () => {
 
   const onSubmit: SubmitHandler<Inputs> = async (formData) => {
     const { data, error } = await supabase.rpc("check_dataset_passkey", {
-      user_id: user?.id,
+      userid: user?.id,
       dataset_passkey: formData.passKey,
     });
 

@@ -1,4 +1,3 @@
-import { NavigateBefore, NavigateNext } from "@mui/icons-material";
 import { Button, Stack } from "@mui/material";
 import { useSetAtom } from "jotai";
 import { useRouter } from "next/router";
@@ -15,20 +14,23 @@ const NavigationButtons = () => {
 
   return (
     <Stack direction="row" justifyContent="space-between" padding={2}>
-      <Button style={{borderRadius:"16px", backgroundColor:"white", width:"20%"}}
+      <Button
+        style={{ borderRadius: "16px", backgroundColor: "white", width: "20%" }}
         onClick={() =>
           setTextSampleIndex(
             (prev) => (prev + textSampleLength - 1) % textSampleLength
           )
         }
-      >Previous
+      >
+        Previous
       </Button>
       <Button
-      style={{borderRadius:"16px",backgroundColor: "white",width: "20%"}}
-      onClick={() =>
-        setTextSampleIndex((prev) => (prev + 1) % textSampleLength)
-      }
-      >Next
+        style={{ borderRadius: "16px", backgroundColor: "white", width: "20%" }}
+        onClick={() =>
+          setTextSampleIndex((prev) => (prev + 1) % textSampleLength)
+        }
+      >
+        Next
       </Button>
     </Stack>
   );

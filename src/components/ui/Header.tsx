@@ -1,4 +1,3 @@
-import { Palette } from "@mui/icons-material";
 import { Alert, Box, Button, Stack, Typography } from "@mui/material";
 import Link from "next/link";
 import useAuth from "src/contexts/AuthContext";
@@ -6,9 +5,12 @@ import useAuth from "src/contexts/AuthContext";
 const UserHeader = () => {
   const { user, signOut } = useAuth();
   return (
-    <Stack direction="row" justifyContent="end" spacing={2}
-     sx={{backgroundColor: "palette.background.default",padding: "15px",}}
-     >
+    <Stack
+      direction="row"
+      justifyContent="end"
+      spacing={2}
+      sx={{ backgroundColor: "palette.background.default", padding: "15px" }}
+    >
       <Typography variant="h6">{user!.email}</Typography>
       <Button variant="outlined" onClick={signOut}>
         Sign Out
@@ -19,8 +21,11 @@ const UserHeader = () => {
 
 const AnonymousHeader = () => {
   return (
-    <Stack direction="row" justifyContent="end" spacing={2}
-    sx={{backgroundColor: "palette.background.default",padding: "15px",}}
+    <Stack
+      direction="row"
+      justifyContent="end"
+      spacing={2}
+      sx={{ backgroundColor: "palette.background.default", padding: "15px" }}
     >
       <Link href="/sign-up">
         <Button variant="outlined">Sign Up</Button>
@@ -36,10 +41,10 @@ const Header = () => {
   const { user, authError } = useAuth();
   return (
     <Box
-    sx={{
-      borderBottom: 'solid',
-      borderWidth: '1px'
-    }}
+      sx={{
+        borderBottom: "solid",
+        borderWidth: "1px",
+      }}
     >
       {user ? <UserHeader /> : <AnonymousHeader />}
       {authError && <Alert severity="error">{authError?.message}</Alert>}

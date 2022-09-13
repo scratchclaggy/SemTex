@@ -17,7 +17,7 @@ const History = () => {
         maxHeight: "80vh",
         overflow: "hidden",
         overflowY: "scroll",
-        scrollbarWidth: "none"
+        scrollbarWidth: "none",
       }}
     >
       {textSamples.map((history) => (

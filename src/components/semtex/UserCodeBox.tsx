@@ -1,5 +1,4 @@
 import { Alert, AlertTitle, Stack, Typography } from "@mui/material";
-import { createTheme } from "@mui/material/styles";
 import { PostgrestError } from "@supabase/supabase-js";
 import { useRouter } from "next/router";
 import { useState } from "react";
@@ -40,17 +39,15 @@ const UserCodeBox = () => {
           {error.hint && <Typography>hint: {error.hint}</Typography>}
         </Alert>
       )}
-      <Stack 
-      alignItems="center" 
-      spacing={1} 
-      mt={"25vh"}
-      >
+      <Stack alignItems="center" spacing={1} mt={"25vh"}>
         <Typography
-        style={{
-          fontFamily: "Roboto",
-          fontSize: "50px"
-        }}
-        >Please Enter Your Access Code</Typography>
+          style={{
+            fontFamily: "Roboto",
+            fontSize: "50px",
+          }}
+        >
+          Please Enter Your Access Code
+        </Typography>
 
         <form onSubmit={handleSubmit(onSubmit)}>
           <input
@@ -61,7 +58,7 @@ const UserCodeBox = () => {
               textAlign: "left",
               fontSize: "70px",
               margin: "5px",
-              borderRadius: "16px"
+              borderRadius: "16px",
             }}
             {...register("passKey")}
           />

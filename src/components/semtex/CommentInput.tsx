@@ -49,12 +49,12 @@ const CommentInput = () => {
       minRows={6}
       maxRows={6}
       InputProps={{
-        disableUnderline: true
+        disableUnderline: true,
       }}
       sx={{
-        backgroundColor:"white",
-        borderRadius:"16px",
-        height:"15vh",
+        backgroundColor: "white",
+        borderRadius: "16px",
+        height: "15vh",
         padding: "10px",
       }}
     />

@@ -8,9 +8,7 @@ const InstructionModalButton = () => {
 
   return (
     <IconButton onClick={() => setIsOpen(true)}>
-      <HelpOutline
-        fontSize="large"
-      />
+      <HelpOutline fontSize="large" />
     </IconButton>
   );
 };

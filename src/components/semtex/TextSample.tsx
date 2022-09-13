@@ -1,4 +1,4 @@
-import { Typography, Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { useAtomValue } from "jotai";
 import { useRouter } from "next/router";
 import useDataset from "src/hooks/dataset";
@@ -13,17 +13,20 @@ const TextSample = () => {
 
   return (
     <Box
-    sx={{
-      backgroundColor:"white",
-      height: "40vh",
-      borderRadius: '16px',
-      padding: "10px",
-      overflowY: "scroll",
-      scrollbarWidth: 'none'
-      }}>
-      <Typography fontFamily="Roboto Mono" fontSize="24px">{textSample}</Typography>
+      sx={{
+        backgroundColor: "white",
+        height: "40vh",
+        borderRadius: "16px",
+        padding: "10px",
+        overflowY: "scroll",
+        scrollbarWidth: "none",
+      }}
+    >
+      <Typography fontFamily="Roboto Mono" fontSize="24px">
+        {textSample}
+      </Typography>
     </Box>
-  )
+  );
 };
 
 export default TextSample;

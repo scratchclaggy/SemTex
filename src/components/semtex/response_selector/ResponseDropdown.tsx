@@ -19,7 +19,10 @@ const ResponseDropdown = () => {
     [userResponses, textSampleID, mutate]
   );
   const [selection, setSelection] = useState<string>(responseOption?.id ?? "");
-  useEffect(() => setSelection(responseOption?.id ?? ""), [textSampleID]);
+  useEffect(
+    () => setSelection(responseOption?.id ?? ""),
+    [textSampleID, responseOption?.id]
+  );
 
   const responseOptions = dataset?.responseOptions ?? [];
 

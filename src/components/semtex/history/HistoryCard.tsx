@@ -13,7 +13,7 @@ import useUserResponses from "src/hooks/user_responses";
 import type { TextSample } from "src/types/client";
 import { textSampleIdAtom, textSampleIndexAtom } from "../Semtex";
 
-const HistoryCard = (history: TextSample) => {
+const HistoryCard = (textSample: TextSample) => {
   const router = useRouter();
   const datasetID = router.query.datasetID as string | undefined;
   const { dataset } = useDataset(datasetID);
@@ -23,10 +23,9 @@ const HistoryCard = (history: TextSample) => {
 
   const currentResponse = useMemo(() => {
     return userResponses?.find(
-      (response) => response.textSample.id === history.id
+      (response) => response.textSample.id === textSample.id
     );
-  }, [userResponses, textSampleID]);
-  console.log(textSampleID);
+  }, [userResponses, textSample.id]);
 
   const isSelected = currentResponse?.textSample.id === textSampleID;
 
@@ -44,11 +43,11 @@ const HistoryCard = (history: TextSample) => {
 
   const handleClick = () => {
     const textSampleIndex = dataset?.textSamples.findIndex(
-      (textSample) => textSample.id === history.id
+      (textSample) => textSample.id === textSample.id
     );
 
     if (textSampleIndex !== undefined) {
-      setTextSampleID(history.id);
+      setTextSampleID(textSample.id);
       setTextSampleIndex(textSampleIndex);
     }
   };
@@ -56,7 +55,7 @@ const HistoryCard = (history: TextSample) => {
   return (
     <ListItem disablePadding>
       <ListItemButton selected={isSelected} onClick={handleClick}>
-        <Typography noWrap>{history.body}</Typography>
+        <Typography noWrap>{textSample.body}</Typography>
         <ListItemIcon>{responseIcon}</ListItemIcon>
       </ListItemButton>
     </ListItem>

@@ -1,0 +1,66 @@
+import { Done, DoneAll } from "@mui/icons-material";
+import {
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  Typography,
+} from "@mui/material";
+import { useAtom, useSetAtom } from "jotai";
+import { useRouter } from "next/router";
+import { useMemo } from "react";
+import useDataset from "src/hooks/dataset";
+import useUserResponses from "src/hooks/user_responses";
+import type { TextSample } from "src/types/client";
+import { textSampleIdAtom, textSampleIndexAtom } from "../Semtex";
+
+const HistoryCard = (history: TextSample) => {
+  const router = useRouter();
+  const datasetID = router.query.datasetID as string | undefined;
+  const { dataset } = useDataset(datasetID);
+  const { userResponses } = useUserResponses(datasetID);
+  const setTextSampleIndex = useSetAtom(textSampleIndexAtom);
+  const [textSampleID, setTextSampleID] = useAtom(textSampleIdAtom);
+
+  const currentResponse = useMemo(() => {
+    return userResponses?.find(
+      (response) => response.textSample.id === history.id
+    );
+  }, [userResponses, textSampleID]);
+  console.log(textSampleID);
+
+  const isSelected = currentResponse?.textSample.id === textSampleID;
+
+  const responseIcon =
+    currentResponse?.response !== null ? (
+      (currentResponse?.highlights?.length ?? 0) > 0 ? (
+        // Returns <DoneAll /> when there's a response && highlights
+        <DoneAll />
+      ) : (
+        // Returns <Done /> when there's a response
+        <Done />
+      )
+    ) : // Else returns null
+    null;
+
+  const handleClick = () => {
+    const textSampleIndex = dataset?.textSamples.findIndex(
+      (textSample) => textSample.id === history.id
+    );
+
+    if (textSampleIndex !== undefined) {
+      setTextSampleID(history.id);
+      setTextSampleIndex(textSampleIndex);
+    }
+  };
+
+  return (
+    <ListItem disablePadding>
+      <ListItemButton selected={isSelected} onClick={handleClick}>
+        <Typography noWrap>{history.body}</Typography>
+        <ListItemIcon>{responseIcon}</ListItemIcon>
+      </ListItemButton>
+    </ListItem>
+  );
+};
+
+export default HistoryCard;

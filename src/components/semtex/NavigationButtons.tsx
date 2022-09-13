@@ -7,9 +7,7 @@ import { textSampleIndexAtom } from "./Semtex";
 
 const NavigationButtons = () => {
   const router = useRouter();
-  const { dataset } = useDataset(
-    router.query.datasetID as string | undefined
-  );
+  const { dataset } = useDataset(router.query.datasetID as string | undefined);
 
   const textSampleLength = dataset?.textSamples?.length ?? 0;
 

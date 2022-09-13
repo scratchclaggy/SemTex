@@ -1,5 +1,6 @@
 import { Alert, AlertTitle, Grid, Stack, Typography } from "@mui/material";
-import { atom, useAtom, useAtomValue, useSetAtom } from "jotai";
+import { Box } from "@mui/system";
+import { atom, useAtomValue, useSetAtom } from "jotai";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import useDataset from "src/hooks/dataset";
@@ -61,20 +62,24 @@ const Semtex = () => {
       {dataset && userResponses && (
         <>
           <InstructionModal />
-          <Grid container>
-            <Grid item>
+          <Grid container columns={9} spacing={4}>
+            <Grid item xs={2}>
               <History />
             </Grid>
-            <Grid item>
-              <Stack>
-                <Progress />
-                <TextSample />
-                <ResponseSelector />
-                <CommentInput />
-                <NavigationButtons />
+            <Grid item xs={5}>
+              <Stack justifyContent="space-between" height="80vh">
+                <Box>
+                  <Progress />
+                  <TextSample />
+                </Box>
+                <Box>
+                  <ResponseSelector />
+                  <CommentInput />
+                  <NavigationButtons />
+                </Box>
               </Stack>
             </Grid>
-            <Grid item>
+            <Grid item xs={2}>
               <Highlighters />
             </Grid>
           </Grid>

@@ -16,6 +16,7 @@ export type Dataset = {
   instructions: string;
   name: string;
   created: string;
+  textSamples: TextSample[];
   responseOptions: ResponseOption[];
   highlightOptions: HighlightOption[];
 };

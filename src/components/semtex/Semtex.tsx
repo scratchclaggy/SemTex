@@ -1,18 +1,22 @@
 import { Alert, AlertTitle, Grid, Stack, Typography } from "@mui/material";
-import { atom, useSetAtom } from "jotai";
+import { atom, useAtom, useAtomValue, useSetAtom } from "jotai";
 import { useRouter } from "next/router";
+import { useEffect } from "react";
 import useDataset from "src/hooks/dataset";
 import useUserResponses from "src/hooks/user_responses";
 import CommentInput from "./CommentInput";
 import Highlighters from "./Highlighters";
 import History from "./history/History";
-import InstructionModalButton from "./instruction_modal/InstructionModal";
-import InstructionModal from "./instruction_modal/InstructionModal";
+import {
+  default as InstructionModal,
+  default as InstructionModalButton,
+} from "./instruction_modal/InstructionModal";
 import NavigationButtons from "./NavigationButtons";
 import Progress from "./Progress";
 import ResponseSelector from "./response_selector/ResponseSelector";
 import TextSample from "./TextSample";
 
+export const textSampleIndexAtom = atom(0);
 export const textSampleIdAtom = atom("");
 
 const Semtex = () => {
@@ -21,8 +25,12 @@ const Semtex = () => {
   const { dataset, datasetError } = useDataset(datasetID);
   const { userResponses, userResponsesError } = useUserResponses(datasetID);
 
+  const textSampleIndex = useAtomValue(textSampleIndexAtom);
   const setTextSampleID = useSetAtom(textSampleIdAtom);
-  setTextSampleID("5cf7a58d-4c06-43d2-935e-e6779be659a2");
+
+  useEffect(() => {
+    setTextSampleID(dataset?.textSamples?.at(textSampleIndex)?.id ?? "");
+  }, [textSampleIndex, dataset]);
 
   return (
     <>

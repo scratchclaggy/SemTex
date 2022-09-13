@@ -6,11 +6,13 @@ const Highlighter_Selection = ( highlighter: HighlightOption) => {
 
   return (
     <Button
+    fullWidth
+    
     style={{
-      width: "100%",
       color: "white",
       textShadow: "1px 0 0 black, 0 -1px 0 black, 0 1px 0 black, -1px 0 0 black",
-      background: styleColor
+      background: styleColor,
+      active: "blue"
     }}
     >{highlighter.label}</Button>
   );

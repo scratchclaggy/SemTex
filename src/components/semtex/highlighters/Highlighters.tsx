@@ -1,4 +1,5 @@
 import { Box, Stack } from "@mui/material";
+import { Button } from "@mui/material";
 import Highlighter_Selection from "./Highlighter_Selection";
 const Highlighters = () => {
 
@@ -54,12 +55,19 @@ const Highlighters = () => {
       }}
       >
         {HighlightOptions.map((highlighters) =>(
-          <Highlighter_Selection 
-          key={highlighters.id} 
-          id={highlighters.id}
-          label={highlighters.label} 
-          color={highlighters.color}
-          />
+          <Button
+          fullWidth
+          sx={{
+            color: "white",
+            textShadow: "1px 0 0 black, 0 -1px 0 black, 0 1px 0 black, -1px 0 0 black",
+            background: highlighters.color,
+            "&:active":{
+              background: "purple"
+            }
+            
+          }}
+          >{highlighters.label}
+          </Button>
         ))}
       </Stack>
     </Box>

@@ -1,4 +1,5 @@
 import { Alert, AlertTitle, Stack, Typography } from "@mui/material";
+import { createTheme } from "@mui/material/styles";
 import { PostgrestError } from "@supabase/supabase-js";
 import { useRouter } from "next/router";
 import { useState } from "react";
@@ -39,8 +40,17 @@ const UserCodeBox = () => {
           {error.hint && <Typography>hint: {error.hint}</Typography>}
         </Alert>
       )}
-      <Stack alignItems="center" spacing={1} mt={"40vh"}>
-        <Typography>Welcome To SemTex</Typography>
+      <Stack 
+      alignItems="center" 
+      spacing={1} 
+      mt={"25vh"}
+      >
+        <Typography
+        style={{
+          fontFamily: "Roboto",
+          fontSize: "50px"
+        }}
+        >Please Enter Your Access Code</Typography>
 
         <form onSubmit={handleSubmit(onSubmit)}>
           <input
@@ -55,8 +65,6 @@ const UserCodeBox = () => {
             {...register("passKey")}
           />
         </form>
-        <a href="">Dont Have a Code?</a>
-        <a href="">Administrator Login</a>
       </Stack>
     </>
   );

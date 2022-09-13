@@ -55,7 +55,7 @@ const CommentInput = () => {
         backgroundColor:"white",
         borderRadius:"16px",
         height:"15vh",
-        padding: "10px"
+        padding: "10px",
       }}
     />
   );

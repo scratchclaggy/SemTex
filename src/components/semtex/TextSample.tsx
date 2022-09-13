@@ -17,9 +17,11 @@ const TextSample = () => {
       backgroundColor:"white",
       height: "40vh",
       borderRadius: '16px',
-      padding: "10px"
+      padding: "10px",
+      overflowY: "scroll",
+      scrollbarWidth: 'none'
       }}>
-      <Typography>{textSample}</Typography>
+      <Typography fontFamily="Roboto Mono" fontSize="24px">{textSample}</Typography>
     </Box>
   )
 };

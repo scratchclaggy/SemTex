@@ -56,11 +56,12 @@ const UserCodeBox = () => {
           <input
             placeholder="Enter Code"
             style={{
-              width: "450px",
-              height: "85px",
+              width: "66vh",
+              height: "10vh",
               textAlign: "left",
               fontSize: "70px",
               margin: "5px",
+              borderRadius: "16px"
             }}
             {...register("passKey")}
           />

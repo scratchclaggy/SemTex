@@ -1,7 +1,7 @@
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import { useAtomValue } from "jotai";
 import { useRouter } from "next/router";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import useDataset from "src/hooks/dataset";
 import useUserResponses from "src/hooks/user_responses";
 import { responseOptionDbAccess } from "src/utils/user_response";
@@ -19,6 +19,10 @@ const ResponseDropdown = () => {
     [userResponses, textSampleID, mutate]
   );
   const [selection, setSelection] = useState<string>(responseOption?.id ?? "");
+  useEffect(
+    () => setSelection(responseOption?.id ?? ""),
+    [textSampleID, responseOption?.id]
+  );
 
   const responseOptions = dataset?.responseOptions ?? [];
 

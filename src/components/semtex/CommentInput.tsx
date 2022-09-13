@@ -2,7 +2,7 @@ import { TextField } from "@mui/material";
 import { useAtomValue } from "jotai";
 import { debounce } from "lodash";
 import { useRouter } from "next/router";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import useUserResponses from "src/hooks/user_responses";
 import { commentDbAccess } from "src/utils/user_response";
 import { textSampleIdAtom } from "./Semtex";
@@ -19,6 +19,8 @@ const CommentInput = () => {
     [userResponses, textSampleID, mutate]
   );
   const [textFieldVal, setTextFieldVal] = useState(comment);
+
+  useEffect(() => setTextFieldVal(comment), [comment]);
 
   const debounceInput = useMemo(() => {
     return debounce(

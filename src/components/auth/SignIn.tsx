@@ -44,6 +44,7 @@ const SignIn = () => {
       spacing={2}
       padding={5}
       width="30vw"
+      minWidth={700}
       alignItems="center"
       style={{ backgroundColor: "#F5F5F0" }}
     >

@@ -14,7 +14,7 @@ const TextSample = () => {
   return (
     <Box
       sx={{
-        backgroundColor: "white",
+        backgroundColor: "#F5F5F0",
         height: "40vh",
         borderRadius: "16px",
         padding: "10px",

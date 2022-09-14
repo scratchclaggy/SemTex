@@ -15,7 +15,7 @@ const History = () => {
       margin: "8px",
       marginTop: "25px",
       width: "11vw",
-      backgroundColor: "white",
+      backgroundColor: "#F5F5F0",
       borderRadius: "16px"
     }}
     >

@@ -45,7 +45,7 @@ const SignIn = () => {
       padding={5}
       width="30vw"
       alignItems="center"
-      style={{ backgroundColor: "white" }}
+      style={{ backgroundColor: "#F5F5F0" }}
     >
       <Avatar sx={{ bgcolor: "secondary.main" }}>
         <LockOutlined />

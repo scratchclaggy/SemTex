@@ -13,7 +13,7 @@ const ResponseSelector = () => {
   return (
    <Box
    sx={{
-    backgroundColor: "white",
+    backgroundColor: "#F5F5F0",
     borderRadius: "16px"
    }}
    >

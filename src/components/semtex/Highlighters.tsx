@@ -27,7 +27,7 @@ const Highlighters = () => {
       padding={4}
       mt={5}
       sx={{
-        backgroundColor: "white",
+        backgroundColor: "#F5F5F0",
         borderRadius: "16px",
         height: "50vh",
       }}

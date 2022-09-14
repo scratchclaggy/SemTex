@@ -52,7 +52,7 @@ const CommentInput = () => {
         disableUnderline: true,
       }}
       style={{
-        backgroundColor: "white",
+        backgroundColor: "#F5F5F0",
         borderRadius: "16px",
         height: "15vh",
         padding: "10px",

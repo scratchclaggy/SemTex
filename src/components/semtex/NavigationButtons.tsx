@@ -25,7 +25,7 @@ const NavigationButtons = () => {
         Previous
       </Button>
       <Button
-        style={{ borderRadius: "16px", backgroundColor: "white", width: "20%" }}
+        style={{ borderRadius: "16px", backgroundColor: "white", width: "20%", }}
         onClick={() =>
           setTextSampleIndex((prev) => (prev + 1) % textSampleLength)
         }

@@ -46,12 +46,12 @@ const CommentInput = () => {
       placeholder="additional comments"
       variant="standard"
       size="medium"
-      minRows={6}
-      maxRows={6}
+      minRows={4}
+      maxRows={4}
       InputProps={{
         disableUnderline: true,
       }}
-      sx={{
+      style={{
         backgroundColor: "white",
         borderRadius: "16px",
         height: "15vh",

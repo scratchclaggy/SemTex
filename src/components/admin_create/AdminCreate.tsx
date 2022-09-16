@@ -7,13 +7,18 @@ import { Stack } from "@mui/material";
 
 const AdminCreate = () =>{
     return(
-        <Stack>
+        <Stack
+        alignItems="center"
+        justifyContent="center"
+        spacing={2}
+        paddingTop={5}
+        >
             <NameInput/>
             <InstructionInput/>
             <ResponseCreator/>
             <HighlightSelector/>
             <UploadButton/>
         </Stack>
-    )
-}
+    );
+};
 export default AdminCreate;

@@ -15,6 +15,6 @@ const AdminHome = () =>{
             <ButtonConsole />
             <DatasetList />
         </Stack>
-    )
-}
+    );
+};
 export default AdminHome;

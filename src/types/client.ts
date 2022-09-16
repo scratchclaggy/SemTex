@@ -14,12 +14,16 @@ export type DatasetPermission = {
 export type Dataset = {
   id: string;
   instructions: string;
-  name: string;
-  created: string;
   textSamples: TextSample[];
   responseOptions: ResponseOption[];
   highlightOptions: HighlightOption[];
 };
+
+export type DatasetBasic = {
+  id: string;
+  name: string;
+  create: string;
+}
 
 export type ResponseOption = {
   id: string;

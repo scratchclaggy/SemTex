@@ -41,7 +41,15 @@ const SignUp = () => {
   }
 
   return (
-    <Stack marginTop={8} spacing={2} alignItems="center">
+    <Stack
+      marginTop={16}
+      marginLeft={22}
+      spacing={2}
+      padding={5}
+      width="30vw"
+      alignItems="center"
+      style={{ backgroundColor: "#F5F5F0" }}
+    >
       <Avatar sx={{ bgcolor: "secondary.main" }}>
         <LockOutlined />
       </Avatar>

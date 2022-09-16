@@ -53,7 +53,7 @@ const HistoryCard = (textSample: TextSample) => {
   };
 
   return (
-    <ListItem disablePadding>
+    <ListItem divider sx={{ backgroundColor: "#F5F5F0" }} disablePadding>
       <ListItemButton selected={isSelected} onClick={handleClick}>
         <Typography noWrap>{textSample.body}</Typography>
         <ListItemIcon>{responseIcon}</ListItemIcon>

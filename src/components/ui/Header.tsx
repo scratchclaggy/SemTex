@@ -5,7 +5,12 @@ import useAuth from "src/contexts/AuthContext";
 const UserHeader = () => {
   const { user, signOut } = useAuth();
   return (
-    <Stack direction="row" justifyContent="end" spacing={2}>
+    <Stack
+      direction="row"
+      justifyContent="end"
+      spacing={2}
+      sx={{ backgroundColor: "palette.background.default", padding: "15px" }}
+    >
       <Typography variant="h6">{user!.email}</Typography>
       <Button variant="outlined" onClick={signOut}>
         Sign Out
@@ -16,7 +21,12 @@ const UserHeader = () => {
 
 const AnonymousHeader = () => {
   return (
-    <Stack direction="row" justifyContent="end" spacing={2}>
+    <Stack
+      direction="row"
+      justifyContent="end"
+      spacing={2}
+      sx={{ backgroundColor: "palette.background.default", padding: "15px" }}
+    >
       <Link href="/sign-up">
         <Button variant="outlined">Sign Up</Button>
       </Link>
@@ -30,7 +40,12 @@ const AnonymousHeader = () => {
 const Header = () => {
   const { user, authError } = useAuth();
   return (
-    <Box>
+    <Box
+      sx={{
+        borderBottom: "solid",
+        borderWidth: "1px",
+      }}
+    >
       {user ? <UserHeader /> : <AnonymousHeader />}
       {authError && <Alert severity="error">{authError?.message}</Alert>}
     </Box>

@@ -43,6 +43,20 @@ const CommentInput = () => {
       value={textFieldVal}
       multiline
       fullWidth
+      placeholder="additional comments"
+      variant="standard"
+      size="medium"
+      minRows={4}
+      maxRows={4}
+      InputProps={{
+        disableUnderline: true,
+      }}
+      style={{
+        backgroundColor: "#F5F5F0",
+        borderRadius: "16px",
+        height: "15vh",
+        padding: "10px",
+      }}
     />
   );
 };

@@ -1,7 +1,7 @@
 import type { NextPage } from "next";
 
-const AdminHome: NextPage = () => {
-  return null
+const AdminCreate: NextPage = () => {
+  return <AdminCreate />;
 };
 
-export default AdminHome;
+export default AdminCreate;

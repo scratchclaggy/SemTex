@@ -5,10 +5,15 @@ import Search from "./Search";
 
 const AdminHome = () =>{
     return(
-        <Stack>
-            <DatasetList />
-            <ButtonConsole />
+        <Stack 
+        spacing={2} 
+        justifyContent="center" 
+        alignItems="center"
+        paddingTop={10}
+        >
             <Search />
+            <ButtonConsole />
+            <DatasetList />
         </Stack>
     )
 }

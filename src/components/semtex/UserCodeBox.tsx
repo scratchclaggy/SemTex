@@ -52,11 +52,11 @@ const UserCodeBox = () => {
         <form onSubmit={handleSubmit(onSubmit)}>
           <input
             placeholder="Enter Code"
-            minLength={500}
             style={{
               width: "66vh",
               height: "10vh",
               minHeight: "100px",
+              minWidth: "500px",
               textAlign: "left",
               fontSize: "70px",
               margin: "5px",

@@ -1,6 +1,4 @@
-const NameInput = () =>{
-    return(
-        <div>NameInput</div>
-    )
-}
+const NameInput = () => {
+  return <div>NameInput</div>;
+};
 export default NameInput;

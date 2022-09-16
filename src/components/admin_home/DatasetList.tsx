@@ -1,6 +1,4 @@
-const DatasetList = () =>{
-    return(
-        <div>DatasetList</div>
-    )
-}
+const DatasetList = () => {
+  return <div>DatasetList</div>;
+};
 export default DatasetList;

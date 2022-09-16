@@ -1,6 +1,4 @@
-const ResponseCreator = () =>{
-    return(
-        <div>Response Creator</div>
-    )
-}
+const ResponseCreator = () => {
+  return <div>Response Creator</div>;
+};
 export default ResponseCreator;

@@ -1,6 +1,4 @@
-const UploadButton = () =>{
-    return(
-        <div>UploadButton</div>
-    )
-}
+const UploadButton = () => {
+  return <div>UploadButton</div>;
+};
 export default UploadButton;

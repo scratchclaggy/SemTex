@@ -77,10 +77,10 @@ const Semtex = () => {
               </Stack>
             </Grid>
             <Grid item xs={3}>
-                <Highlighters />
-                <InstructionModalButton />
-                </Grid>
-          </Grid>                
+              <Highlighters />
+              <InstructionModalButton />
+            </Grid>
+          </Grid>
         </>
       )}
     </>

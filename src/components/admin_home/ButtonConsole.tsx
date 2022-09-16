@@ -1,6 +1,4 @@
-const ButtonConsole = () =>{
-    return(
-        <div>Button Console</div>
-    )
-}
+const ButtonConsole = () => {
+  return <div>Button Console</div>;
+};
 export default ButtonConsole;

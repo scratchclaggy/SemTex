@@ -59,28 +59,28 @@ const Semtex = () => {
       {dataset && userResponses && (
         <>
           <InstructionModal />
-          <Grid container columns={9} spacing={4}>
-            <Grid item xs={2}>
+          <Grid container columns={12} spacing={8}>
+            <Grid item xs={2} marginRight={8}>
               <History />
             </Grid>
-            <Grid item xs={5}>
+            <Grid item xs={6} marginLeft={4}>
               <Stack justifyContent="space-between" height="80vh">
-                <Box>
+                <Box mt={2}>
                   <Progress />
                   <TextSample />
+                  <NavigationButtons />
+                  <ResponseSelector />
                 </Box>
                 <Box>
-                  <ResponseSelector />
                   <CommentInput />
-                  <NavigationButtons />
                 </Box>
               </Stack>
             </Grid>
-            <Grid item xs={2}>
-              <Highlighters />
-            </Grid>
-          </Grid>
-          <InstructionModalButton />
+            <Grid item xs={3}>
+                <Highlighters />
+                <InstructionModalButton />
+                </Grid>
+          </Grid>                
         </>
       )}
     </>

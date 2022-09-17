@@ -1,8 +1,8 @@
 import type { NextPage } from "next";
-import AdminCreate from "src/components/admin_create/AdminCreate";
+import AdminCreateComponent from "src/components/admin/CreateDataset/CreateDataset";
 
-const Admin_Create: NextPage = () => {
-  return <AdminCreate />;
+const AdminCreate: NextPage = () => {
+  return <AdminCreateComponent />;
 };
 
-export default Admin_Create;
+export default AdminCreate;

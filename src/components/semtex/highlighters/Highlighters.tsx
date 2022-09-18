@@ -1,48 +1,30 @@
 import { Box, Stack, Button } from "@mui/material";
+import { useRouter } from "next/router";
 import Highlighter_Selection from "./Highlighter_Selection";
-const Highlighters = () => {
+import useDataset from "src/hooks/dataset";
+import { useState } from "react";
 
-  const HighlightOptions = [
-    {
-      id: "674fa6c7-8d7a-4d31-b6bd-ac42dc9864a2",
-      label: "Somber",
-      color: "navy"
-    },
-    {
-      id: "9a3234ab-7108-4b5d-8778-6e80e174936f",
-      label: "Jubilant",
-      color: "lavender"
-    },
-    {
-      id: "83756432-36b1-45ae-91ff-59089324ad6a",
-      label: "Energetic",
-      color: "salmon"
-    },
-    {
-      id: "7ae1e36a-e574-4c03-9852-25dfa52d1830",
-      label: "Bright",
-      color: "orange"
-    },
-    {
-      id: "dc623d01-096d-4334-92f2-0de85d183336",
-      label: "Happy",
-      color: "gold"
-    },
-    {
-      id: "2a1d0f07-dd1a-4f0b-ab50-3d2a2f6618d0",
-      label: "Loving",
-      color: "fuchsia"
-    }
-  ]
+const Highlighters = () => {
+  const router = useRouter();
+  const datasetID = router.query.datasetID as string | undefined;
+  const { dataset, datasetError } = useDataset(datasetID);
+  const HighlightOptions = dataset?.highlightOptions
+
+  const [active, setActive] = useState("")
+
+  const handleClick = (color: string) => {
+    setActive(color)
+    console.log(color)
+  }
 
   return (
     <Box
+    marginTop={4}
     style={{
-      border:'solid',
-      borderWidth:'1px',
+      backgroundColor: "#F5F5F0",
+      borderRadius: "16px",
       width:'200px',
-      height:'600px',
-      margin:'4px'
+      height:'60vh',
     }}
     >
       <Stack
@@ -53,21 +35,25 @@ const Highlighters = () => {
         padding:"10px"
       }}
       >
-        {HighlightOptions.map((highlighters) =>(
-          <Highlighter_Selection
-          id={highlighters.id}
-          label={highlighters.label}
-          color={highlighters.color}
+        {HighlightOptions?.map((highlighters) =>(
+          <Button
           key={highlighters.id}
-          />
+          onClick={event => handleClick(highlighters.color)}
+          variant="contained"
+          sx={{
+            backgroundColor: highlighters.color,
+            textShadow: "1px 0 0 black, 0 -1px 0 black, 0 1px 0 black, -1px 0 0 black",
+            boxShadow: highlighters.color === active ? "0 0 10px #000" : "",
+          }}
+          >{highlighters.label}
+          </Button>
         ))}
         <Button
-        fullWidth
+        onClick={event => handleClick("highlighters.color")}
+        variant="contained"
         sx={{
-          border: "solid",
-          borderColor: "black",
-          color: "white",
           textShadow: "1px 0 0 black, 0 -1px 0 black, 0 1px 0 black, -1px 0 0 black",
+          boxShadow: "delete" === active ? "0 0 10px #000" : ""
         }}
         >Delete Highlight</Button>
       </Stack>

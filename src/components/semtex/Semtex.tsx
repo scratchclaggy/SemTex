@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import useDataset from "src/hooks/dataset";
 import useUserResponses from "src/hooks/user_responses";
 import CommentInput from "./CommentInput";
-import Highlighters from "./highlighters/Highlighters";
+import Highlighters from "./Highlighters";
 import History from "./history/History";
 import InstructionModal from "./instruction_modal/InstructionModal";
 import InstructionModalButton from "./instruction_modal/InstructionModalButton";
@@ -77,10 +77,10 @@ const Semtex = () => {
               </Stack>
             </Grid>
             <Grid item xs={3}>
-                <Highlighters />
-                <InstructionModalButton />
-                </Grid>
-          </Grid>                
+              <Highlighters />
+              <InstructionModalButton />
+            </Grid>
+          </Grid>
         </>
       )}
     </>

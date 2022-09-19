@@ -61,7 +61,7 @@ const UserCodeBox = () => {
               fontSize: "70px",
               margin: "5px",
               borderRadius: "16px",
-              backgroundColor: "#F5F5F0"
+              backgroundColor: "#F5F5F0",
             }}
             {...register("passKey")}
           />

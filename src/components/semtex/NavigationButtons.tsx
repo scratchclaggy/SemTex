@@ -15,7 +15,11 @@ const NavigationButtons = () => {
   return (
     <Stack direction="row" justifyContent="space-between" padding={2}>
       <Button
-        style={{ borderRadius: "16px", backgroundColor: "#F5F5F0", width: "20%" }}
+        style={{
+          borderRadius: "16px",
+          backgroundColor: "#F5F5F0",
+          width: "20%",
+        }}
         onClick={() =>
           setTextSampleIndex(
             (prev) => (prev + textSampleLength - 1) % textSampleLength
@@ -25,7 +29,7 @@ const NavigationButtons = () => {
         Previous
       </Button>
       <Button
-        style={{ borderRadius: "16px", backgroundColor: "white", width: "20%", }}
+        style={{ borderRadius: "16px", backgroundColor: "white", width: "20%" }}
         onClick={() =>
           setTextSampleIndex((prev) => (prev + 1) % textSampleLength)
         }

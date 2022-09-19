@@ -20,9 +20,9 @@ const TextSample = () => {
         padding: "10px",
         overflowY: "scroll",
         scrollbarWidth: "none",
-          "&::-webkit-scrollbar":{
-            display: "none"
-          }
+        "&::-webkit-scrollbar": {
+          display: "none",
+        },
       }}
     >
       <Typography fontFamily="Roboto Mono" fontSize="24px">

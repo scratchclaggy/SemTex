@@ -13,6 +13,8 @@ export type DatasetPermission = {
 
 export type Dataset = {
   id: string;
+  name?: string;
+  passkey?: string;
   instructions: string;
   textSamples: TextSample[];
   responseOptions: ResponseOption[];

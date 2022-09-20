@@ -1,9 +1,20 @@
-import { Alert, AlertTitle, Box, Grid, Stack, Typography } from "@mui/material";
+import {
+  Alert,
+  AlertTitle,
+  Box,
+  Button,
+  Grid,
+  Stack,
+  Typography,
+} from "@mui/material";
 import { atom, useAtomValue, useSetAtom } from "jotai";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { insertDataset } from "src/db/dataset";
 import useDataset from "src/hooks/dataset";
+import useDatasetList from "src/hooks/datasetList";
 import useUserResponses from "src/hooks/user_responses";
+import { Dataset } from "src/types/client";
 import CommentInput from "./CommentInput";
 import Highlighters from "./Highlighters";
 import History from "./history/History";
@@ -29,6 +40,9 @@ const Semtex = () => {
   useEffect(() => {
     setTextSampleID(dataset?.textSamples?.at(textSampleIndex)?.id ?? "");
   }, [textSampleIndex, dataset, setTextSampleID]);
+
+  const { datasetList, datasetListError } = useDatasetList();
+  const [response, setResponse] = useState<any>(null);
 
   return (
     <>
@@ -56,6 +70,33 @@ const Semtex = () => {
           )}
         </Alert>
       )}
+      {datasetListError && (
+        <pre>{JSON.stringify(datasetListError, null, 4)}</pre>
+      )}
+      {datasetList && <pre>{JSON.stringify(datasetList, null, 4)}</pre>}
+      {response && <pre>{JSON.stringify(response, null, 4)}</pre>}
+      <Button
+        onClick={async () => {
+          const newDataset = {
+            name: "From Frontend",
+            passkey: "randomly generated",
+            instructions: "",
+            text_samples: [{ body: "Some text sample" }],
+            highlight_options: [{ label: "my highlighter", color: "#FFFFFF" }],
+            response_options: [
+              {
+                label: "New Option",
+              },
+            ],
+          };
+
+          const res = await insertDataset(newDataset as unknown as Dataset);
+          console.log("HMM", res);
+          setResponse(res);
+        }}
+      >
+        New Dataset
+      </Button>
       {dataset && userResponses && (
         <>
           <InstructionModal />

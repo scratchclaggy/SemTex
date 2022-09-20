@@ -10,11 +10,10 @@ import {
 import { atom, useAtomValue, useSetAtom } from "jotai";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { insertDataset } from "src/db/dataset";
 import useDataset from "src/hooks/dataset";
 import useDatasetList from "src/hooks/datasetList";
 import useUserResponses from "src/hooks/user_responses";
-import { Dataset } from "src/types/client";
+import supabase from "src/utils/supabase";
 import CommentInput from "./CommentInput";
 import Highlighters from "./Highlighters";
 import History from "./history/History";
@@ -79,7 +78,7 @@ const Semtex = () => {
         onClick={async () => {
           const newDataset = {
             name: "From Frontend",
-            passkey: "randomly generated",
+            passkey: "new passkey",
             instructions: "",
             text_samples: [{ body: "Some text sample" }],
             highlight_options: [{ label: "my highlighter", color: "#FFFFFF" }],
@@ -90,7 +89,9 @@ const Semtex = () => {
             ],
           };
 
-          const res = await insertDataset(newDataset as unknown as Dataset);
+          const res = await supabase.rpc("add_dataset", {
+            datasetobj: newDataset,
+          });
           console.log("HMM", res);
           setResponse(res);
         }}

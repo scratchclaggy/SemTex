@@ -1,9 +1,8 @@
 import { Box, Button, ClickAwayListener, Stack } from "@mui/material";
+import convert from "color-convert";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import useDataset from "src/hooks/dataset";
-
-var convert = require("color-convert");
 
 const Highlighters = () => {
   const router = useRouter();

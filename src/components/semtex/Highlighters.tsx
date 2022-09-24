@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import useDataset from "src/hooks/dataset";
 
-var convert = require('color-convert');
+var convert = require("color-convert");
 
 const Highlighters = () => {
   const router = useRouter();
@@ -21,13 +21,13 @@ const Highlighters = () => {
     setActive(null);
   };
 
-  const isLight = (color: string) =>{
-    const hsl = convert.hex.hsl(color)
-    if(hsl[2] > 50){
-      return true
+  const isLight = (color: string) => {
+    const hsl = convert.hex.hsl(color);
+    if (hsl[2] > 50) {
+      return true;
     }
-    return false
-  }
+    return false;
+  };
   return (
     <ClickAwayListener onClickAway={handleClickAway}>
       <Box

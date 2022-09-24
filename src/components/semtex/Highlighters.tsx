@@ -3,6 +3,8 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import useDataset from "src/hooks/dataset";
 
+var convert = require('color-convert');
+
 const Highlighters = () => {
   const router = useRouter();
   const datasetID = router.query.datasetID as string | undefined;
@@ -19,6 +21,14 @@ const Highlighters = () => {
     setActive(null);
   };
 
+  const isLight = (color: string) =>{
+    const hsl = convert.hex.hsl(color)
+    console.log(hsl)
+    if(hsl[2] < 125){
+      return true
+    }
+    return false
+  }
   return (
     <ClickAwayListener onClickAway={handleClickAway}>
       <Box
@@ -45,8 +55,7 @@ const Highlighters = () => {
               variant="contained"
               sx={{
                 backgroundColor: highlighters.color,
-                textShadow:
-                  "1px 0 0 black, 0 -1px 0 black, 0 1px 0 black, -1px 0 0 black",
+                color: isLight(highlighters.color) === true ? "black" : "white",
                 outline: highlighters.color === active ? "solid" : null,
                 outlineWidth: "1px",
                 outlineColor: "black",
@@ -66,8 +75,7 @@ const Highlighters = () => {
             onClick={() => handleClick("delete")}
             variant="contained"
             sx={{
-              textShadow:
-                "1px 0 0 black, 0 -1px 0 black, 0 1px 0 black, -1px 0 0 black",
+              color: "black",
               backgroundColor: "white",
               outline: "delete" === active ? "solid" : null,
               outlineWidth: "1px",

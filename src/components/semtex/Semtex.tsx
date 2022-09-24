@@ -10,10 +10,10 @@ import {
 import { atom, useAtomValue, useSetAtom } from "jotai";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { deleteDataset, insertDataset } from "src/db/dataset";
 import useDataset from "src/hooks/dataset";
 import useDatasetList from "src/hooks/datasetList";
 import useUserResponses from "src/hooks/user_responses";
-import supabase from "src/utils/supabase";
 import CommentInput from "./CommentInput";
 import Highlighters from "./Highlighters";
 import History from "./history/History";
@@ -89,14 +89,17 @@ const Semtex = () => {
             ],
           };
 
-          const res = await supabase.rpc("add_dataset", {
-            datasetobj: newDataset,
-          });
-          console.log("HMM", res);
-          setResponse(res);
+          insertDataset(newDataset);
         }}
       >
         New Dataset
+      </Button>
+      <Button
+        onClick={() => {
+          deleteDataset("c0139742-62ec-4560-9dee-c894a7de3fe2");
+        }}
+      >
+        Delete Dataset
       </Button>
       {dataset && userResponses && (
         <>

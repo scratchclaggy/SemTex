@@ -13,15 +13,13 @@ export type DatasetPermission = {
 
 export type Dataset = {
   id: string;
-  name?: string;
-  passkey?: string;
   instructions: string;
   textSamples: TextSample[];
   responseOptions: ResponseOption[];
   highlightOptions: HighlightOption[];
 };
 
-export type DatasetBasic = {
+export type ListDataset = {
   id: string;
   name: string;
   create: string;

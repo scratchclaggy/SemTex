@@ -8,10 +8,7 @@ const InstructionModalButton = () => {
 
   return (
     <IconButton onClick={() => setIsOpen(true)}>
-      <HelpOutline
-        fontSize="large"
-        sx={{ position: "fixed", right: 64, top: 64 }}
-      />
+      <HelpOutline fontSize="large" />
     </IconButton>
   );
 };

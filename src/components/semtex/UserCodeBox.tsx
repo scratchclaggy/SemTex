@@ -39,24 +39,33 @@ const UserCodeBox = () => {
           {error.hint && <Typography>hint: {error.hint}</Typography>}
         </Alert>
       )}
-      <Stack alignItems="center" spacing={1} mt={"40vh"}>
-        <Typography>Welcome To SemTex</Typography>
+      <Stack alignItems="center" spacing={1} mt={"25vh"}>
+        <Typography
+          style={{
+            fontFamily: "Roboto",
+            fontSize: "50px",
+          }}
+        >
+          Please Enter Your Access Code
+        </Typography>
 
         <form onSubmit={handleSubmit(onSubmit)}>
           <input
             placeholder="Enter Code"
             style={{
-              width: "450px",
-              height: "85px",
+              width: "66vh",
+              height: "10vh",
+              minHeight: "100px",
+              minWidth: "500px",
               textAlign: "left",
               fontSize: "70px",
               margin: "5px",
+              borderRadius: "16px",
+              backgroundColor: "#F5F5F0",
             }}
             {...register("passKey")}
           />
         </form>
-        <a href="">Dont Have a Code?</a>
-        <a href="">Administrator Login</a>
       </Stack>
     </>
   );

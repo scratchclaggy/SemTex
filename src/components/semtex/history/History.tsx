@@ -1,4 +1,4 @@
-import { List } from "@mui/material";
+import { Box, List } from "@mui/material";
 import { useRouter } from "next/router";
 import useDataset from "src/hooks/dataset";
 import HistoryCard from "../history/HistoryCard";
@@ -9,19 +9,33 @@ const History = () => {
   const textSamples = dataset?.textSamples ?? [];
 
   return (
-    <List
+    <Box
       sx={{
-        margin: "10px",
-        width: "250px",
-        maxHeight: "80vh",
-        overflow: "hidden",
-        overflowY: "scroll",
+        padding: "10px",
+        margin: "8px",
+        marginTop: "25px",
+        width: "11vw",
+        backgroundColor: "#F5F5F0",
+        borderRadius: "16px",
       }}
     >
-      {textSamples.map((history) => (
-        <HistoryCard body={history.body} id={history.id} key={history.id} />
-      ))}
-    </List>
+      <List
+        sx={{
+          width: "10vw",
+          maxHeight: "80vh",
+          overflow: "hidden",
+          overflowY: "scroll",
+          scrollbarWidth: "none",
+          "&::-webkit-scrollbar": {
+            width: 0,
+          },
+        }}
+      >
+        {textSamples.map((history) => (
+          <HistoryCard body={history.body} id={history.id} key={history.id} />
+        ))}
+      </List>
+    </Box>
   );
 };
 

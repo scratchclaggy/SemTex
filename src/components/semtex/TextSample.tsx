@@ -12,7 +12,7 @@ const TextSample = () => {
   
   const textSample = dataset?.textSamples[textSampleIndex]?.body ?? "";
 
-  const base = {start: 0, end: textSample.length, value: textSample}
+  const highlightMap = [{start: 0, end: textSample.length, value: textSample}]
   
   const [markup, setMarkup] = useState([textSample])
 
@@ -26,13 +26,56 @@ const TextSample = () => {
     const selObj = window.getSelection()
 
     if(selObj != null && selObj.focusNode == selObj.anchorNode){
-
+      
       let start = selObj.anchorOffset
       let end = selObj.focusOffset
 
-      console.log()
+      // Make it so the user can highlight backwards
+      if(start > end){
+        let temp = start
+        start = end
+        end = temp
+      }
+      
+      const newSelection: highlightData = {start: start, end: end, value: selObj.toString()}
+
+      highlightMap.find((item, index) => {
+        // When we find the element which the selection enters in the middle of
+        if(start > item.start && end < item.end){
+          const newBefore: highlightData = {start: item.start, end: start-1,
+          value: textSample.substring(item.start, start-1)}
+          const newAfter: highlightData = {start: end+1, end: item.end, 
+          value: textSample.substring(end+1, item.end)}
+          
+          highlightMap.splice(index, 1)
+          highlightMap.push(newBefore)
+          highlightMap.push(newSelection)
+          highlightMap.push(newAfter)
+        }
+
+        // If the selection we choose is at the start of the text sample
+        else if(start == item.start && end < item.end){
+          const newAfter: highlightData = {start: end+1, end: item.end, 
+            value: textSample.substring(end+1, item.end)}
+
+          highlightMap.splice(index, 1)
+          highlightMap.push(newSelection)
+          highlightMap.push(newAfter)
+        }
+
+        // If the selection we choose is at the end of the text sample
+        else if(start > item.start && end == item.end){
+          const newBefore: highlightData = {start: item.start, end: start-1,
+            value: textSample.substring(item.start, start-1)}
+
+          highlightMap.splice(index, 1)
+          highlightMap.push(newBefore)
+          highlightMap.push(newSelection)
+        }
+
+        console.log(highlightMap)
+      })
     }
-    console.log("test")
   }
 
   return (

@@ -9,14 +9,14 @@ const Highlighters = () => {
   const { dataset, datasetError } = useDataset(datasetID);
   const HighlightOptions = dataset?.highlightOptions;
 
-  const [active, setActive] = useState("");
+  const [active, setActive] = useState<string | null>(null);
 
   const handleClick = (color: string) => {
     setActive(color);
   };
 
   const handleClickAway = () => {
-    setActive("");
+    setActive(null);
   };
 
   return (
@@ -47,7 +47,13 @@ const Highlighters = () => {
                 backgroundColor: highlighters.color,
                 textShadow:
                   "1px 0 0 black, 0 -1px 0 black, 0 1px 0 black, -1px 0 0 black",
-                boxShadow: highlighters.color === active ? "0 0 10px #000" : "",
+                outline: highlighters.color === active ? "solid" : null,
+                outlineWidth: "1px",
+                outlineColor: "black",
+                outlineOffset: "3px",
+                borderStyle: highlighters.color === active ? "solid" : null,
+                borderWidth: "1px",
+                borderColor: "black",
                 "&:hover": {
                   backgroundColor: highlighters.color,
                 },
@@ -62,11 +68,14 @@ const Highlighters = () => {
             sx={{
               textShadow:
                 "1px 0 0 black, 0 -1px 0 black, 0 1px 0 black, -1px 0 0 black",
-              boxShadow: "delete" === active ? "0 0 10px #000" : "",
               backgroundColor: "white",
-              borderColor: "black",
+              outline: "delete" === active ? "solid" : null,
+              outlineWidth: "1px",
+              outlineColor: "black",
+              outlineOffset: "3px",
+              borderStyle: "delete" === active ? "solid" : null,
               borderWidth: "1px",
-              borderStyle: "solid",
+              borderColor: "black",
               "&:hover": {
                 backgroundColor: "white",
               },

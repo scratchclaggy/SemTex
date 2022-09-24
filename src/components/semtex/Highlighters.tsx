@@ -1,62 +1,103 @@
-import { Button, Stack } from "@mui/material";
-import { useAtomValue } from "jotai";
+import { Box, Button, ClickAwayListener, Stack } from "@mui/material";
+import convert from "color-convert";
 import { useRouter } from "next/router";
-import { useMemo } from "react";
+import { useState } from "react";
 import useDataset from "src/hooks/dataset";
-import useUserResponses from "src/hooks/user_responses";
-import { highlightsDbAccess } from "src/utils/user_response";
-import { textSampleIdAtom } from "./Semtex";
 
 const Highlighters = () => {
   const router = useRouter();
   const datasetID = router.query.datasetID as string | undefined;
-  const { dataset } = useDataset(datasetID);
-  const { userResponses, mutate } = useUserResponses(datasetID);
+  const { dataset, datasetError } = useDataset(datasetID);
+  const HighlightOptions = dataset?.highlightOptions;
 
-  const textSampleID = useAtomValue(textSampleIdAtom);
-  const { insertHighlight, updateHighlightSelection, deleteHighlight } =
-    useMemo(
-      () => highlightsDbAccess(userResponses, textSampleID, mutate),
-      [userResponses, textSampleID, mutate]
-    );
+  const [active, setActive] = useState<string | null>(null);
 
-  // Demo buttons showing use of the different highlight functions
+  const handleClick = (color: string) => {
+    setActive(color);
+  };
+
+  const handleClickAway = () => {
+    setActive(null);
+  };
+
+  const isLight = (color: string) => {
+    const hsl = convert.hex.hsl(color);
+    if (hsl[2] > 50) {
+      return true;
+    }
+    return false;
+  };
   return (
-    <Stack
-      spacing={2}
-      padding={4}
-      mt={5}
-      sx={{
-        backgroundColor: "#F5F5F0",
-        borderRadius: "16px",
-        height: "50vh",
-      }}
-    >
-      <Button
-        variant="outlined"
-        onClick={() => {
-          insertHighlight("New highlight", dataset?.highlightOptions[0]);
+    <ClickAwayListener onClickAway={handleClickAway}>
+      <Box
+        marginTop={4}
+        style={{
+          backgroundColor: "#F5F5F0",
+          borderRadius: "16px",
+          width: "200px",
+          height: "75vh",
         }}
       >
-        Insert Highlight
-      </Button>
-      <Button
-        variant="outlined"
-        onClick={() => {
-          updateHighlightSelection("highlightID", Math.random().toString());
-        }}
-      >
-        Change Highlight Selection
-      </Button>
-      <Button
-        variant="outlined"
-        onClick={() => {
-          deleteHighlight("highlightID");
-        }}
-      >
-        Delete Highlight
-      </Button>
-    </Stack>
+        <Stack
+          spacing={5}
+          justifyContent="space-evenly"
+          alignItems="center"
+          style={{
+            padding: "10px",
+          }}
+        >
+          {HighlightOptions?.map((highlighters) => (
+            <Button
+              key={highlighters.id}
+              onClick={() => handleClick(highlighters.color)}
+              variant="contained"
+              fullWidth
+              sx={{
+                backgroundColor: highlighters.color,
+                padding: "5px",
+                minHeight: "8vh",
+                color: isLight(highlighters.color) === true ? "black" : "white",
+                outline: highlighters.color === active ? "solid" : null,
+                outlineWidth: "1px",
+                outlineColor: "black",
+                outlineOffset: "3px",
+                borderStyle: highlighters.color === active ? "solid" : null,
+                borderWidth: "1px",
+                borderColor: "black",
+                "&:hover": {
+                  backgroundColor: highlighters.color,
+                },
+              }}
+            >
+              {highlighters.label}
+            </Button>
+          ))}
+          <Button
+            onClick={() => handleClick("delete")}
+            variant="contained"
+            fullWidth
+            sx={{
+              padding: "5px",
+              minHeight: "8vh",
+              color: "black",
+              backgroundColor: "white",
+              outline: "delete" === active ? "solid" : null,
+              outlineWidth: "1px",
+              outlineColor: "black",
+              outlineOffset: "3px",
+              borderStyle: "delete" === active ? "solid" : null,
+              borderWidth: "1px",
+              borderColor: "black",
+              "&:hover": {
+                backgroundColor: "white",
+              },
+            }}
+          >
+            Delete Highlight
+          </Button>
+        </Stack>
+      </Box>
+    </ClickAwayListener>
   );
 };
 

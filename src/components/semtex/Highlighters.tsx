@@ -23,8 +23,7 @@ const Highlighters = () => {
 
   const isLight = (color: string) =>{
     const hsl = convert.hex.hsl(color)
-    console.log(hsl)
-    if(hsl[2] < 125){
+    if(hsl[2] > 50){
       return true
     }
     return false
@@ -37,7 +36,7 @@ const Highlighters = () => {
           backgroundColor: "#F5F5F0",
           borderRadius: "16px",
           width: "200px",
-          height: "60vh",
+          height: "75vh",
         }}
       >
         <Stack
@@ -53,8 +52,11 @@ const Highlighters = () => {
               key={highlighters.id}
               onClick={() => handleClick(highlighters.color)}
               variant="contained"
+              fullWidth
               sx={{
                 backgroundColor: highlighters.color,
+                padding: "5px",
+                minHeight: "8vh",
                 color: isLight(highlighters.color) === true ? "black" : "white",
                 outline: highlighters.color === active ? "solid" : null,
                 outlineWidth: "1px",
@@ -74,7 +76,10 @@ const Highlighters = () => {
           <Button
             onClick={() => handleClick("delete")}
             variant="contained"
+            fullWidth
             sx={{
+              padding: "5px",
+              minHeight: "8vh",
               color: "black",
               backgroundColor: "white",
               outline: "delete" === active ? "solid" : null,

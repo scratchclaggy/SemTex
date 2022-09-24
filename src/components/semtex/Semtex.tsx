@@ -1,18 +1,8 @@
-import {
-  Alert,
-  AlertTitle,
-  Box,
-  Button,
-  Grid,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { Alert, AlertTitle, Box, Grid, Stack, Typography } from "@mui/material";
 import { atom, useAtomValue, useSetAtom } from "jotai";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
-import { deleteDataset, insertDataset } from "src/db/dataset";
+import { useEffect } from "react";
 import useDataset from "src/hooks/dataset";
-import useDatasetList from "src/hooks/datasetList";
 import useUserResponses from "src/hooks/user_responses";
 import CommentInput from "./CommentInput";
 import Highlighters from "./Highlighters";
@@ -40,9 +30,6 @@ const Semtex = () => {
     setTextSampleID(dataset?.textSamples?.at(textSampleIndex)?.id ?? "");
   }, [textSampleIndex, dataset, setTextSampleID]);
 
-  const { datasetList, datasetListError } = useDatasetList();
-  const [response, setResponse] = useState<any>(null);
-
   return (
     <>
       {datasetError && (
@@ -69,38 +56,6 @@ const Semtex = () => {
           )}
         </Alert>
       )}
-      {datasetListError && (
-        <pre>{JSON.stringify(datasetListError, null, 4)}</pre>
-      )}
-      {datasetList && <pre>{JSON.stringify(datasetList, null, 4)}</pre>}
-      {response && <pre>{JSON.stringify(response, null, 4)}</pre>}
-      <Button
-        onClick={async () => {
-          const newDataset = {
-            name: "From Frontend",
-            passkey: "new passkey",
-            instructions: "",
-            text_samples: [{ body: "Some text sample" }],
-            highlight_options: [{ label: "my highlighter", color: "#FFFFFF" }],
-            response_options: [
-              {
-                label: "New Option",
-              },
-            ],
-          };
-
-          insertDataset(newDataset);
-        }}
-      >
-        New Dataset
-      </Button>
-      <Button
-        onClick={() => {
-          deleteDataset("c0139742-62ec-4560-9dee-c894a7de3fe2");
-        }}
-      >
-        Delete Dataset
-      </Button>
       {dataset && userResponses && (
         <>
           <InstructionModal />

@@ -25,7 +25,7 @@ export type DatasetBasic = {
   id: string;
   name: string;
   create: string;
-}
+};
 
 export type ResponseOption = {
   id: string;

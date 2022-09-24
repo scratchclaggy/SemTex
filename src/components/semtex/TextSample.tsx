@@ -9,12 +9,12 @@ const TextSample = () => {
   const router = useRouter();
   const { dataset } = useDataset(router.query.datasetID as string | undefined);
   const textSampleIndex = useAtomValue(textSampleIndexAtom);
-  
   const textSample = dataset?.textSamples[textSampleIndex]?.body ?? "";
 
   const highlightMap = [{start: 0, end: textSample.length, value: textSample}]
   
   const [markup, setMarkup] = useState([textSample])
+  const [atom, setAtom] = useState<string | null>(null)
 
   type highlightData = {
     start: number,
@@ -77,7 +77,7 @@ const TextSample = () => {
       })
     }
   }
-
+  
   return (
     <Box
       sx={{
@@ -93,7 +93,7 @@ const TextSample = () => {
       }}
     >
       <Typography onMouseUp={handleMouseUp}fontFamily="Roboto Mono" fontSize="24px">
-        {markup}
+        { atom ? "Testing" : markup}
       </Typography>
     </Box>
   );

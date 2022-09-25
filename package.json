@@ -15,6 +15,8 @@
     "@emotion/styled": "^11.10.0",
     "@mui/icons-material": "^5.8.4",
     "@mui/material": "^5.10.2",
+    "@mui/system": "^5.10.6",
+    "@mui/x-data-grid": "^5.17.4",
     "@supabase/supabase-js": "^1.35.6",
     "@types/lodash": "^4.14.184",
     "jotai": "^1.8.1",

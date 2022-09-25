@@ -22,7 +22,7 @@ export type Dataset = {
 export type ListDataset = {
   id: string;
   name: string;
-  create: string;
+  created: Date;
 };
 
 export type ResponseOption = {

@@ -15,7 +15,9 @@ const useDatasetList = () => {
   });
 
   return {
-    datasetList: data as ListDataset | undefined,
+    datasetList: data?.map((dataset) => {
+      return { ...dataset, created: new Date(dataset.created) };
+    }) as ListDataset[] | undefined,
     datasetListError: error as PostgrestError | null,
   };
 };

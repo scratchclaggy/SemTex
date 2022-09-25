@@ -1,6 +1,4 @@
-const CreateHighlighter = () =>{
-    return(
-        <div>CreateHighlighter</div>
-    );
+const CreateHighlighter = () => {
+  return <div>CreateHighlighter</div>;
 };
 export default CreateHighlighter;

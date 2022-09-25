@@ -15,7 +15,9 @@ const DatasetList = () => {
   const rows: GridRowsProp | undefined = useMemo(
     () =>
       datasetList
-        ?.filter((dataset) => dataset.name.toLowerCase().includes(filter))
+        ?.filter((dataset) =>
+          dataset.name.toLowerCase().includes(filter.toLowerCase())
+        )
         .map((dataset) => {
           return {
             ...dataset,
@@ -24,9 +26,10 @@ const DatasetList = () => {
             ),
           };
         }),
-    [datasetList]
+    [datasetList, filter]
   );
 
+  // Flex property sets width of column via ratio i.e. 7:2
   const columns: GridColDef[] = [
     { field: "name", headerName: "Name", flex: 7 },
     {

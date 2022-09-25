@@ -12,3 +12,12 @@ export type Highlight = {
   user_response_id: string;
   selection: string;
 };
+
+export type Dataset = {
+  name: string;
+  passkey: string;
+  instructions: string;
+  text_samples: { body: string }[];
+  highlight_options: { label: string; color: string }[];
+  response_options: { label: string }[];
+};

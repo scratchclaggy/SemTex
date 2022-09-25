@@ -3,8 +3,6 @@ import { Dataset } from "src/types/client";
 import supabase from "src/utils/supabase";
 import useSWR from "swr";
 
-type SingleDataSet = Omit<Dataset, "name" | "created">;
-
 const useDataset = (datasetID: string | undefined) => {
   const { data, error } = useSWR(datasetID && "dataset", async () => {
     const { data, error } = await supabase
@@ -27,7 +25,7 @@ const useDataset = (datasetID: string | undefined) => {
   });
 
   return {
-    dataset: data as SingleDataSet | undefined,
+    dataset: data as Dataset | undefined,
     datasetError: error as PostgrestError | null,
   };
 };

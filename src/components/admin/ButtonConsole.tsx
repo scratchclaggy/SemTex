@@ -7,15 +7,15 @@ import ButtonGroup from '@mui/material/ButtonGroup';
 
 
 const buttons = [
-  <Button key="one"><AddIcon/>Add Data Set</Button>,
-  <Button key="two"><DeleteIcon/>Delete Data Set</Button>,
-  <Button key="three"><DownloadIcon/>Download Data Set </Button>,
+  <Button key="add"><AddIcon/>Add Data Set</Button>,
+  <Button key="del"><DeleteIcon/>Delete Data Set</Button>,
+  <Button key="download"><DownloadIcon/> Download Data Set </Button>,
 ];
 
 const ButtonConsole = () => {
 
   return(
-    <ButtonGroup size="large" aria-label="large button group">
+    <ButtonGroup size="large" aria-label="large button group" fullWidth>
   {buttons}
 </ButtonGroup>
   )

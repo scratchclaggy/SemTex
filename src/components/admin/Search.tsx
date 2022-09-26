@@ -21,7 +21,7 @@ import DatasetList from "./DatasetList";
 const Search = () => {
   
 
- return  <TextField id="outlined-basic" label=<SearchIcon/>   color="primary"/>
+ return  <TextField id="outlined-basic" label=<SearchIcon/>     fullWidth />
 
  
 };

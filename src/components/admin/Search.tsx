@@ -1,28 +1,21 @@
 import SearchIcon from "@mui/icons-material/Search";
 import TextField from "@mui/material/TextField";
-import { atom, useAtom } from "jotai";
-import DatasetList from "./DatasetList";
-
-
- // const requestSearch = (searchedVal: string) => {
- //   const filteredRows = originalRows.filter((row) => {
- //     return row.name.toLowerCase().includes(searchedVal.toLowerCase());
- //   });
- //   setRows(filteredRows);
- // };
-//
- // const cancelSearch = () => {
-//    setSearchTerm("");
-//    requestSearch(searchTerm);
-//  };
-
-
+import { useAtom } from "jotai";
+import { filterAtom } from "./DatasetList";
 
 const Search = () => {
-  
+  const [filter, setFilter] = useAtom(filterAtom);
 
- return  <TextField id="outlined-basic" label=<SearchIcon/>     fullWidth />
-
- 
+  return (
+    <TextField
+      id="outlined-basic"
+      label={<SearchIcon />}
+      fullWidth
+      value={filter}
+      onChange={(e) => {
+        setFilter(e.target.value);
+      }}
+    />
+  );
 };
 export default Search;

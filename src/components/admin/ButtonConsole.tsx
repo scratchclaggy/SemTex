@@ -1,23 +1,34 @@
-import DownloadIcon from '@mui/icons-material/Download';
-import DeleteIcon from '@mui/icons-material/Delete';
-import AddIcon from '@mui/icons-material/Add';
-import Button from '@mui/material/Button';
-import Box from '@mui/material/Box';
-import ButtonGroup from '@mui/material/ButtonGroup';
+import AddIcon from "@mui/icons-material/Add";
+import DeleteIcon from "@mui/icons-material/Delete";
+import DownloadIcon from "@mui/icons-material/Download";
+import Button from "@mui/material/Button";
+import ButtonGroup from "@mui/material/ButtonGroup";
+import {selectedDatasetIDsAtom} from "./DatasetList"
+import {useAtomValue} from "jotai";
+import {deleteDatasets} from  "src/utils/dataset"
 
-
-const buttons = [
-  <Button key="add"><AddIcon/>Add Data Set</Button>,
-  <Button key="del"><DeleteIcon/>Delete Data Set</Button>,
-  <Button key="download"><DownloadIcon/> Download Data Set </Button>,
-];
 
 const ButtonConsole = () => {
+ 
+  const selectedDatasetIDs = useAtomValue(selectedDatasetIDsAtom);
 
-  return(
+  const onDelete=() => { console.log(selectedDatasetIDs);deleteDatasets(selectedDatasetIDs)}
+  return (
     <ButtonGroup size="large" aria-label="large button group" fullWidth>
-  {buttons}
-</ButtonGroup>
-  )
+      
+    <Button >
+      <AddIcon />
+      Add Data Set
+    </Button>
+    <Button  onClick={onDelete} >
+      <DeleteIcon />
+      Delete Data Set
+    </Button>
+    <Button >
+      <DownloadIcon /> Download Data Set
+    </Button>
+
+    </ButtonGroup>
+  );
 };
 export default ButtonConsole;

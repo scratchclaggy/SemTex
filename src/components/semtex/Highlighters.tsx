@@ -3,6 +3,9 @@ import convert from "color-convert";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import useDataset from "src/hooks/dataset";
+import { atom } from "jotai";
+
+export const highlightAtom = atom<string | null>(null)
 
 const Highlighters = () => {
   const router = useRouter();

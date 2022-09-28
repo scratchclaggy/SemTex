@@ -1,4 +1,4 @@
-import { Highlight, HighlightOption, UserResponse } from "src/types/client";
+import { Highlight, UserResponse } from "src/types/client";
 import supabase from "src/utils/supabase";
 import { KeyedMutator } from "swr";
 
@@ -72,38 +72,27 @@ export const highlightsDbAccess = (
 
   const highlights = matchingResponse?.highlights ?? [];
 
-  const insertHighlight = async (
-    selection: string,
-    highlightOption: HighlightOption | undefined
-  ) => {
-    if (matchingResponse === undefined || highlightOption === undefined) return;
+  const insertHighlight = async (highlight: Highlight) => {
+    console.log("SANITY")
+    if (matchingResponse === undefined || highlight.highlightOption === undefined)
+      return;
 
-    const { data } = await supabase
+    const { data, error } = await supabase
       .from("highlight")
       .insert({
-        selection,
-        highlight_option: highlightOption.id,
+        selection: highlight.selection,
+        start_index: highlight.startIndex,
+        end_index: highlight.endIndex,
+        highlight_option: highlight.highlightOption.id,
         user_response_id: matchingResponse.id,
       })
       .single();
 
+    console.log(data, error)
+
     mutate();
 
     return data as Highlight;
-  };
-
-  const updateHighlightSelection = async (
-    highlightID: string,
-    selection: string
-  ) => {
-    if (matchingResponse === undefined) return;
-
-    await supabase
-      .from("highlight")
-      .update({ selection })
-      .eq("id", highlightID);
-
-    mutate();
   };
 
   const deleteHighlight = async (highlightID: string) => {
@@ -117,7 +106,6 @@ export const highlightsDbAccess = (
   return {
     highlights,
     insertHighlight,
-    updateHighlightSelection,
     deleteHighlight,
   };
 };

@@ -40,7 +40,9 @@ export type TextSample = {
 export type Highlight = {
   id: string;
   selection: string;
-  highlightOption: HighlightOption;
+  startIndex: number;
+  endIndex: number;
+  highlightOption: HighlightOption | undefined;
 };
 
 export type UserResponse = {

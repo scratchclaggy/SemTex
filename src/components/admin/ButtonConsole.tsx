@@ -3,18 +3,23 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import DownloadIcon from "@mui/icons-material/Download";
 import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
-import { useAtomValue } from "jotai";
+import { useAtom } from "jotai";
 import { useRouter } from "next/router";
 import { deleteDatasets } from "src/utils/dataset";
+import { useSWRConfig } from "swr";
 import { selectedDatasetIDsAtom } from "./DatasetList";
 
 const ButtonConsole = () => {
-  const selectedDatasetIDs = useAtomValue(selectedDatasetIDsAtom);
+  const [selectedDatasetIDs, setSelectedDatasetIDs] = useAtom(
+    selectedDatasetIDsAtom
+  );
   const router = useRouter();
+  const { mutate } = useSWRConfig();
 
   const onDelete = () => {
-    console.log(selectedDatasetIDs);
     deleteDatasets(selectedDatasetIDs);
+    mutate("datasetList");
+    setSelectedDatasetIDs([]);
   };
 
   const onAdd = () => {

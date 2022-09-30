@@ -1,11 +1,11 @@
 import { Box, Button, ClickAwayListener, Stack } from "@mui/material";
 import convert from "color-convert";
 import { useRouter } from "next/router";
-import { useState } from "react";
 import useDataset from "src/hooks/dataset";
-import { atom } from "jotai";
+import { atom, useAtom } from "jotai";
+import { HighlightOption } from "src/types/client";
 
-export const highlightAtom = atom<string | null>(null)
+export const highlightAtom = atom<HighlightOption | null>(null)
 
 const Highlighters = () => {
   const router = useRouter();
@@ -13,10 +13,10 @@ const Highlighters = () => {
   const { dataset, datasetError } = useDataset(datasetID);
   const HighlightOptions = dataset?.highlightOptions;
 
-  const [active, setActive] = useState<string | null>(null);
+  const [active, setActive] = useAtom(highlightAtom)
 
-  const handleClick = (color: string) => {
-    setActive(color);
+  const handleClick = (highlighter: HighlightOption) => {
+    setActive(highlighter);
   };
 
   const handleClickAway = () => {
@@ -52,7 +52,7 @@ const Highlighters = () => {
           {HighlightOptions?.map((highlighters) => (
             <Button
               key={highlighters.id}
-              onClick={() => handleClick(highlighters.color)}
+              onClick={() => handleClick(highlighters)}
               variant="contained"
               fullWidth
               sx={{
@@ -60,11 +60,11 @@ const Highlighters = () => {
                 padding: "5px",
                 minHeight: "8vh",
                 color: isLight(highlighters.color) === true ? "black" : "white",
-                outline: highlighters.color === active ? "solid" : null,
+                outline: highlighters === active ? "solid" : null,
                 outlineWidth: "1px",
                 outlineColor: "black",
                 outlineOffset: "3px",
-                borderStyle: highlighters.color === active ? "solid" : null,
+                borderStyle: highlighters === active ? "solid" : null,
                 borderWidth: "1px",
                 borderColor: "black",
                 "&:hover": {
@@ -76,7 +76,7 @@ const Highlighters = () => {
             </Button>
           ))}
           <Button
-            onClick={() => handleClick("delete")}
+            // onClick={() => handleClick("delete")}
             variant="contained"
             fullWidth
             sx={{
@@ -84,11 +84,11 @@ const Highlighters = () => {
               minHeight: "8vh",
               color: "black",
               backgroundColor: "white",
-              outline: "delete" === active ? "solid" : null,
+              // outline: HighlightOption === active ? "solid" : null,
               outlineWidth: "1px",
               outlineColor: "black",
               outlineOffset: "3px",
-              borderStyle: "delete" === active ? "solid" : null,
+              // borderStyle: "delete" === active ? "solid" : null,
               borderWidth: "1px",
               borderColor: "black",
               "&:hover": {

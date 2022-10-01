@@ -34,10 +34,11 @@ const Semtex = () => {
   }, [dataset?.textSamples, setTextSampleID, navButtonIndex]);
 
   useEffect(() => {
-    const userResponse = userResponseList?.find(
-      (ur) => ur.textSampleID === textSampleID
+    setUserResponseID(
+      userResponseList?.find(
+        (userResponse) => userResponse.textSampleID === textSampleID
+      )?.id
     );
-    setUserResponseID(userResponse?.id ?? "");
   }, [userResponseList, textSampleID, setUserResponseID]);
 
   return (

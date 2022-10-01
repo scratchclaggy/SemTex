@@ -23,7 +23,7 @@ const CommentInput = () => {
       500,
       { leading: false, trailing: true }
     );
-  }, [userResponse]);
+  }, [userResponseID]);
 
   const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setTextFieldVal(event.target.value);

@@ -21,11 +21,11 @@ const HistoryCard = (textSample: TextSample) => {
   const setNavButtonIndex = useSetAtom(navButtonIndexAtom);
   const textSampleID = useAtomValue(textSampleIdAtom);
 
-  const thisUserResponse = userResponseList?.find(
-    (response) => response.textSampleID === textSample.id
+  const { userResponse } = useUserResponse(
+    userResponseList?.find(
+      (response) => response.textSampleID === textSample.id
+    )?.id
   );
-
-  const { userResponse } = useUserResponse(thisUserResponse?.id);
 
   const hasResponse = userResponse?.response !== null;
 

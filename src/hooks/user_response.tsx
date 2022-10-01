@@ -51,9 +51,14 @@ const useUserResponse = (userResponseID: string | undefined) => {
   };
 
   const deleteHighlight = async (highlightID: string) => {
-    await supabase.from("highlight").delete().eq("id", highlightID);
+    await supabase.from("highlight").delete().eq("id", highlightID).single();
 
-    const newUserResponse = { ...data, highlights: [] };
+    const newUserResponse = {
+      ...data,
+      highlights: data.highlights.filter(
+        (highlight: Highlight) => highlight.id !== highlightID
+      ),
+    };
 
     mutate(() => newUserResponse, {
       optimisticData: newUserResponse,

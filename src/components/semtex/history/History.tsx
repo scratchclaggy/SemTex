@@ -1,13 +1,11 @@
 import { Box, List } from "@mui/material";
 import { useRouter } from "next/router";
-import useTextSamples from "src/hooks/text_samples";
+import useDataset from "src/hooks/dataset";
 import HistoryCard from "../history/HistoryCard";
 
 const History = () => {
   const router = useRouter();
-  const { textSamples } = useTextSamples(
-    router.query.datasetID as string | undefined
-  );
+  const { dataset } = useDataset(router.query.datasetID as string | undefined);
 
   return (
     <Box
@@ -31,7 +29,7 @@ const History = () => {
           },
         }}
       >
-        {textSamples?.map((history) => (
+        {dataset?.textSamples?.map((history) => (
           <HistoryCard body={history.body} id={history.id} key={history.id} />
         ))}
       </List>

@@ -12,9 +12,8 @@ import { textSampleIdAtom, userResponseIdAtom } from "./Semtex";
 
 const TextSample = () => {
   const router = useRouter();
-  const datasetID = router.query.datasetID as string | undefined;
+  const { dataset } = useDataset(router.query.datasetID as string | undefined);
 
-  const { dataset } = useDataset(datasetID);
   const textSampleID = useAtomValue(textSampleIdAtom);
   const textSample = dataset?.textSamples.find(
     (textSample) => textSample.id === textSampleID
@@ -117,7 +116,7 @@ const TextSample = () => {
   return (
     <Box
       sx={{
-        backgroundColor: "#F5F5F0",
+        backgroundColor: activeHighlight ? "#DCDCDC" : "#F5F5F0",
         height: "40vh",
         borderRadius: "16px",
         padding: "10px",

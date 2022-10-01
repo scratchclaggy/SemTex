@@ -14,7 +14,7 @@ const useUserResponses = (datasetID: string | undefined) => {
             id,
             response:response_option(id, label),
             comments,
-            highlights:highlight(id, selection, highlightOption:highlight_option(id, label, color)),
+            highlights:highlight(id, selection, startIndex:start_index, endIndex:end_index, highlightOption:highlight_option(id, label, color)),
             textSample:text_sample!inner(id, datsetID:dataset_id)
           `
         )

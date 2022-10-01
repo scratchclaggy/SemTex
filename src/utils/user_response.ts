@@ -65,7 +65,7 @@ export const responseOptionDbAccess = (
 
 export const highlightsDbAccess = (
   userResponses: UserResponse[] | undefined,
-  textSampleID: string,
+  textSampleID: string | undefined,
   mutate: KeyedMutator<any>
 ) => {
   const matchingResponse = findMatchingResponse(userResponses, textSampleID);
@@ -73,7 +73,6 @@ export const highlightsDbAccess = (
   const highlights = matchingResponse?.highlights ?? [];
 
   const insertHighlight = async (highlight: Omit<Highlight, "id">) => {
-    console.log("SANITY")
     if (matchingResponse === undefined || highlight.highlightOption === undefined)
       return;
 

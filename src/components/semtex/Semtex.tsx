@@ -1,19 +1,9 @@
-import {
-  Alert,
-  AlertTitle,
-  Box,
-  Button,
-  Grid,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { Alert, AlertTitle, Box, Grid, Stack, Typography } from "@mui/material";
 import { atom, useAtomValue, useSetAtom } from "jotai";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import useDataset from "src/hooks/dataset";
 import useUserResponses from "src/hooks/user_responses";
-import { Highlight } from "src/types/client";
-import { highlightsDbAccess } from "src/utils/user_response";
 import CommentInput from "./CommentInput";
 import Highlighters from "./Highlighters";
 import History from "./history/History";
@@ -31,24 +21,10 @@ const Semtex = () => {
   const router = useRouter();
   const datasetID = router.query.datasetID as string | undefined;
   const { dataset, datasetError } = useDataset(datasetID);
-  const { userResponses, userResponsesError, mutate } =
-    useUserResponses(datasetID);
+  const { userResponses, userResponsesError } = useUserResponses(datasetID);
 
   const textSampleIndex = useAtomValue(textSampleIndexAtom);
   const setTextSampleID = useSetAtom(textSampleIdAtom);
-
-  ///////////////////////////////////////////////////
-  // DEMO
-
-  const textSampleID = useAtomValue(textSampleIdAtom);
-
-  const { highlights, insertHighlight, deleteHighlight } = highlightsDbAccess(
-    userResponses,
-    textSampleID,
-    mutate
-  );
-
-  ///////////////////////////////////////////////////
 
   useEffect(() => {
     setTextSampleID(dataset?.textSamples?.at(textSampleIndex)?.id ?? "");
@@ -80,34 +56,6 @@ const Semtex = () => {
           )}
         </Alert>
       )}
-      {/* DEMO */}
-      {highlights && <pre>{JSON.stringify(highlights, null, 2)}</pre>}
-      <Button
-        onClick={() => {
-          console.log("ADD");
-          const highlight: Highlight = {
-            id: "",
-            selection: "SELECTION",
-            startIndex: 0,
-            endIndex: 12,
-            highlightOption: dataset?.highlightOptions[0],
-          };
-
-          insertHighlight(highlight);
-        }}
-      >
-        ADD HIGHLIGHT
-      </Button>
-      <Button
-        onClick={() => {
-          console.log("DELETE");
-          deleteHighlight(highlights[0].id);
-        }}
-      >
-        DELETE HIGHLIGHT
-      </Button>
-
-      {/* DEMO */}
       {dataset && userResponses && (
         <>
           <InstructionModal />

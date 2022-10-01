@@ -3,10 +3,10 @@ import { Box, Button, ClickAwayListener, Stack } from "@mui/material";
 import { atom, useAtom, useAtomValue } from "jotai";
 import { useRouter } from "next/router";
 import useDataset from "src/hooks/dataset";
+import useHighlights from "src/hooks/highlights";
 import useUserResponses from "src/hooks/user_responses";
 import { HighlightOption } from "src/types/client";
 import { isLight } from "src/utils/color";
-import { highlightsDbAccess } from "src/utils/user_response";
 import { textSampleIdAtom } from "./Semtex";
 
 export const highlightAtom = atom<HighlightOption | undefined>(undefined);
@@ -18,11 +18,10 @@ const Highlighters = () => {
   const HighlightOptions = dataset?.highlightOptions;
 
   const textSampleId = useAtomValue(textSampleIdAtom);
-  const { userResponses, mutate } = useUserResponses(datasetID);
-  const { highlights, deleteHighlight } = highlightsDbAccess(
-    userResponses,
-    textSampleId,
-    mutate
+  const { userResponses } = useUserResponses(datasetID);
+  const { highlights, deleteHighlight } = useHighlights(
+    userResponses?.find((response) => response.textSample.id === textSampleId)
+      ?.id
   );
 
   const [active, setActive] = useAtom(highlightAtom);
@@ -36,7 +35,7 @@ const Highlighters = () => {
   };
 
   const handleDelete = () => {
-    highlights.forEach((highlight) => {
+    highlights?.forEach((highlight) => {
       deleteHighlight(highlight.id);
     });
   };

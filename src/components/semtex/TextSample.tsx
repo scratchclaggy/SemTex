@@ -8,7 +8,6 @@ import useHighlights from "src/hooks/highlights";
 import useUserResponses from "src/hooks/user_responses";
 import { Highlight } from "src/types/client";
 import { isLight } from "src/utils/color";
-import { highlightsDbAccess } from "src/utils/user_response";
 import { highlightAtom } from "./Highlighters";
 import { textSampleIndexAtom } from "./Semtex";
 
@@ -18,21 +17,15 @@ const TextSample = () => {
   const { dataset } = useDataset(datasetID);
   const textSampleIndex = useAtomValue(textSampleIndexAtom);
   const textSample = dataset?.textSamples[textSampleIndex];
-  const { userResponses, mutate } = useUserResponses(datasetID);
+  const { userResponses } = useUserResponses(datasetID);
   const [textContent, setTextContent] = useState<ReactJSXElement[]>([]);
 
-  const { highlights } = useHighlights(
+  const { highlights, insertHighlight } = useHighlights(
     userResponses?.find((response) => response.textSample.id === textSample?.id)
       ?.id
   );
 
   const activeHighlight = useAtomValue(highlightAtom);
-
-  const { insertHighlight, deleteHighlight } = highlightsDbAccess(
-    userResponses,
-    textSample?.id,
-    mutate
-  );
 
   useEffect(() => {
     // If no highlights

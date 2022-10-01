@@ -5,7 +5,7 @@ import useSWR from "swr";
 
 const useUserResponses = (datasetID: string | undefined) => {
   const { data, error, mutate } = useSWR(
-    datasetID && "userResponses",
+    datasetID,
     async () => {
       const { data, error } = await supabase
         .from("user_response")
@@ -14,7 +14,6 @@ const useUserResponses = (datasetID: string | undefined) => {
             id,
             response:response_option(id, label),
             comments,
-            highlights:highlight(id, selection, startIndex:start_index, endIndex:end_index, highlightOption:highlight_option(id, label, color)),
             textSample:text_sample!inner(id, datsetID:dataset_id)
           `
         )

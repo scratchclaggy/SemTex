@@ -1,4 +1,3 @@
-import { optionUnstyledClasses } from "@mui/base";
 import { PostgrestError } from "@supabase/supabase-js";
 import { Highlight } from "src/types/client";
 import supabase from "src/utils/supabase";
@@ -6,7 +5,7 @@ import useSWR from "swr";
 
 const useHighlights = (userResponseID: string | undefined) => {
   const { data, error, mutate } = useSWR(
-    userResponseID && "highlights",
+    userResponseID,
     async () => {
       const { data, error } = await supabase
         .from("highlight")
@@ -55,7 +54,7 @@ const useHighlights = (userResponseID: string | undefined) => {
   const deleteHighlight = async (highlightID: string) => {
     await supabase.from("highlight").delete().eq("id", highlightID);
 
-    mutate(()=>[], {optimisticData: [], rollbackOnError: true});
+    mutate(() => [], { optimisticData: [], rollbackOnError: true });
   };
 
   return {

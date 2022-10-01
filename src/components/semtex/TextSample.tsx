@@ -5,28 +5,27 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import useDataset from "src/hooks/dataset";
 import useHighlights from "src/hooks/highlights";
-import useUserResponses from "src/hooks/user_responses";
 import { Highlight } from "src/types/client";
 import { isLight } from "src/utils/color";
 import { highlightAtom } from "./Highlighters";
-import { textSampleIndexAtom } from "./Semtex";
+import { textSampleIdAtom, userResponseIdAtom } from "./Semtex";
 
 const TextSample = () => {
   const router = useRouter();
   const datasetID = router.query.datasetID as string | undefined;
-  const { dataset } = useDataset(datasetID);
-  const textSampleIndex = useAtomValue(textSampleIndexAtom);
-  const textSample = dataset?.textSamples[textSampleIndex];
-  const { userResponses } = useUserResponses(datasetID);
-  const [textContent, setTextContent] = useState<ReactJSXElement[]>([]);
 
-  const { highlights, insertHighlight } = useHighlights(
-    userResponses?.find((response) => response.textSample.id === textSample?.id)
-      ?.id
+  const { dataset } = useDataset(datasetID);
+  const textSampleID = useAtomValue(textSampleIdAtom);
+  const textSample = dataset?.textSamples.find(
+    (textSample) => textSample.id === textSampleID
   );
 
-  const activeHighlight = useAtomValue(highlightAtom);
+  const userResponseID = useAtomValue(userResponseIdAtom);
+  const { highlights, insertHighlight, deleteHighlight } =
+    useHighlights(userResponseID);
 
+  const activeHighlight = useAtomValue(highlightAtom);
+  const [textContent, setTextContent] = useState<ReactJSXElement[]>([]);
   useEffect(() => {
     // If no highlights
     if (highlights === undefined || highlights.length === 0) {
@@ -73,40 +72,8 @@ const TextSample = () => {
     }
 
     setTextContent(tempTextContent);
-  }, [highlights, textSample]);
+  }, [highlights, textSampleID, textSample?.body]);
 
-  // --------------------------------- Function for Comparing Highlight Indicies ----------------------
-  // const compareStart = (a: highlightData, b: highlightData) => {
-  //   if (a.start < b.start) {
-  //     return -1;
-  //   }
-  //   if (a.start > b.start) {
-  //     return 1;
-  //   }
-  //   return 0;
-  // };
-
-  // ------------------------------------ Function For Handling Sorting the Highlights ------------------
-
-  // Constructs the highlighter state using the given sorted highlightMap.
-  // const constructText = (map: highlightData[]) => {
-  //   const output: object[] = [];
-  //
-  //   map.forEach((item) => {
-  //     // If the item is plain text, put it in a span
-  //     if (item.color == null) {
-  //       output.push(<span>{item.value}</span>);
-  //     }
-  //     // If the item is a highlight, put it in a mark with the corresponding
-  //     // color
-  //     else {
-  //       output.push(<mark>{item.value}</mark>);
-  //     }
-  //   });
-  //
-  //   return output;
-  // };
-  //
   // // -------------------------------------- Function For Handling the Highlight --------------------------
   const handleMouseUp = () => {
     if (activeHighlight === undefined) return;
@@ -132,10 +99,13 @@ const TextSample = () => {
       };
 
       highlights
-        .filter((highlight) => highlight.endIndex > start)
+        ?.filter(
+          (highlight) =>
+            highlight.startIndex < end && highlight.endIndex > start
+        )
         .forEach((highlight) => {
           console.log(highlight);
-          // deleteHighlight(highlight.id);
+          deleteHighlight(highlight.id);
         });
 
       insertHighlight(newSelection);

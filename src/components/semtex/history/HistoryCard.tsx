@@ -5,21 +5,21 @@ import {
   ListItemIcon,
   Typography,
 } from "@mui/material";
-import { useAtom, useSetAtom } from "jotai";
+import { useSetAtom, useAtomValue } from "jotai";
 import { useRouter } from "next/router";
 import { useMemo } from "react";
 import useDataset from "src/hooks/dataset";
 import useUserResponses from "src/hooks/user_responses";
 import type { TextSample } from "src/types/client";
-import { textSampleIdAtom, textSampleIndexAtom } from "../Semtex";
+import { navButtonIndexAtom, textSampleIdAtom } from "../Semtex";
 
 const HistoryCard = (textSample: TextSample) => {
   const router = useRouter();
   const datasetID = router.query.datasetID as string | undefined;
   const { dataset } = useDataset(datasetID);
   const { userResponses } = useUserResponses(datasetID);
-  const setTextSampleIndex = useSetAtom(textSampleIndexAtom);
-  const [textSampleID, setTextSampleID] = useAtom(textSampleIdAtom);
+  const setNavButtonIndex = useSetAtom(navButtonIndexAtom)
+  const textSampleID = useAtomValue(textSampleIdAtom);
 
   const currentResponse = useMemo(() => {
     return userResponses?.find(
@@ -42,13 +42,12 @@ const HistoryCard = (textSample: TextSample) => {
     null;
 
   const handleClick = () => {
-    const textSampleIndex = dataset?.textSamples.findIndex(
+    const selectedTextSampleID = dataset?.textSamples.findIndex(
       (sample) => sample.id === textSample.id
     );
 
-    if (textSampleIndex !== undefined) {
-      setTextSampleID(textSample.id);
-      setTextSampleIndex(textSampleIndex);
+    if (selectedTextSampleID !== undefined) {
+      setNavButtonIndex(selectedTextSampleID)
     }
   };
 

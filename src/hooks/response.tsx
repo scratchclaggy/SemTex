@@ -3,23 +3,19 @@ import { Highlight } from "src/types/client";
 import supabase from "src/utils/supabase";
 import useSWR from "swr";
 
-const useHighlights = (userResponseID: string | undefined) => {
+const useResponse = (userResponseID: string | undefined) => {
   const { data, error, mutate } = useSWR(
-    userResponseID,
+    userResponseID && `response/${userResponseID}`,
     async () => {
       const { data, error } = await supabase
-        .from("highlight")
+        .from("user_response")
         .select(
           `
             id,
-            highlightOption:highlight_option(label, color),
-            selection,
-            startIndex:start_index,
-            endIndex:end_index
+            label
           `
         )
-        .eq("user_response_id", userResponseID)
-        .order("start_index");
+        .eq("user_response_id", userResponseID);
 
       if (error) throw error;
 
@@ -65,4 +61,4 @@ const useHighlights = (userResponseID: string | undefined) => {
   };
 };
 
-export default useHighlights;
+export default useResponse;

@@ -5,11 +5,11 @@ import {
   ListItemIcon,
   Typography,
 } from "@mui/material";
-import { useSetAtom, useAtomValue } from "jotai";
+import { useAtomValue, useSetAtom } from "jotai";
 import { useRouter } from "next/router";
-import { useMemo } from "react";
 import useDataset from "src/hooks/dataset";
-import useUserResponses from "src/hooks/user_responses";
+import useUserResponse from "src/hooks/user_response";
+import useUserResponseList from "src/hooks/user_response_list";
 import type { TextSample } from "src/types/client";
 import { navButtonIndexAtom, textSampleIdAtom } from "../Semtex";
 
@@ -17,29 +17,32 @@ const HistoryCard = (textSample: TextSample) => {
   const router = useRouter();
   const datasetID = router.query.datasetID as string | undefined;
   const { dataset } = useDataset(datasetID);
-  const { userResponses } = useUserResponses(datasetID);
-  const setNavButtonIndex = useSetAtom(navButtonIndexAtom)
+  const { userResponseList } = useUserResponseList(datasetID);
+  const setNavButtonIndex = useSetAtom(navButtonIndexAtom);
   const textSampleID = useAtomValue(textSampleIdAtom);
 
-  const currentResponse = useMemo(() => {
-    return userResponses?.find(
-      (response) => response.textSample.id === textSample.id
-    );
-  }, [userResponses, textSample.id]);
+  const thisUserResponse = userResponseList?.find(
+    (response) => response.textSampleID === textSample.id
+  );
 
-  const isSelected = currentResponse?.textSample.id === textSampleID;
+  const { userResponse } = useUserResponse(thisUserResponse?.id);
 
-  const responseIcon =
-    currentResponse?.response !== null ? (
-      (currentResponse?.highlights?.length ?? 0) > 0 ? (
-        // Returns <DoneAll /> when there's a response && highlights
-        <DoneAll />
-      ) : (
-        // Returns <Done /> when there's a response
-        <Done />
-      )
-    ) : // Else returns null
-    null;
+  const hasResponse = userResponse?.response !== null;
+
+  const hasHighlights = (userResponse?.highlights?.length ?? 0) !== 0;
+
+  const isSelected = textSample.id === textSampleID;
+
+  const responseIcon = hasResponse ? (
+    hasHighlights ? (
+      // Returns <DoneAll /> when there's a response && highlights
+      <DoneAll />
+    ) : (
+      // Returns <Done /> when there's a response
+      <Done />
+    )
+  ) : // Else returns null
+  null;
 
   const handleClick = () => {
     const selectedTextSampleID = dataset?.textSamples.findIndex(
@@ -47,7 +50,7 @@ const HistoryCard = (textSample: TextSample) => {
     );
 
     if (selectedTextSampleID !== undefined) {
-      setNavButtonIndex(selectedTextSampleID)
+      setNavButtonIndex(selectedTextSampleID);
     }
   };
 

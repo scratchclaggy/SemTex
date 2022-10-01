@@ -4,7 +4,7 @@ import { useAtomValue } from "jotai";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import useDataset from "src/hooks/dataset";
-import useHighlights from "src/hooks/highlights";
+import useUserResponse from "src/hooks/user_response";
 import { Highlight } from "src/types/client";
 import { isLight } from "src/utils/color";
 import { highlightAtom } from "./Highlighters";
@@ -21,8 +21,10 @@ const TextSample = () => {
   );
 
   const userResponseID = useAtomValue(userResponseIdAtom);
-  const { highlights, insertHighlight, deleteHighlight } =
-    useHighlights(userResponseID);
+  const { userResponse, insertHighlight, deleteHighlight } =
+    useUserResponse(userResponseID);
+
+  const highlights = userResponse?.highlights;
 
   const activeHighlight = useAtomValue(highlightAtom);
   const [textContent, setTextContent] = useState<ReactJSXElement[]>([]);

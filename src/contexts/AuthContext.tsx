@@ -1,6 +1,6 @@
 import { ApiError, Session, User } from "@supabase/supabase-js";
 import React, { useContext, useEffect, useState } from "react";
-import supabase from "src/utils/supabase";
+import supabase from "../utils/supabase";
 
 interface AuthContextInterface {
   user: User | null;

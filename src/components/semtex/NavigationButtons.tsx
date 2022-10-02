@@ -1,7 +1,7 @@
 import { Button, Stack } from "@mui/material";
 import { useSetAtom } from "jotai";
 import { useRouter } from "next/router";
-import useDataset from "src/hooks/dataset";
+import useDataset from "../../hooks/dataset";
 import { textSampleIndexAtom } from "./Semtex";
 
 const NavigationButtons = () => {

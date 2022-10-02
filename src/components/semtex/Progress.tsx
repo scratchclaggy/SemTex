@@ -2,7 +2,7 @@ import Box from "@mui/material/Box";
 import LinearProgress from "@mui/material/LinearProgress";
 import Typography from "@mui/material/Typography";
 import { useRouter } from "next/router";
-import useUserResponses from "src/hooks/user_responses";
+import useUserResponses from "../../hooks/user_responses";
 
 const ProgressBar = () => {
   const router = useRouter();

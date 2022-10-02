@@ -1,6 +1,6 @@
 import { PostgrestError } from "@supabase/supabase-js";
-import { Dataset } from "src/types/client";
-import supabase from "src/utils/supabase";
+import { Dataset } from "../types/client";
+import supabase from "../utils/supabase";
 import useSWR from "swr";
 
 const useDataset = (datasetID: string | undefined) => {

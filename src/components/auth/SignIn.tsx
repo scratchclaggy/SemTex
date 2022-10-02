@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import { useRouter } from "next/router";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
-import useAuth from "src/contexts/AuthContext";
+import useAuth from "../../contexts/AuthContext";
 import Link from "../ui/Link";
 
 type FormInput = {

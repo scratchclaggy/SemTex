@@ -49,7 +49,7 @@ const useUserResponse = (userResponseID: string | undefined) => {
 
     const newUserResponse = {
       ...data,
-      highlights: [...data?.highlights, highlight].sort(
+      highlights: [...( data?.highlights ?? [] ), highlight].sort(
         (a, b) => a.startIndex - b.startIndex
       ),
     };

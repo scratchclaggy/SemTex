@@ -3,27 +3,39 @@ import supabase from "src/utils/supabase";
 import useSWR from "swr";
 
 const useUserResponseList = (datasetID: string | undefined) => {
-  const { data, error } = useSWR(datasetID, async () => {
-    const { data, error } = await supabase
-      .from("user_response")
-      .select("id, text_sample!inner(id, dataset_id), response_option_id")
-      .eq("text_sample.dataset_id", datasetID);
+  const { data, error } = useSWR(
+    datasetID,
+    async () => {
+      const { data, error } = await supabase
+        .from("user_response")
+        .select(
+          `
+          id,
+          text_sample!inner(
+            id, dataset_id
+          ),
+          response_option_id,
+          highlight(id)
+        `
+        )
+        .eq("text_sample.dataset_id", datasetID);
 
-    if (error) throw error;
+      if (error) throw error;
 
-    return data;
-  });
+      return data;
+    },
+    { revalidateOnFocus: false }
+  );
 
   return {
     userResponseList: data?.map((userResponse) => {
       return {
         id: userResponse.id,
         textSampleID: userResponse.text_sample?.id,
-        responseOptionID: userResponse.response_option_id,
+        hasResponse: userResponse.response_option_id !== null,
+        hasHighlight: userResponse.highlight.length !== 0,
       };
-    }) as
-      | { id: string; textSampleID: string; responseOptionID: string }[]
-      | undefined,
+    }),
     userResponseListError: error as PostgrestError | null,
   };
 };

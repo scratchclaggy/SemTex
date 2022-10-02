@@ -105,7 +105,6 @@ const TextSample = () => {
             highlight.startIndex < end && highlight.endIndex > start
         )
         .forEach((highlight) => {
-          console.log(highlight);
           deleteHighlight(highlight.id);
         });
 

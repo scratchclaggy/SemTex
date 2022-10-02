@@ -5,25 +5,35 @@ import supabase from "src/utils/supabase";
 import useSWR, { useSWRConfig } from "swr";
 
 const useUserResponse = (userResponseID: string | undefined) => {
-  const { data, error, mutate } = useSWR(userResponseID, async () => {
-    const { data, error } = await supabase
-      .from("user_response")
-      .select(
-        `
+  const { data, error, mutate } = useSWR(
+    userResponseID,
+    async () => {
+      const { data, error } = await supabase
+        .from("user_response")
+        .select(
+          `
             id,
             response:response_option(id, label),
             comments,
             highlights:highlight(id, selection, startIndex:start_index, endIndex:end_index, highlightOption:highlight_option(id, label, color)),
             textSampleID:text_sample_id
           `
-      )
-      .eq("id", userResponseID)
-      .single();
+        )
+        .eq("id", userResponseID)
+        .single();
 
-    if (error) throw error;
+      if (error) throw error;
 
-    return data;
-  });
+      return {
+        ...data,
+        highlights: data?.highlights.sort(
+          (a: { startIndex: number }, b: { startIndex: number }) =>
+            a.startIndex - b.startIndex
+        ),
+      };
+    },
+    { revalidateOnFocus: false }
+  );
 
   const router = useRouter();
   const { mutate: genericMutate } = useSWRConfig();
@@ -39,7 +49,7 @@ const useUserResponse = (userResponseID: string | undefined) => {
 
     const newUserResponse = {
       ...data,
-      highlights: [...data.highlights, highlight].sort(
+      highlights: [...data?.highlights, highlight].sort(
         (a, b) => a.startIndex - b.startIndex
       ),
     };
@@ -55,7 +65,7 @@ const useUserResponse = (userResponseID: string | undefined) => {
 
     const newUserResponse = {
       ...data,
-      highlights: data.highlights.filter(
+      highlights: data?.highlights.filter(
         (highlight: Highlight) => highlight.id !== highlightID
       ),
     };

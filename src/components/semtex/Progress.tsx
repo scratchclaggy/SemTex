@@ -11,8 +11,7 @@ const ProgressBar = () => {
   );
 
   const completed =
-    userResponseList?.filter((response) => response.responseOptionID !== null)
-      .length ?? 0;
+    userResponseList?.filter((response) => response.hasResponse).length ?? 0;
   const count = userResponseList?.length ?? 0;
   const percentage = count ? (completed / count) * 100 : 0;
 

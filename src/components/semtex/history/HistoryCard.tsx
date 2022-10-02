@@ -8,7 +8,6 @@ import {
 import { useAtomValue, useSetAtom } from "jotai";
 import { useRouter } from "next/router";
 import useDataset from "src/hooks/dataset";
-import useUserResponse from "src/hooks/user_response";
 import useUserResponseList from "src/hooks/user_response_list";
 import type { TextSample } from "src/types/client";
 import { navButtonIndexAtom, textSampleIdAtom } from "../Semtex";
@@ -21,20 +20,12 @@ const HistoryCard = (textSample: TextSample) => {
   const setNavButtonIndex = useSetAtom(navButtonIndexAtom);
   const textSampleID = useAtomValue(textSampleIdAtom);
 
-  const { userResponse } = useUserResponse(
-    userResponseList?.find(
-      (response) => response.textSampleID === textSample.id
-    )?.id
+  const userResponse = userResponseList?.find(
+    (userResponse) => userResponse.textSampleID === textSample.id
   );
 
-  const hasResponse = userResponse?.response !== null;
-
-  const hasHighlights = (userResponse?.highlights?.length ?? 0) !== 0;
-
-  const isSelected = textSample.id === textSampleID;
-
-  const responseIcon = hasResponse ? (
-    hasHighlights ? (
+  const responseIcon = userResponse?.hasResponse ? (
+    userResponse?.hasHighlight ? (
       // Returns <DoneAll /> when there's a response && highlights
       <DoneAll />
     ) : (
@@ -43,6 +34,8 @@ const HistoryCard = (textSample: TextSample) => {
     )
   ) : // Else returns null
   null;
+
+  const isSelected = textSample.id === textSampleID;
 
   const handleClick = () => {
     const selectedTextSampleID = dataset?.textSamples.findIndex(

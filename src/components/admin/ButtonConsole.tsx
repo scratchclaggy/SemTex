@@ -3,50 +3,38 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import DownloadIcon from "@mui/icons-material/Download";
 import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
-import { useAtom,useAtomValue,useSetAtom } from "jotai";
+import { useAtomValue, useSetAtom } from "jotai";
 import { useRouter } from "next/router";
-import { deleteDatasets } from "src/utils/dataset";
 import supabase from "src/utils/supabase";
-import { useSWRConfig } from "swr";
 import { selectedDatasetIDsAtom } from "./DatasetList";
 import { deleteModalAtom } from "./DeleteConfirmationModal";
-import AlertDialog from "./DeleteConfirmationModal";
 const ButtonConsole = () => {
-  const setIsOpen= useSetAtom(deleteModalAtom);
+  const setIsOpen = useSetAtom(deleteModalAtom);
 
-  const selectedDatasetIDs = useAtomValue(
-    selectedDatasetIDsAtom
-  );
+  const selectedDatasetIDs = useAtomValue(selectedDatasetIDsAtom);
 
   const router = useRouter();
-  
-  
+
   const handleClickOpen = () => {
     setIsOpen(true);
-    
   };
 
-  
   const onDownload = () => {
     selectedDatasetIDs.forEach(async (datasetID) => {
-      const {data,error} = await supabase.rpc("download_dataset", {
+      const { data, error } = await supabase.rpc("download_dataset", {
         downloaded_dataset_id: datasetID,
       });
       //const blob = new Blob([respose.data], { type: json})
 
-     if (error){
-      return 
-     }
-      console.log(data);
+      if (error) {
+        return;
+      }
       const json = JSON.stringify(data);
       const blob = new Blob([json], { type: "application/json" });
       const a = document.createElement("a");
-      a.href= URL.createObjectURL(blob)
-     a.download= `${data?.at(0)?.dataset?.name}.json`
-     a.click()
-
-
-
+      a.href = URL.createObjectURL(blob);
+      a.download = `${data?.at(0)?.dataset?.name}.json`;
+      a.click();
     });
   };
 
@@ -59,9 +47,7 @@ const ButtonConsole = () => {
         <AddIcon />
         Add Data Set
       </Button>
-      <Button
-        onClick ={()=> setIsOpen(true)}
-      >
+      <Button onClick={() => setIsOpen(true)}>
         <DeleteIcon />
         Delete Data Set
       </Button>

@@ -17,7 +17,7 @@ const Highlighters = () => {
   const HighlightOptions = dataset?.highlightOptions;
 
   const userResponseID = useAtomValue(userResponseIdAtom);
-  const { userResponse, deleteHighlight } = useUserResponse(userResponseID);
+  const { userResponse, clearHighlights } = useUserResponse(userResponseID);
 
   const [active, setActive] = useAtom(highlightAtom);
 
@@ -29,11 +29,6 @@ const Highlighters = () => {
     setActive(undefined);
   };
 
-  const handleDelete = () => {
-    userResponse?.highlights?.forEach((highlight) => {
-      deleteHighlight(highlight.id);
-    });
-  };
 
   return (
     <ClickAwayListener onClickAway={handleClickAway}>
@@ -81,7 +76,7 @@ const Highlighters = () => {
             </Button>
           ))}
           <Button
-            onClick={handleDelete}
+            onClick={clearHighlights}
             variant="contained"
             fullWidth
             sx={{

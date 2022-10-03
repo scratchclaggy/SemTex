@@ -37,19 +37,35 @@ const useUserResponse = (userResponseID: string | undefined) => {
 
   const router = useRouter();
   const { mutate: genericMutate } = useSWRConfig();
+  const refetchUserReponseList = () => {
+    genericMutate(router.query.datasetID as string | undefined);
+  };
 
-  const insertHighlight = async (highlight: Omit<Highlight, "id">) => {
-    await supabase.from("highlight").insert({
-      selection: highlight.selection,
-      start_index: highlight.startIndex,
-      end_index: highlight.endIndex,
-      highlight_option: highlight.highlightOption?.id,
-      user_response_id: userResponseID,
-    });
+  const setHighlights = async (
+    highlights: Omit<Highlight, "id">[] | undefined
+  ) => {
+    if (highlights === undefined) return;
+
+    await supabase
+      .from("highlight")
+      .delete()
+      .eq("user_response_id", userResponseID);
+
+    await supabase.from("highlight").insert(
+      highlights.map((highlight) => {
+        return {
+          selection: highlight.selection,
+          start_index: highlight.startIndex,
+          end_index: highlight.endIndex,
+          highlight_option: highlight.highlightOption?.id,
+          user_response_id: userResponseID,
+        };
+      })
+    );
 
     const newUserResponse = {
       ...data,
-      highlights: [...( data?.highlights ?? [] ), highlight].sort(
+      highlights: [...(highlights ?? [])].sort(
         (a, b) => a.startIndex - b.startIndex
       ),
     };
@@ -58,22 +74,25 @@ const useUserResponse = (userResponseID: string | undefined) => {
       optimisticData: newUserResponse,
       rollbackOnError: true,
     });
+    refetchUserReponseList();
   };
 
-  const deleteHighlight = async (highlightID: string) => {
-    await supabase.from("highlight").delete().eq("id", highlightID).single();
+  const clearHighlights = async () => {
+    await supabase
+      .from("highlight")
+      .delete()
+      .eq("user_response_id", userResponseID);
 
     const newUserResponse = {
       ...data,
-      highlights: data?.highlights.filter(
-        (highlight: Highlight) => highlight.id !== highlightID
-      ),
+      highlights: [],
     };
 
     mutate(() => newUserResponse, {
       optimisticData: newUserResponse,
       rollbackOnError: true,
     });
+    genericMutate(router.query.datasetID as string | undefined);
   };
 
   const updateResponseOption = async (responseOptionID: string) => {
@@ -91,7 +110,6 @@ const useUserResponse = (userResponseID: string | undefined) => {
       optimisticData: newUserResponse,
       rollbackOnError: true,
     });
-    genericMutate(router.query.datasetID as string | undefined);
   };
 
   const updateComment = async (newComment: string) => {
@@ -112,8 +130,8 @@ const useUserResponse = (userResponseID: string | undefined) => {
   return {
     userResponse: data as UserResponse | undefined,
     userResponseError: error as PostgrestError | null,
-    insertHighlight,
-    deleteHighlight,
+    setHighlights,
+    clearHighlights,
     updateResponseOption,
     updateComment,
   };

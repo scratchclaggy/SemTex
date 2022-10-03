@@ -20,8 +20,7 @@ const TextSample = () => {
   );
 
   const userResponseID = useAtomValue(userResponseIdAtom);
-  const { userResponse, insertHighlight, deleteHighlight } =
-    useUserResponse(userResponseID);
+  const { userResponse, setHighlights } = useUserResponse(userResponseID);
 
   const highlights = userResponse?.highlights;
 
@@ -99,16 +98,13 @@ const TextSample = () => {
         highlightOption: activeHighlight,
       };
 
-      highlights
-        ?.filter(
-          (highlight) =>
-            highlight.startIndex < end && highlight.endIndex > start
-        )
-        .forEach((highlight) => {
-          deleteHighlight(highlight.id);
-        });
+      const tempHighlights = highlights?.filter(
+        (highlight) =>
+          highlight.startIndex >= end || highlight.endIndex <= start
+      );
+      (tempHighlights ?? []).push(newSelection as Highlight);
 
-      insertHighlight(newSelection);
+      setHighlights(tempHighlights);
     }
   };
 

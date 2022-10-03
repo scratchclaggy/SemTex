@@ -28,7 +28,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <LoginGuard>
           <>
             <Header />
-            <Container maxWidth="lg">
+            <Container maxWidth="xl">
               <Component {...pageProps} />
             </Container>
           </>

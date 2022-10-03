@@ -1,9 +1,9 @@
 import { Alert, AlertTitle, Box, Grid, Stack, Typography } from "@mui/material";
-import { atom, useAtomValue, useSetAtom } from "jotai";
+import { atom, useAtom, useAtomValue, useSetAtom } from "jotai";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import useDataset from "src/hooks/dataset";
-import useUserResponses from "src/hooks/user_responses";
+import useUserResponseList from "src/hooks/user_response_list";
 import CommentInput from "./CommentInput";
 import Highlighters from "./Highlighters";
 import History from "./history/History";
@@ -14,21 +14,32 @@ import Progress from "./Progress";
 import ResponseSelector from "./response_selector/ResponseSelector";
 import TextSample from "./TextSample";
 
-export const textSampleIndexAtom = atom(0);
-export const textSampleIdAtom = atom("");
+export const navButtonIndexAtom = atom(0);
+export const textSampleIdAtom = atom<string | undefined>(undefined);
+export const userResponseIdAtom = atom<string | undefined>(undefined);
 
 const Semtex = () => {
   const router = useRouter();
   const datasetID = router.query.datasetID as string | undefined;
   const { dataset, datasetError } = useDataset(datasetID);
-  const { userResponses, userResponsesError } = useUserResponses(datasetID);
+  const { userResponseList, userResponseListError } =
+    useUserResponseList(datasetID);
 
-  const textSampleIndex = useAtomValue(textSampleIndexAtom);
-  const setTextSampleID = useSetAtom(textSampleIdAtom);
+  const navButtonIndex = useAtomValue(navButtonIndexAtom);
+  const [textSampleID, setTextSampleID] = useAtom(textSampleIdAtom);
+  const setUserResponseID = useSetAtom(userResponseIdAtom);
 
   useEffect(() => {
-    setTextSampleID(dataset?.textSamples?.at(textSampleIndex)?.id ?? "");
-  }, [textSampleIndex, dataset, setTextSampleID]);
+    setTextSampleID(dataset?.textSamples.at(navButtonIndex)?.id);
+  }, [dataset?.textSamples, setTextSampleID, navButtonIndex]);
+
+  useEffect(() => {
+    setUserResponseID(
+      userResponseList?.find(
+        (userResponse) => userResponse.textSampleID === textSampleID
+      )?.id
+    );
+  }, [userResponseList, textSampleID, setUserResponseID]);
 
   return (
     <>
@@ -44,26 +55,26 @@ const Semtex = () => {
           )}
         </Alert>
       )}
-      {userResponsesError && (
+      {userResponseListError && (
         <Alert severity="error">
-          <AlertTitle>Error {userResponsesError.code}</AlertTitle>
-          <Typography>{userResponsesError.message}</Typography>
-          {userResponsesError.details && (
-            <Typography>Details: {userResponsesError.details}</Typography>
+          <AlertTitle>Error {userResponseListError.code}</AlertTitle>
+          <Typography>{userResponseListError.message}</Typography>
+          {userResponseListError.details && (
+            <Typography>Details: {userResponseListError.details}</Typography>
           )}
-          {userResponsesError.hint && (
-            <Typography>hint: {userResponsesError.hint}</Typography>
+          {userResponseListError.hint && (
+            <Typography>hint: {userResponseListError.hint}</Typography>
           )}
         </Alert>
       )}
-      {dataset && userResponses && (
-        <>
+      {dataset && userResponseList && (
+        <div>
           <InstructionModal />
-          <Grid container columns={12} spacing={8}>
-            <Grid item xs={2} marginRight={8}>
+          <Grid container columns={12} spacing={3}>
+            <Grid item xs={4}>
               <History />
             </Grid>
-            <Grid item xs={6} marginLeft={4}>
+            <Grid item xs={5}>
               <Stack justifyContent="space-between" height="80vh">
                 <Box mt={2}>
                   <Progress />
@@ -81,7 +92,7 @@ const Semtex = () => {
               <InstructionModalButton />
             </Grid>
           </Grid>
-        </>
+        </div>
       )}
     </>
   );

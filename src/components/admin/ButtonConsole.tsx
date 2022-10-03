@@ -4,16 +4,16 @@ import DownloadIcon from "@mui/icons-material/Download";
 import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import { useAtom } from "jotai";
-import { filter } from "lodash";
 import { useRouter } from "next/router";
 import { deleteDatasets } from "src/utils/dataset";
 import supabase from "src/utils/supabase";
-import { json } from "stream/consumers";
 import { useSWRConfig } from "swr";
 import { selectedDatasetIDsAtom } from "./DatasetList";
-
+import { DeleteModalAtom } from "./DeleteConfirmationModal";
 
 const ButtonConsole = () => {
+  const [_, setIsOpen] = useAtom(DeleteModalAtom);
+
   const [selectedDatasetIDs, setSelectedDatasetIDs] = useAtom(
     selectedDatasetIDsAtom
   );
@@ -26,22 +26,20 @@ const ButtonConsole = () => {
     setSelectedDatasetIDs([]);
   };
 
-  
-
   const onDownload = () => {
     selectedDatasetIDs.forEach(async (datasetID) => {
-      
       const respose = await supabase.rpc("download_dataset", {
         downloaded_dataset_id: datasetID,
-  
-    
       });
       //const blob = new Blob([respose.data], { type: json})
 
       console.log(respose);
+      var json = JSON.stringify(respose);
+      var blob = new Blob([json], { type: "octet/stream" });
+      var url = window.URL.createObjectURL(blob);
+      window.location.assign(url);
     });
-    };
-
+  };
 
   const onAdd = () => {
     router.push(`admin/new-dataset`);
@@ -52,7 +50,12 @@ const ButtonConsole = () => {
         <AddIcon />
         Add Data Set
       </Button>
-      <Button onClick={onDelete}>
+      <Button
+        onClick={() => {
+          const response = setIsOpen(true);
+          console.log(response);
+        }}
+      >
         <DeleteIcon />
         Delete Data Set
       </Button>

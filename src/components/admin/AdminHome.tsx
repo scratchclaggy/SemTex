@@ -1,8 +1,8 @@
 import { Stack } from "@mui/material";
 import ButtonConsole from "./ButtonConsole";
 import DatasetList from "./DatasetList";
+import AlertDialog from "./DeleteModal";
 import Search from "./Search";
-
 const AdminHome = () => {
   return (
     <Stack
@@ -11,6 +11,7 @@ const AdminHome = () => {
       alignItems="center"
       paddingTop={10}
     >
+      <AlertDialog />
       <Search />
       <ButtonConsole />
       <DatasetList />

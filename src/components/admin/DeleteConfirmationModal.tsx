@@ -4,12 +4,32 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import { atom, useAtom } from "jotai";
+import { atom, useAtom, useAtomValue } from "jotai";
+import { deleteDatasets } from "src/utils/dataset";
+import { mutate, useSWRConfig } from "swr";
+import { selectedDatasetIDsAtom } from "./DatasetList";
 
-export const DeleteModalAtom = atom(false);
+export const deleteModalAtom = atom(false);
+
+
 
 function AlertDialog() {
-  const [isOpen, setIsOpen] = useAtom(DeleteModalAtom);
+  const [isOpen, setIsOpen] = useAtom(deleteModalAtom);
+  const [selectedDatasetIDs,setSelectedDatasetIDs] = useAtom(
+    selectedDatasetIDsAtom
+  );
+
+  const { mutate } = useSWRConfig();
+
+  const onDelete = () => {
+    deleteDatasets(selectedDatasetIDs);
+    mutate("datasetList"); 
+
+    setSelectedDatasetIDs([]);
+    setIsOpen(false);
+
+
+  };
 
   const handleClose = () => {
     setIsOpen(false);
@@ -19,7 +39,7 @@ function AlertDialog() {
     <div>
       <Dialog
         open={isOpen}
-        onClose={handleClose}
+
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
@@ -33,7 +53,7 @@ function AlertDialog() {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>No</Button>
-          <Button onClick={handleClose} autoFocus>
+          <Button onClick={onDelete} >
             Yes
           </Button>
         </DialogActions>

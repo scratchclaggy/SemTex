@@ -6,7 +6,6 @@ import HistoryCard from "../history/HistoryCard";
 const History = () => {
   const router = useRouter();
   const { dataset } = useDataset(router.query.datasetID as string | undefined);
-  const textSamples = dataset?.textSamples ?? [];
 
   return (
     <Box
@@ -14,14 +13,13 @@ const History = () => {
         padding: "10px",
         margin: "8px",
         marginTop: "25px",
-        width: "11vw",
+        width: "100%",
         backgroundColor: "#F5F5F0",
         borderRadius: "16px",
       }}
     >
       <List
         sx={{
-          width: "10vw",
           maxHeight: "80vh",
           overflow: "hidden",
           overflowY: "scroll",
@@ -31,7 +29,7 @@ const History = () => {
           },
         }}
       >
-        {textSamples.map((history) => (
+        {dataset?.textSamples?.map((history) => (
           <HistoryCard body={history.body} id={history.id} key={history.id} />
         ))}
       </List>

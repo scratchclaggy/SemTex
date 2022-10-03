@@ -110,6 +110,7 @@ const useUserResponse = (userResponseID: string | undefined) => {
       optimisticData: newUserResponse,
       rollbackOnError: true,
     });
+    refetchUserReponseList();
   };
 
   const updateComment = async (newComment: string) => {

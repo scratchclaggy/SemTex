@@ -1,4 +1,4 @@
-import CreateHighlighter from "./CreateHighlighter";
+import CreateHighlighter from "./CreateHighlighterComponents/CreateHighlighter";
 import CreateResponses from "./CreateResponses";
 
 const CreateDataset = () => {

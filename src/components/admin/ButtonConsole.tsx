@@ -2,7 +2,7 @@ import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
 import DownloadIcon from "@mui/icons-material/Download";
 import Button from "@mui/material/Button";
-import ButtonGroup from "@mui/material/ButtonGroup";
+import Stack from "@mui/material/Stack";
 import { useAtomValue, useSetAtom } from "jotai";
 import { useRouter } from "next/router";
 import supabase from "src/utils/supabase";
@@ -39,19 +39,27 @@ const ButtonConsole = () => {
   };
 
   return (
-    <ButtonGroup size="large" aria-label="large button group" fullWidth>
-      <Button onClick={onAdd}>
+    <Stack direction="row" spacing={2}>
+      <Button variant="outlined" onClick={onAdd}>
         <AddIcon />
         Add Data Set
       </Button>
-      <Button onClick={() => setDeleteModalOpen(true)}>
+      <Button
+        variant="outlined"
+        disabled={selectedDatasetIDs.length === 0}
+        onClick={() => setDeleteModalOpen(true)}
+      >
         <DeleteIcon />
         Delete Data Set
       </Button>
-      <Button onClick={onDownload}>
+      <Button
+        variant="outlined"
+        disabled={selectedDatasetIDs.length === 0}
+        onClick={onDownload}
+      >
         <DownloadIcon /> Download Data Set
       </Button>
-    </ButtonGroup>
+    </Stack>
   );
 };
 export default ButtonConsole;

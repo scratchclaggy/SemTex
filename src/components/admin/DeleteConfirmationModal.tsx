@@ -36,7 +36,7 @@ const DeleteConfirmationDialog = () => {
   return (
     <div>
       <Dialog open={isOpen}>
-        <DialogTitle>{" Are You Sure?"}</DialogTitle>
+        <DialogTitle>Are You Sure?</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
             Do you really want to delete these records? This process cannot be

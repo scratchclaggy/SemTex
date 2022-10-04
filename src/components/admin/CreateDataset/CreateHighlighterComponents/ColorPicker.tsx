@@ -1,6 +1,7 @@
-import { Box, Button, Stack } from '@mui/material';
+import { Button, Stack, Typography } from '@mui/material';
 import { useState } from 'react';
 import { HuePicker } from 'react-color';
+import RectangleIcon from '@mui/icons-material/Rectangle';
 
 const ColorPicker = () => {
   const [color, setColor] = useState("#ff0000")
@@ -15,9 +16,12 @@ const ColorPicker = () => {
   }
 
   return (
-    <Stack direction="row">
+    <Stack direction="row" alignItems="center">
+      <Typography>
+        Select Color: 
+      </Typography>
       <Button  onClick={handleDisplay}>
-        Pick Color:
+        <RectangleIcon sx={{backgroundColor:{color}}}/>
       </Button>
       {display && (
         <HuePicker

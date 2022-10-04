@@ -56,7 +56,7 @@ const DatasetList = () => {
         </Alert>
       )}
       {rows && (
-        <Box height="80vh" width="90vw" bgcolor="#F5F5F0">
+        <Box height="80vh" width={"100%"} bgcolor="#F5F5F0">
           <DataGrid
             columns={columns}
             rows={rows}

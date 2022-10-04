@@ -8,17 +8,14 @@ const CreateDataset = () => {
   };
 
   return (
-    <form 
-    style={{
-      width: "50%",
-      marginLeft: "25%",
-      textAlign: "center"
-    }}
+    <form
+      style={{
+        width: "50%",
+        marginLeft: "25%",
+        textAlign: "center",
+      }}
     >
-      <Stack
-      paddingTop={10}
-      spacing={3}
-      >
+      <Stack paddingTop={10} spacing={3}>
         <input type="text" placeholder="Dataset Name" />
         <input type="text" placeholder="Dataset Instructions" />
         <input type="button" value="Upload" onClick={handleUpload} />

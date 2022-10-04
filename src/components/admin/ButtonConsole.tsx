@@ -7,7 +7,8 @@ import { useAtomValue, useSetAtom } from "jotai";
 import { useRouter } from "next/router";
 import supabase from "src/utils/supabase";
 import { selectedDatasetIDsAtom } from "./DatasetList";
-import { deleteModalAtom } from "./DeleteModal";
+import { deleteModalAtom } from "./DeleteConfirmationModal";
+
 const ButtonConsole = () => {
   const setIsOpen = useSetAtom(deleteModalAtom);
 
@@ -20,7 +21,6 @@ const ButtonConsole = () => {
       const { data, error } = await supabase.rpc("download_dataset", {
         downloaded_dataset_id: datasetID,
       });
-      //const blob = new Blob([respose.data], { type: json})
 
       if (error) {
         return;
@@ -37,6 +37,7 @@ const ButtonConsole = () => {
   const onAdd = () => {
     router.push(`admin/new-dataset`);
   };
+
   return (
     <ButtonGroup size="large" aria-label="large button group" fullWidth>
       <Button onClick={onAdd}>

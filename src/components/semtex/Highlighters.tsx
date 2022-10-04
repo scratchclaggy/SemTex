@@ -29,7 +29,6 @@ const Highlighters = () => {
     setActive(undefined);
   };
 
-
   return (
     <ClickAwayListener onClickAway={handleClickAway}>
       <Box

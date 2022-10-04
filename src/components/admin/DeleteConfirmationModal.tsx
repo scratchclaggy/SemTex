@@ -13,7 +13,7 @@ import { selectedDatasetIDsAtom } from "./DatasetList";
 
 export const deleteModalAtom = atom(false);
 
-function AlertDialog() {
+const DeleteConfirmationDialog = () => {
   const [isOpen, setIsOpen] = useAtom(deleteModalAtom);
   const [selectedDatasetIDs, setSelectedDatasetIDs] = useAtom(
     selectedDatasetIDsAtom
@@ -35,12 +35,8 @@ function AlertDialog() {
 
   return (
     <div>
-      <Dialog
-        open={isOpen}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">{" Are You Sure?"}</DialogTitle>
+      <Dialog open={isOpen}>
+        <DialogTitle>{" Are You Sure?"}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
             Do you really want to delete these records? This process cannot be
@@ -68,5 +64,5 @@ function AlertDialog() {
       </Dialog>
     </div>
   );
-}
-export default AlertDialog;
+};
+export default DeleteConfirmationDialog;

@@ -1,7 +1,7 @@
 import { Stack } from "@mui/material";
 import ButtonConsole from "./ButtonConsole";
 import DatasetList from "./DatasetList";
-import AlertDialog from "./DeleteModal";
+import DeleteConfirmationDialog from "./DeleteConfirmationModal";
 import Search from "./Search";
 const AdminHome = () => {
   return (
@@ -11,7 +11,7 @@ const AdminHome = () => {
       alignItems="center"
       paddingTop={10}
     >
-      <AlertDialog />
+      <DeleteConfirmationDialog />
       <Search />
       <ButtonConsole />
       <DatasetList />

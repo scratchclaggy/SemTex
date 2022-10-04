@@ -10,7 +10,7 @@ import { selectedDatasetIDsAtom } from "./DatasetList";
 import { deleteModalAtom } from "./DeleteConfirmationModal";
 
 const ButtonConsole = () => {
-  const setIsOpen = useSetAtom(deleteModalAtom);
+  const setDeleteModalOpen = useSetAtom(deleteModalAtom);
 
   const selectedDatasetIDs = useAtomValue(selectedDatasetIDsAtom);
 
@@ -44,7 +44,7 @@ const ButtonConsole = () => {
         <AddIcon />
         Add Data Set
       </Button>
-      <Button onClick={() => setIsOpen(true)}>
+      <Button onClick={() => setDeleteModalOpen(true)}>
         <DeleteIcon />
         Delete Data Set
       </Button>

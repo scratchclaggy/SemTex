@@ -16,9 +16,22 @@ const CreateResponses = () => {
       <Typography>Create Responses</Typography>
       <Grid>
         {fields.map((item, index) => (
-          <Grid container item alignItems="center" key={item.id} spacing={2}>
+          <Grid 
+          container 
+          item 
+          alignItems="center" 
+          key={item.id} 
+          spacing={2}
+          sx={{
+            paddingLeft: "50px",
+            justifyContent: "center",
+            justifyItems: "center"
+          }}
+          >
             <Grid item>
-              <input/>
+              <input
+              placeholder="Set Response Option"
+              />
             </Grid>
             <Grid item>
               <IconButton onClick={() => {

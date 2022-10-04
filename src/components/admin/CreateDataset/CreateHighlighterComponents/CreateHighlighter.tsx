@@ -4,6 +4,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
 import { useState } from "react";
 import ColorPicker from "./ColorPicker";
+import { AddBoxTwoTone } from "@mui/icons-material";
 
 const CreateHighlighter = () => {
   const { control, register } = useForm();
@@ -17,7 +18,14 @@ const CreateHighlighter = () => {
       <Typography>Create Highlighters</Typography>
       <Grid>
         {fields.map((item, index) => (
-          <Grid container item key={item.id} spacing={2} alignItems="center">
+          <Grid 
+          container 
+          item 
+          key={item.id} 
+          spacing={2} 
+          alignItems="center"
+          justifyContent="center"
+          >
             <Grid item>
               <ColorPicker/>
             </Grid>

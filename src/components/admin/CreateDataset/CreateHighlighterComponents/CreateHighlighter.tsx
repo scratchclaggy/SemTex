@@ -22,7 +22,9 @@ const CreateHighlighter = () => {
               <ColorPicker/>
             </Grid>
             <Grid item>
-              <input/>
+              <input
+              placeholder="Set Highlighter Label"
+              />
             </Grid>
             <Grid item>
               <IconButton onClick={() => {

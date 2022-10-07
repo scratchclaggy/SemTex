@@ -1,39 +1,34 @@
 import { TextField } from "@mui/material";
 import { useAtomValue } from "jotai";
-import { debounce } from "lodash";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import useUserResponse from "src/hooks/user_response";
+import { useDebounce } from "usehooks-ts";
 import { userResponseIdAtom } from "./Semtex";
 
 const CommentInput = () => {
   const userResponseID = useAtomValue(userResponseIdAtom);
   const { userResponse, updateComment } = useUserResponse(userResponseID);
-  const comment = userResponse?.comments;
 
-  const [textFieldVal, setTextFieldVal] = useState("");
+  const [comment, setComment] = useState("");
+
   useEffect(() => {
-    setTextFieldVal(comment ?? "");
-  }, [userResponseID]);
-
-  const debounceInput = useMemo(() => {
-    return debounce(
-      (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-        updateComment(event.target.value);
-      },
-      500,
-      { leading: false, trailing: true }
-    );
+    setComment(userResponse?.comments ?? "");
   }, [userResponseID]);
 
   const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setTextFieldVal(event.target.value);
-    debounceInput(event);
+    setComment(event.target.value);
   };
+
+  const debouncedComment = useDebounce(comment, 500);
+
+  useEffect(() => {
+    updateComment(userResponse, debouncedComment);
+  }, [debouncedComment]);
 
   return (
     <TextField
       onChange={handleChange}
-      value={textFieldVal}
+      value={comment}
       multiline
       fullWidth
       placeholder="additional comments"

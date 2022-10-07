@@ -104,7 +104,7 @@ const TextSample = () => {
       );
       (tempHighlights ?? []).push(newSelection as Highlight);
 
-      setHighlights(tempHighlights);
+      setHighlights(userResponse, tempHighlights);
     }
   };
 

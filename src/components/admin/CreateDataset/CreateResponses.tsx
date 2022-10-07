@@ -3,13 +3,13 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { Box, Grid, IconButton, Typography } from "@mui/material";
 import { Control, FieldValues, useFieldArray, useForm, useFormContext } from "react-hook-form";
 
-const CreateResponses = () => {
-
+const CreateResponses = ({value: Array<String>, onChange: function}) => {
+  
   const { control, register } = useFormContext();
   const { fields, append, prepend, remove, swap, move, insert } = useFieldArray(
     {
       control,
-      name: "test",
+      name: "responses",
     }
   );
 
@@ -31,7 +31,7 @@ const CreateResponses = () => {
             }}
           >
             <Grid item>
-              <input placeholder="Set Response Option" />
+              <input {...register("Response Option")}placeholder="Set Response Option" />
             </Grid>
             <Grid item>
               <IconButton
@@ -47,7 +47,7 @@ const CreateResponses = () => {
         <Grid item>
           <IconButton
             onClick={() => {
-              append({ testing: fields.length.toString(), name: "" });
+              append({ responseItem: fields.length.toString(), name: "" });
             }}
           >
             <AddIcon />

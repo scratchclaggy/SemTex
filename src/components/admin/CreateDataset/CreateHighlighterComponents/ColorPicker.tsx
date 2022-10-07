@@ -4,7 +4,6 @@ import { useState } from "react";
 import { PhotoshopPicker } from "react-color";
 
 const ColorPicker = () => {
-  const [rectangle, setRectangle] = useState("#FF0000");
   const [color, setColor] = useState("#FF0000");
   const [display, setDisplay] = useState(false);
 

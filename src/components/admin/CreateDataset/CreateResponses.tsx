@@ -1,10 +1,11 @@
 import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Box, Grid, IconButton, Typography } from "@mui/material";
-import { useFieldArray, useForm } from "react-hook-form";
+import { Control, FieldValues, useFieldArray, useForm, useFormContext } from "react-hook-form";
 
 const CreateResponses = () => {
-  const { control, register } = useForm();
+
+  const { control, register } = useFormContext();
   const { fields, append, prepend, remove, swap, move, insert } = useFieldArray(
     {
       control,

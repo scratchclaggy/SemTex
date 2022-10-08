@@ -14,11 +14,9 @@ const CreateDataset = () => {
     }
   });
   
-  const onSubmit = (data: any) => console.log(data)
-
   return (
     <FormProvider {...methods}>
-      <form onSubmit={methods.handleSubmit(onSubmit)}
+      <form onSubmit={methods.handleSubmit(console.log)}
         style={{
           width: "50%",
           marginLeft: "25%",
@@ -52,13 +50,7 @@ const CreateDataset = () => {
             <input type="file" id="myFile" name="filename"/>
           </Box>
 
-          <Controller 
-            control={methods.control}
-            name="responses"
-            render={({field: {value, onChange}}) => (
-              <CreateResponses />
-            )}
-          />
+          <CreateResponses />
           
           <Controller 
             control={methods.control}

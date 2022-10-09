@@ -9,7 +9,7 @@ const CreateResponses = () => {
   const { fields, append, prepend, remove, swap, move, insert } = useFieldArray(
     {
       control,
-      name: "responses",
+      name: "response_options",
     }
   );
 
@@ -32,7 +32,7 @@ const CreateResponses = () => {
             }}
           >
             <Grid item>
-              <input {...register(`responses[${index}].value`)} placeholder="Set Response Option" />
+              <input {...register(`response_options[${index}].value`)} placeholder="Set Response Option" />
             </Grid>
             <Grid item>
               <IconButton
@@ -49,7 +49,7 @@ const CreateResponses = () => {
         <Grid item>
           <IconButton
             onClick={() => {
-              append({ name: `response ${fields.length.toString()}}`, value: ""});
+              append({value: ""});
             }}
           >
             <AddIcon />

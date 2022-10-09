@@ -1,9 +1,11 @@
 import RectangleIcon from "@mui/icons-material/Rectangle";
 import { Box, Button, Stack, Typography } from "@mui/material";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { PhotoshopPicker } from "react-color";
+import { useFormContext } from "react-hook-form";
 
-const ColorPicker = () => {
+const ColorPicker = (index: any) => {
+  const { control, register } = useFormContext();
   const [color, setColor] = useState("#FF0000");
   const [display, setDisplay] = useState(false);
 
@@ -23,6 +25,10 @@ const ColorPicker = () => {
     setDisplay(!display);
   };
 
+  useEffect(() => {
+   register(`hex[${index}]`, {value: {color}})
+  });
+
   return (
     <Stack direction="row" alignItems="center">
       <Typography>Select Color:</Typography>
@@ -34,9 +40,9 @@ const ColorPicker = () => {
           <PhotoshopPicker
             header="Highlighter Colour"
             color={color}
-            onChange={(color) => handleColorChange(color.hex)}
             onAccept={handleAccept}
             onCancel={handleCancel}
+            // {...register(`highlighters[${index}].hex`)}
           />
         </Box>
       )}

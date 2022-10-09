@@ -10,7 +10,7 @@ const CreateHighlighter = () => {
   const { fields, append, prepend, remove, swap, move, insert } = useFieldArray(
     {
       control,
-      name: "highlighters",
+      name: "highlight_options",
     }
   );
 
@@ -28,10 +28,10 @@ const CreateHighlighter = () => {
             justifyContent="center"
           >
             <Grid item>
-              <ColorPicker />
+              <ColorPicker index={index}/>
             </Grid>
             <Grid item>
-              <input {...register(`highlighters[${index}].value`)} placeholder="Set Highlighter Label" />
+              <input {...register(`highlight_options[${index}].label`)} placeholder="Set Highlighter Label" />
             </Grid>
             <Grid item>
               <IconButton
@@ -47,7 +47,7 @@ const CreateHighlighter = () => {
         <Grid item>
           <IconButton
             onClick={() => {
-              append({ highlighterItem: fields.length.toString(), value: "" });
+              append({ highlighterItem: fields.length.toString(), label: "", hex: "" });
             }}
           >
             <AddIcon />

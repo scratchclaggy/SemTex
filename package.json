@@ -22,6 +22,7 @@
     "jotai": "^1.8.1",
     "lodash": "^4.17.21",
     "next": "12.2.4",
+    "random-words": "^1.2.0",
     "react": "18.2.0",
     "react-color": "^2.19.3",
     "react-dom": "18.2.0",

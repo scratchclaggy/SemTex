@@ -20,7 +20,7 @@ type FormInput = {
 const SignIn = () => {
   // Redirect to home page if user already exists
   const router = useRouter();
-  const { user, authError, signIn } = useAuth();
+  const { user, authError, isAdmin, signIn } = useAuth();
 
   const {
     control,
@@ -33,14 +33,15 @@ const SignIn = () => {
   };
 
   if (user) {
-    router.push("/");
+    if (isAdmin) router.push("/admin");
+    else router.push("/");
     return null;
   }
 
   return (
     <Stack
       marginTop={16}
-      marginLeft={22}
+      mx="auto"
       spacing={2}
       padding={5}
       width="30vw"

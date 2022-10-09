@@ -42,6 +42,7 @@ const useUserResponse = (userResponseID: string | undefined) => {
   };
 
   const setHighlights = async (
+    userResponse: UserResponse | undefined,
     highlights: Omit<Highlight, "id">[] | undefined
   ) => {
     if (highlights === undefined) return;
@@ -64,7 +65,7 @@ const useUserResponse = (userResponseID: string | undefined) => {
     );
 
     const newUserResponse = {
-      ...data,
+      ...userResponse,
       highlights: [...(highlights ?? [])].sort(
         (a, b) => a.startIndex - b.startIndex
       ),
@@ -77,14 +78,14 @@ const useUserResponse = (userResponseID: string | undefined) => {
     refetchUserReponseList();
   };
 
-  const clearHighlights = async () => {
+  const clearHighlights = async (userResponse: UserResponse | undefined) => {
     await supabase
       .from("highlight")
       .delete()
       .eq("user_response_id", userResponseID);
 
     const newUserResponse = {
-      ...data,
+      ...userResponse,
       highlights: [],
     };
 
@@ -95,16 +96,19 @@ const useUserResponse = (userResponseID: string | undefined) => {
     genericMutate(router.query.datasetID as string | undefined);
   };
 
-  const updateResponseOption = async (responseOptionID: string) => {
+  const updateResponseOption = async (
+    userResponse: UserResponse | undefined,
+    responseOptionID: string
+  ) => {
     await supabase
       .from("user_response")
       .update({
         response_option_id: responseOptionID,
       })
-      .eq("id", data.id)
+      .eq("id", data?.id)
       .single();
 
-    const newUserResponse = { ...data, responseOptionID };
+    const newUserResponse = { ...userResponse, responseOptionID };
 
     mutate(() => newUserResponse, {
       optimisticData: newUserResponse,
@@ -113,14 +117,19 @@ const useUserResponse = (userResponseID: string | undefined) => {
     refetchUserReponseList();
   };
 
-  const updateComment = async (newComment: string) => {
+  const updateComment = async (
+    userResponse: UserResponse | undefined,
+    newComment: string
+  ) => {
+    if (newComment === undefined) return;
+
     await supabase
       .from("user_response")
       .update({ comments: newComment })
-      .eq("id", data.id)
+      .eq("id", data?.id)
       .single();
 
-    const newUserResponse = { ...data, comments: newComment };
+    const newUserResponse = { ...userResponse, comments: newComment };
 
     mutate(() => newUserResponse, {
       optimisticData: newUserResponse,

@@ -49,7 +49,7 @@ const CreateResponses = () => {
         <Grid item>
           <IconButton
             onClick={() => {
-              append({ responseItem: fields.length.toString(), value: ""});
+              append({ name: `response ${fields.length.toString()}}`, value: ""});
             }}
           >
             <AddIcon />

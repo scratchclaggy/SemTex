@@ -31,7 +31,7 @@ const CreateHighlighter = () => {
               <ColorPicker />
             </Grid>
             <Grid item>
-              <input {...register("Highlight Label")} placeholder="Set Highlighter Label" />
+              <input {...register(`highlighters[${index}].value`)} placeholder="Set Highlighter Label" />
             </Grid>
             <Grid item>
               <IconButton
@@ -47,7 +47,7 @@ const CreateHighlighter = () => {
         <Grid item>
           <IconButton
             onClick={() => {
-              append({ highlighterItem: fields.length.toString(), name: "" });
+              append({ highlighterItem: fields.length.toString(), value: "" });
             }}
           >
             <AddIcon />

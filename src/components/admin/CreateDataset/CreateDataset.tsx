@@ -4,15 +4,7 @@ import CreateHighlighter from "./CreateHighlighterComponents/CreateHighlighter";
 import CreateResponses from "./CreateResponses";
 
 const CreateDataset = () => {
-  const methods = useForm({
-    defaultValues: {
-      datasetTitle: "",
-      instructions: "",
-      textsamples: [],
-      responses: [],
-      highlights: []
-    }
-  });
+  const methods = useForm();
   
   return (
     <FormProvider {...methods}>

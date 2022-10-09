@@ -1,25 +1,50 @@
-import { Alert, Box, Button, Stack, Typography } from "@mui/material";
+import {
+  Alert,
+  Box,
+  Button,
+  ButtonBase,
+  Stack,
+  Typography,
+} from "@mui/material";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import useAuth from "src/contexts/AuthContext";
 
 const UserHeader = () => {
-  const { user, signOut } = useAuth();
+  const { user, isAdmin, signOut } = useAuth();
   return (
     <Stack
       direction="row"
-      justifyContent="end"
-      spacing={2}
-      sx={{ backgroundColor: "palette.background.default", padding: "15px" }}
+      justifyContent="space-between"
+      sx={{ padding: "15px" }}
     >
-      <Typography variant="h6">{user!.email}</Typography>
-      <Button variant="outlined" onClick={signOut}>
-        Sign Out
-      </Button>
+      {isAdmin && (
+        <Link href={isAdmin ? "/admin" : "/"}>
+          <ButtonBase>
+            <Typography variant="h6">Home</Typography>
+          </ButtonBase>
+        </Link>
+      )}
+      <Stack
+        direction="row"
+        justifyContent="end"
+        spacing={2}
+        sx={{ backgroundColor: "palette.background.default" }}
+      >
+        <Typography variant="h6">{user!.email}</Typography>
+        <Button variant="outlined" onClick={signOut}>
+          Sign Out
+        </Button>
+      </Stack>
     </Stack>
   );
 };
 
 const AnonymousHeader = () => {
+  const router = useRouter();
+
+  const isSignIn = router.pathname === "/sign-in";
+
   return (
     <Stack
       direction="row"
@@ -27,12 +52,15 @@ const AnonymousHeader = () => {
       spacing={2}
       sx={{ backgroundColor: "palette.background.default", padding: "15px" }}
     >
-      <Link href="/sign-up">
-        <Button variant="outlined">Sign Up</Button>
-      </Link>
-      <Link href="/sign-in">
-        <Button variant="contained">Sign In</Button>
-      </Link>
+      {isSignIn ? (
+        <Link href="/sign-up">
+          <Button variant="outlined">Sign Up</Button>
+        </Link>
+      ) : (
+        <Link href="/sign-in">
+          <Button variant="contained">Sign In</Button>
+        </Link>
+      )}
     </Stack>
   );
 };

@@ -1,16 +1,13 @@
 import CreateHighlighter from "./CreateHighlighter";
 import CreateResponses from "./CreateResponses";
+import CSVReader from "./UploadButton";
 
 const CreateDataset = () => {
-  const handleUpload = () => {
-    console.log("Upload");
-  };
-
   return (
     <form style={{ position: "absolute" }}>
       <input type="text" placeholder="Dataset Name" />
       <input type="text" placeholder="Dataset Instructions" />
-      <input type="button" value="Upload" onClick={handleUpload} />
+      <CSVReader />
       <CreateResponses />
       <CreateHighlighter />
     </form>

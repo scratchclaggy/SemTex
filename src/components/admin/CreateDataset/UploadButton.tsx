@@ -8,8 +8,9 @@ const OnUpload = (event: any) => {
     skipEmptyLines: true,
     dynamicTyping: false,
     complete: function (results, file) {
-     const res= results.data.map((row:any)=>{return{id: row[0],body: row[1]}} );
-
+      const res = results.data.map((row: any) => {
+        return { id: row[0], body: row[1] };
+      });
     },
   });
 };
@@ -18,11 +19,13 @@ const CSVReader = () => {
   const { CSVReader } = useCSVReader();
 
   return (
-    <CSVReader onUploadAccepted={(results: "text/CSV") => {
-
-  const res= results.data.map((row:any)=>{return{id: row[0],body: row[1]}} );
-      
-    }}>
+    <CSVReader
+      onUploadAccepted={(results: "text/CSV") => {
+        const res = results.data.map((row: any) => {
+          return { id: row[0], body: row[1] };
+        });
+      }}
+    >
       {({
         getRootProps,
         acceptedFile,

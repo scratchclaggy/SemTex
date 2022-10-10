@@ -2,8 +2,10 @@ import FileUploadOutlinedIcon from "@mui/icons-material/FileUploadOutlined";
 import NotInterestedOutlinedIcon from "@mui/icons-material/NotInterestedOutlined";
 import { Box, Grid } from "@mui/material";
 import Button from "@mui/material/Button";
+import { atom, useAtom } from "jotai";
 import { useCSVReader } from "react-papaparse";
 
+export const DatasetBodyAtom = atom<[]>;
 const CSVReader = () => {
   const { CSVReader } = useCSVReader();
 
@@ -13,7 +15,12 @@ const CSVReader = () => {
         const res = results.data.map((row: any) => {
           return { id: row[0], body: row[1] };
         });
-        console.log(res);
+        DatasetBodyAtom(res); 
+
+
+      
+
+
       }}
     >
       {({
@@ -73,3 +80,7 @@ const CSVReader = () => {
   );
 };
 export default CSVReader;
+function useatom<T>(arg0: never[]) {
+  throw new Error("Function not implemented.");
+}
+

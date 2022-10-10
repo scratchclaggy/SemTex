@@ -1,4 +1,3 @@
-import { idID } from "@mui/material/locale";
 import Papa from "papaparse";
 import { useCSVReader } from "react-papaparse";
 
@@ -7,7 +6,7 @@ const OnUpload = (event: any) => {
   Papa.parse(event.target.files[0], {
     header: false,
     skipEmptyLines: true,
-    dynamicTyping: true,
+    dynamicTyping: false,
     complete: function (results, file) {
      const res= results.data.map((row:any)=>{return{id: row[0],body: row[1]}} );
 
@@ -21,7 +20,7 @@ const CSVReader = () => {
   return (
     <CSVReader onUploadAccepted={(results: "text/CSV") => {
 
-
+  const res= results.data.map((row:any)=>{return{id: row[0],body: row[1]}} );
       
     }}>
       {({

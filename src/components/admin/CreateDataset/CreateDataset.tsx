@@ -1,6 +1,7 @@
 import CreateHighlighter from "./CreateHighlighter";
 import CreateResponses from "./CreateResponses";
-import CSVReader from "./UploadButton";
+// import CSVReader from "./UploadButton";
+import CSVReader from "./CSVReader";
 
 const CreateDataset = () => {
   return (

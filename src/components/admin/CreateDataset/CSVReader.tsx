@@ -5,7 +5,7 @@ import Button from "@mui/material/Button";
 import { atom, useAtom } from "jotai";
 import { useCSVReader } from "react-papaparse";
 
-export const DatasetBodyAtom = atom<[]>;
+export const DatasetBodyAtom = atom<[string[]]>;
 const CSVReader = () => {
   const { CSVReader } = useCSVReader();
 
@@ -16,10 +16,6 @@ const CSVReader = () => {
           return { id: row[0], body: row[1] };
         });
         DatasetBodyAtom(res); 
-
-
-      
-
 
       }}
     >

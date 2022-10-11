@@ -28,7 +28,7 @@ const CreateHighlighter = () => {
             justifyContent="center"
           >
             <Grid item>
-              <ColorPicker index={index}/>
+              <ColorPicker index={index} />
             </Grid>
             <Grid item>
               <input {...register(`highlight_options[${index}].label`)} placeholder="Set Highlighter Label" />

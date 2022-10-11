@@ -1,12 +1,13 @@
 import { Box, Stack, TextField } from "@mui/material";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Controller, FormProvider, useForm } from "react-hook-form";
 import CreateHighlighter from "./CreateHighlighterComponents/CreateHighlighter";
 import CreateResponses from "./CreateResponses";
 import RandomWords from "random-words";
+import { Dataset } from "src/types/db";
 
 const CreateDataset = () => {
-  const methods = useForm({
+  const methods = useForm<Dataset>({
     defaultValues: {
       name: "",
       passkey: "",
@@ -19,13 +20,14 @@ const CreateDataset = () => {
   
   const [passkey, setPasskey] = useState("");
 
+  // -------------------- Function Which Generates Passkey -----------------
   const handlePasskey = () => {
-    const keyArray = RandomWords({exactly: 3});
+    const keyArray = RandomWords({exactly: 2});
     let pass = ""
     keyArray.forEach((e, index) =>{
       pass += e;
       if(index != 2){
-        pass += "-"
+        pass += " "
       }
     })
     setPasskey(pass)
@@ -47,10 +49,12 @@ const CreateDataset = () => {
           </Box>
 
           <Box>
-            <label>Passkey: </label>
-            <p {...methods.register("passkey")} >{passkey}</p>
-            <button onClick={handlePasskey}>Generate Passkey</button>
+            <input {...methods.register("passkey")} type="text" value={passkey}/>
           </Box>
+
+          <label>Passkey: </label>
+          <p>{passkey}</p>
+          <button type="button" onClick={handlePasskey}>Generate Passkey</button>
           
           <label>Dataset Instructions</label>
           <Controller

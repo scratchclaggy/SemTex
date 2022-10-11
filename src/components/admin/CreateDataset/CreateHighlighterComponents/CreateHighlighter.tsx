@@ -5,7 +5,6 @@ import { useFieldArray, useFormContext } from "react-hook-form";
 import ColorPicker from "./ColorPicker";
 
 const CreateHighlighter = () => {
-
   const { control, register } = useFormContext();
   const { fields, append, prepend, remove, swap, move, insert } = useFieldArray(
     {
@@ -31,7 +30,10 @@ const CreateHighlighter = () => {
               <ColorPicker index={index} />
             </Grid>
             <Grid item>
-              <input {...register(`highlight_options[${index}].label`)} placeholder="Set Highlighter Label" />
+              <input
+                {...register(`highlight_options[${index}].label`)}
+                placeholder="Set Highlighter Label"
+              />
             </Grid>
             <Grid item>
               <IconButton
@@ -47,7 +49,10 @@ const CreateHighlighter = () => {
         <Grid item>
           <IconButton
             onClick={() => {
-              append({ highlighterItem: fields.length.toString(), label: "", hex: "" });
+              append({
+                color: "#FFF",
+                label: "",
+              });
             }}
           >
             <AddIcon />

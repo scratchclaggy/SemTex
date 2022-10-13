@@ -4,6 +4,8 @@ import { Controller, FormProvider, useForm } from "react-hook-form";
 import { Dataset } from "src/types/db";
 import CreateHighlighter from "./CreateHighlighterComponents/CreateHighlighter";
 import CreateResponses from "./CreateResponses";
+// import CSVReader from "./UploadButton";
+import CSVReader from "./CSVReader";
 
 const CreateDataset = () => {
   const generatePasskey = () => {
@@ -73,12 +75,7 @@ const CreateDataset = () => {
             )}
           />
 
-          <label>Upload Dataset CSV</label>
-
-          <Box>
-            <input type="file" id="myFile" name="filename" />
-          </Box>
-
+          <CSVReader />
           <CreateResponses />
 
           <CreateHighlighter />

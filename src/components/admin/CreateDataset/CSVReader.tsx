@@ -53,8 +53,8 @@ const CSVReader = () => {
             >
               {acceptedFile && acceptedFile.name}
             </div>
-            <ProgressBar style={{ background: "#1e81b0" }} /> //Progress bar
-            prop that tells the user the file is uploaded
+            <ProgressBar style={{ background: "#1e81b0" }} /> 
+          {/* Progress bar prop that tells the user the file is uploaded */}
             <Grid item xs={24}>
               <Button
                 {...getRemoveFileProps()}

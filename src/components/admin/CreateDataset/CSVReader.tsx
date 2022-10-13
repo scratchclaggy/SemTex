@@ -4,19 +4,17 @@ import { Box, Grid } from "@mui/material";
 import Button from "@mui/material/Button";
 import { useCSVReader } from "react-papaparse";
 
-
-
 const CSVReader = () => {
   const { CSVReader } = useCSVReader();
 
   return (
     <CSVReader
       onUploadAccepted={(results: any) => {
-        const res = results.data.map((row: any) => {
+        const array_items = results.data.map((row: any) => {
           return { id: row[0], body: row[1] };
         });
-  //Pass value to contoller 
-
+        console.log(array_items);
+        //Pass value to contoller
       }}
     >
       {({
@@ -44,7 +42,6 @@ const CSVReader = () => {
                 Browse file
               </Button>
             </Grid>
-
             <div
               style={{
                 border: "1px solid black",
@@ -56,7 +53,8 @@ const CSVReader = () => {
             >
               {acceptedFile && acceptedFile.name}
             </div>
-
+            <ProgressBar style={{ background: "#1e81b0" }} /> //Progress bar
+            prop that tells the user the file is uploaded
             <Grid item xs={24}>
               <Button
                 {...getRemoveFileProps()}
@@ -68,8 +66,6 @@ const CSVReader = () => {
               </Button>
             </Grid>
           </Grid>
-
-          <ProgressBar style={{ background: "#1e81b0" }} />
         </Box>
       )}
     </CSVReader>

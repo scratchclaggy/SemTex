@@ -1,6 +1,6 @@
 import FileUploadOutlinedIcon from "@mui/icons-material/FileUploadOutlined";
 import NotInterestedOutlinedIcon from "@mui/icons-material/NotInterestedOutlined";
-import { Box, Grid } from "@mui/material";
+import { Box, Grid, Stack } from "@mui/material";
 import Button from "@mui/material/Button";
 import { Controller, useFormContext } from "react-hook-form";
 import { useCSVReader } from "react-papaparse";
@@ -28,47 +28,36 @@ const CSVReader = () => {
             getRootProps, acceptedFile, getRemoveFileProps, ProgressBar,
           }: any) => (
             <Box>
-              <Grid
-                container
-                spacing={0}
-                direction="column"
-                alignItems="center"
-                justifyContent="center"
+              <Stack
+                direction="row"
               >
-                <Grid item xs={3}>
-                  <Button
-                    type="button"
-                    {...getRootProps()}
-                    variant="contained"
-                    startIcon={<FileUploadOutlinedIcon />}
-                  >
-                    Browse file
-                  </Button>
-                </Grid>
+                <Button
+                  type="button"
+                  {...getRootProps()}
+                  variant="contained"
+                  startIcon={<FileUploadOutlinedIcon />}
+                >
+                </Button>
 
-                <div
+                <Box
                   style={{
-                    border: "1px solid black",
-                    height: 45,
+                    height: "30px",
                     lineHeight: 2.5,
                     paddingLeft: 10,
-                    width: "80%",
+                    width: "100px",
                   }}
                 >
                   {acceptedFile && acceptedFile.name}
-                </div>
+                </Box>
 
-                <Grid item xs={24}>
-                  <Button
-                    {...getRemoveFileProps()}
-                    variant="contained"
-                    color="error"
-                    startIcon={<NotInterestedOutlinedIcon />}
-                  >
-                    Remove
-                  </Button>
-                </Grid>
-              </Grid>
+                <Button
+                  {...getRemoveFileProps()}
+                  variant="contained"
+                  color="error"
+                  startIcon={<NotInterestedOutlinedIcon />}
+                >
+                </Button>
+              </Stack>
 
               <ProgressBar style={{ background: "#1e81b0" }} />
             </Box>

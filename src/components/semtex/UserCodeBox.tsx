@@ -5,6 +5,7 @@ import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import useAuth from "src/contexts/AuthContext";
 import supabase from "src/utils/supabase";
+import { useSWRConfig } from "swr";
 
 type Inputs = {
   passKey: string;
@@ -15,12 +16,15 @@ const UserCodeBox = () => {
   const { user } = useAuth();
   const { register, handleSubmit } = useForm<Inputs>();
   const [error, setError] = useState<PostgrestError | null>(null);
+  const { mutate } = useSWRConfig();
 
   const onSubmit: SubmitHandler<Inputs> = async (formData) => {
     const { data, error } = await supabase.rpc("check_dataset_passkey", {
       userid: user?.id,
       dataset_passkey: formData.passKey,
     });
+
+    mutate("dataset");
 
     setError(error);
 

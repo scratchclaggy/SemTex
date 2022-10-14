@@ -9,7 +9,7 @@ const useDatasetList = () => {
     async () => {
       const { data, error } = await supabase
         .from("dataset")
-        .select("id, name, created");
+        .select("id, name, created, passkey");
 
       if (error !== null) throw error;
 

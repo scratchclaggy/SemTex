@@ -40,7 +40,7 @@ const SignIn = () => {
   return (
     <Stack
       marginTop={16}
-      marginLeft={22}
+      mx="auto"
       spacing={2}
       padding={5}
       width="30vw"

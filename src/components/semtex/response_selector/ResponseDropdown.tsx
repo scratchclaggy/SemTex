@@ -25,7 +25,7 @@ const ResponseDropdown = () => {
         value={userResponse?.response?.id ?? ""}
         label="Response"
         onChange={(event) => {
-          updateResponseOption(event.target.value);
+          updateResponseOption(userResponse, event.target.value);
         }}
       >
         {responseOptions.map((responseOption) => {

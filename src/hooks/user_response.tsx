@@ -100,6 +100,8 @@ const useUserResponse = (userResponseID: string | undefined) => {
     userResponse: UserResponse | undefined,
     responseOptionID: string
   ) => {
+    if (userResponse === undefined) return
+    
     await supabase
       .from("user_response")
       .update({
@@ -121,7 +123,7 @@ const useUserResponse = (userResponseID: string | undefined) => {
     userResponse: UserResponse | undefined,
     newComment: string
   ) => {
-    if (newComment === undefined) return;
+    if (userResponse === undefined) return
 
     await supabase
       .from("user_response")

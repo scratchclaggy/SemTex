@@ -9,6 +9,7 @@ const CreateResponses = () => {
     {
       control,
       name: "response_options",
+      rules: {required: true, }
     }
   );
 
@@ -32,8 +33,9 @@ const CreateResponses = () => {
             >
               <Grid item>
                 <input
-                  {...register(`response_options[${index}].label`)}
+                  {...register(`response_options[${index}].label`, { required: true })}
                   placeholder="Set Response Option"
+                  required
                 />
               </Grid>
               <Grid item>

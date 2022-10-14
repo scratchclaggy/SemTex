@@ -15,6 +15,7 @@ const CSVReader = () => {
     <Controller
       control={control}
       name="text_samples"
+      rules={{required: true}}
       render={({field: {name, value}}) => {
         return <CSVReader
           onUploadAccepted={(results: any) => {

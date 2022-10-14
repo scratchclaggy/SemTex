@@ -10,6 +10,7 @@ const CreateHighlighter = () => {
     {
       control,
       name: "highlight_options",
+      rules: {required: true, }
     }
   );
 
@@ -31,8 +32,9 @@ const CreateHighlighter = () => {
             </Grid>
             <Grid item>
               <input
-                {...register(`highlight_options[${index}].label`)}
+                {...register(`highlight_options[${index}].label`, {required: true})}
                 placeholder="Set Highlighter Label"
+                required
               />
             </Grid>
             <Grid item>

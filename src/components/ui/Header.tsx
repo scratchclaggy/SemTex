@@ -9,6 +9,10 @@ import {
 import Link from "next/link";
 import { useRouter } from "next/router";
 import useAuth from "src/contexts/AuthContext";
+import Image from "next/image";
+import LogoutIcon from '@mui/icons-material/Logout';
+import { styled } from '@mui/material/styles';
+
 
 const UserHeader = () => {
   const { user, isAdmin, signOut } = useAuth();
@@ -19,18 +23,21 @@ const UserHeader = () => {
       sx={{ padding: "15px" }}
     >
       <Link href={isAdmin ? "/admin" : "/"}>
-        <ButtonBase>
-          <Typography variant="h6">Home</Typography>
+      <ButtonBase >
+        <Image src="/logo.png" alt="Home" width={222} height={105} />
         </ButtonBase>
       </Link>
       <Stack
-        direction="row"
-        justifyContent="end"
-        spacing={2}
+        direction="column"
+        justifyContent="center"
+        spacing={3}
         sx={{ backgroundColor: "palette.background.default" }}
       >
-        <Typography variant="h6">{user!.email}</Typography>
-        <Button variant="outlined" onClick={signOut}>
+        <Typography  variant="h6">{user!.email}</Typography>
+        
+        
+
+        <Button variant="outlined"   size="small"  endIcon ={<LogoutIcon/>}onClick={signOut}>
           Sign Out
         </Button>
       </Stack>

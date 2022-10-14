@@ -18,13 +18,11 @@ const UserHeader = () => {
       justifyContent="space-between"
       sx={{ padding: "15px" }}
     >
-      {isAdmin && (
-        <Link href={isAdmin ? "/admin" : "/"}>
-          <ButtonBase>
-            <Typography variant="h6">Home</Typography>
-          </ButtonBase>
-        </Link>
-      )}
+      <Link href={isAdmin ? "/admin" : "/"}>
+        <ButtonBase>
+          <Typography variant="h6">Home</Typography>
+        </ButtonBase>
+      </Link>
       <Stack
         direction="row"
         justifyContent="end"

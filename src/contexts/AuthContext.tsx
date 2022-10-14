@@ -4,7 +4,7 @@ import supabase from "src/utils/supabase";
 
 interface AuthContextInterface {
   user: User | null;
-  isAdmin: boolean | null;
+  isAdmin: boolean | undefined;
   authError: ApiError | null;
   signIn: (email: string, password: string) => void;
   signOut: () => void;
@@ -18,7 +18,7 @@ const useAuth = () => useContext(AuthContext) as AuthContextInterface;
 export const AuthProvider = ({ children }: { children: JSX.Element }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [user, setUser] = useState<User | null>(null);
-  const [isAdmin, setAdmin] = useState<boolean | null>(null);
+  const [isAdmin, setAdmin] = useState<boolean | undefined>(undefined);
   const [authError, setAuthError] = useState<ApiError | null>(null);
 
   useEffect(() => {
@@ -27,26 +27,25 @@ export const AuthProvider = ({ children }: { children: JSX.Element }) => {
   }, []);
 
   const updateAdmin = async () => {
-    const { data } = await supabase
+    const { data: admin } = await supabase
       .from("admin")
       .select()
       .eq("user_id", user?.id)
-      .single();
+      .maybeSingle();
 
-    setAdmin(data?.id !== null);
+    setAdmin(admin !== null);
   };
 
   const signIn = async (email: string, password: string) => {
-    const res = await supabase.auth.signIn({ email, password });
-    await updateAdmin();
+    const { user, error } = await supabase.auth.signIn({ email, password });
 
-    setUser(res.user);
-    setAuthError(res.error);
+    setUser(user);
+    setAuthError(error);
   };
 
   useEffect(() => {
     if (user === null) {
-      setAdmin(false);
+      setAdmin(undefined);
       return;
     }
 

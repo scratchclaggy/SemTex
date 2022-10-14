@@ -6,7 +6,7 @@ import ColorPicker from "./ColorPicker";
 
 const CreateHighlighter = () => {
   const { control, register } = useFormContext();
-  const { fields, append, prepend, remove, swap, move, insert } = useFieldArray(
+  const { fields, append, remove } = useFieldArray(
     {
       control,
       name: "highlight_options",

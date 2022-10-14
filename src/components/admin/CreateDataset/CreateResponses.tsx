@@ -5,7 +5,7 @@ import { useFieldArray, useFormContext } from "react-hook-form";
 
 const CreateResponses = () => {
   const { control, register } = useFormContext();
-  const { fields, append, prepend, remove, swap, move, insert } = useFieldArray(
+  const { fields, append, remove } = useFieldArray(
     {
       control,
       name: "response_options",
@@ -32,7 +32,7 @@ const CreateResponses = () => {
             >
               <Grid item>
                 <input
-                  {...register(`response_options[${index}].value`)}
+                  {...register(`response_options[${index}].label`)}
                   placeholder="Set Response Option"
                 />
               </Grid>
@@ -51,7 +51,7 @@ const CreateResponses = () => {
         <Grid item>
           <IconButton
             onClick={() => {
-              append({ value: "" });
+              append({ label: "" });
             }}
           >
             <AddIcon />

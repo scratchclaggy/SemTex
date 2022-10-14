@@ -1,10 +1,11 @@
 import { Box, Stack } from "@mui/material";
 import RandomWords from "random-words";
 import { Controller, FormProvider, useForm } from "react-hook-form";
-import { Dataset } from "src/types/db";
+import { Dataset, Submission } from "src/types/db";
 import CreateHighlighter from "./CreateHighlighterComponents/CreateHighlighter";
 import CreateResponses from "./CreateResponses";
 import CSVReader from "./CSVReader";
+import { insertDataset } from "src/utils/dataset";
 
 const CreateDataset = () => {
   const generatePasskey = () => {
@@ -14,20 +15,31 @@ const CreateDataset = () => {
   const methods = useForm<Dataset>({
     defaultValues: {
       name: "",
-      passkey: generatePasskey(),
       instructions: "",
+      passkey: generatePasskey(),
       text_samples: [],
-      highlight_options: [],
       response_options: [],
+      highlight_options: [],
     },
   });
+
+  const cleanSubmit = (data: Dataset) => {
+    const submitData: Submission = {
+      name: data.name,
+      instructions: data.instructions,
+      passkey: data.passkey,
+      text_samples: data.text_samples.filter((sample) => sample.body != undefined),
+      response_options: data.response_options,
+      highlight_options: data.highlight_options
+    }
+    insertDataset(submitData)
+  }
 
   return (
     <FormProvider {...methods}>
       <form
         onSubmit={methods.handleSubmit(
-          (data) => console.log("VALID", data),
-          (data) => console.log("INVALID", data)
+          data => cleanSubmit(data)
         )}
         style={{
           width: "50%",
@@ -73,10 +85,8 @@ const CreateDataset = () => {
               />
             )}
           />
-
           <CSVReader />
           <CreateResponses />
-
           <CreateHighlighter />
         </Stack>
         <input type="submit" value="Submit" />

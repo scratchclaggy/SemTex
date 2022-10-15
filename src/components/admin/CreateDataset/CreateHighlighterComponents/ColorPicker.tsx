@@ -11,7 +11,7 @@ const ColorPicker: React.FC<{ index: number }> = ({ index }) => {
   const handleDisplay = () => {
     setDisplay(!display);
   };
-
+  
   return (
     <Controller
       control={control}

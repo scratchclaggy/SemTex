@@ -1,12 +1,18 @@
-import { Box, Stack } from "@mui/material";
+import { Alert, AlertTitle, Box, Stack, Typography } from "@mui/material";
 import RandomWords from "random-words";
 import { Controller, FormProvider, useForm } from "react-hook-form";
-import { Dataset } from "src/types/db";
+import { Dataset, Submission } from "src/types/db";
 import CreateHighlighter from "./CreateHighlighterComponents/CreateHighlighter";
 import CreateResponses from "./CreateResponses";
 import CSVReader from "./CSVReader";
+import { insertDataset } from "src/utils/dataset";
+import { ErrorMessage } from "@hookform/error-message";
+import { useRouter } from "next/router";
 
 const CreateDataset = () => {
+  const router = useRouter()
+
+
   const generatePasskey = () => {
     return RandomWords({ exactly: 2 }).join(" ");
   };
@@ -14,20 +20,32 @@ const CreateDataset = () => {
   const methods = useForm<Dataset>({
     defaultValues: {
       name: "",
-      passkey: generatePasskey(),
       instructions: "",
+      passkey: generatePasskey(),
       text_samples: [],
-      highlight_options: [],
       response_options: [],
+      highlight_options: [],
     },
   });
+
+  const cleanSubmit = (data: Dataset) => {
+    const submitData: Submission = {
+      name: data.name,
+      instructions: data.instructions,
+      passkey: data.passkey,
+      text_samples: data.text_samples.filter((sample) => sample.body != undefined),
+      response_options: data.response_options,
+      highlight_options: data.highlight_options
+    }
+    insertDataset(submitData)
+  }
 
   return (
     <FormProvider {...methods}>
       <form
         onSubmit={methods.handleSubmit(
-          (data) => console.log("VALID", data),
-          (data) => console.log("INVALID", data)
+          data => {cleanSubmit(data)
+          router.push('/admin')}
         )}
         style={{
           width: "50%",
@@ -35,10 +53,26 @@ const CreateDataset = () => {
           textAlign: "center",
         }}
       >
+
         <Stack paddingTop={10} spacing={1} alignItems="center">
+          <ErrorMessage errors={methods.formState.errors} name="text_samples" render={() =>
+            <Alert severity="error">
+              <AlertTitle>Text Samples</AlertTitle>
+              <Typography>No text samples uploaded</Typography>
+            </Alert>} />
+          <ErrorMessage errors={methods.formState.errors} name="response_options" render={() =>
+            <Alert severity="error">
+              <AlertTitle>Response Options</AlertTitle>
+              <Typography>Minimum of one response option required</Typography>
+            </Alert>} />
+          <ErrorMessage errors={methods.formState.errors} name="highlight_options" render={() =>
+            <Alert severity="error">
+              <AlertTitle>Highlight Options</AlertTitle>
+              <Typography>Minimum one highlight option required</Typography>
+            </Alert>} />
           <Box>
             <label>Dataset Name: </label>
-            <input {...methods.register("name")} type="text" />
+            <input {...methods.register("name", { required: true })} required type="text" />
           </Box>
 
           <Controller
@@ -62,8 +96,10 @@ const CreateDataset = () => {
           <Controller
             control={methods.control}
             name="instructions"
+            rules={{ required: true }}
             render={({ field }) => (
               <textarea
+                required
                 {...field}
                 style={{
                   width: "400px",

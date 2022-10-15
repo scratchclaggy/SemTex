@@ -6,10 +6,11 @@ import ColorPicker from "./ColorPicker";
 
 const CreateHighlighter = () => {
   const { control, register } = useFormContext();
-  const { fields, append, prepend, remove, swap, move, insert } = useFieldArray(
+  const { fields, append, remove } = useFieldArray(
     {
       control,
       name: "highlight_options",
+      rules: {required: true, }
     }
   );
 
@@ -31,8 +32,9 @@ const CreateHighlighter = () => {
             </Grid>
             <Grid item>
               <input
-                {...register(`highlight_options[${index}].label`)}
+                {...register(`highlight_options[${index}].label`, {required: true})}
                 placeholder="Set Highlighter Label"
+                required
               />
             </Grid>
             <Grid item>

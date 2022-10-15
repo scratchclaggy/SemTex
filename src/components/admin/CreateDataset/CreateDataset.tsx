@@ -1,4 +1,4 @@
-import { Alert, AlertTitle, Box, Stack, Typography } from "@mui/material";
+import { Alert, AlertTitle, Box, Button, Grid, Stack, Typography } from "@mui/material";
 import RandomWords from "random-words";
 import { Controller, FormProvider, useForm } from "react-hook-form";
 import { Dataset, Submission } from "src/types/db";
@@ -47,73 +47,123 @@ const CreateDataset = () => {
           data => {cleanSubmit(data)
           router.push('/admin')}
         )}
-        style={{
-          width: "50%",
-          marginLeft: "25%",
-          textAlign: "center",
-        }}
       >
+        <Grid alignItems="center" justifyContent="flex-start" width="100vw" paddingRight="20vw">
+          <Grid 
+          container 
+          justifyContent="flex-start" 
+          alignItems="flex-start"
+          sx={{
+            paddingTop: "10px"
+          }}
+          >
 
-        <Stack paddingTop={10} spacing={1} alignItems="center">
-          <ErrorMessage errors={methods.formState.errors} name="text_samples" render={() =>
-            <Alert severity="error">
-              <AlertTitle>Text Samples</AlertTitle>
-              <Typography>No text samples uploaded</Typography>
-            </Alert>} />
-          <ErrorMessage errors={methods.formState.errors} name="response_options" render={() =>
-            <Alert severity="error">
-              <AlertTitle>Response Options</AlertTitle>
-              <Typography>Minimum of one response option required</Typography>
-            </Alert>} />
-          <ErrorMessage errors={methods.formState.errors} name="highlight_options" render={() =>
-            <Alert severity="error">
-              <AlertTitle>Highlight Options</AlertTitle>
-              <Typography>Minimum one highlight option required</Typography>
-            </Alert>} />
-          <Box>
-            <label>Dataset Name: </label>
-            <input {...methods.register("name", { required: true })} required type="text" />
-          </Box>
+            <Grid container xs={12} justifyContent="center">
+              <Typography fontSize="36px" fontFamily="Roboto Mono">Create New Dataset</Typography>
+            </Grid>
+          
+            <Grid container alignItems="center" spacing={2}>
+              <Grid item>
+                <label>Dataset Name: </label>
+                <input {...methods.register("name", { required: true })} required type="text" />
+              </Grid>
 
-          <Controller
-            name="passkey"
-            control={methods.control}
-            render={({ field: { name, value } }) => (
-              <Box>
-                <label>Passkey: </label>
-                <p>{`"${value}"`}</p>
-                <button
-                  type="button"
-                  onClick={() => methods.setValue(name, generatePasskey())}
-                >
-                  Generate Passkey
-                </button>
-              </Box>
-            )}
-          />
+              <Grid item justifyContent="center">
+                <Controller
+                  name="passkey"
+                  control={methods.control}
+                  render={({ field: { name, value } }) => (
+                    <Stack direction="row" alignItems="center" spacing={2}>
+                      <Button
+                        type="button"
+                        variant="contained"
+                        color="primary"
+                        onClick={() => methods.setValue(name, generatePasskey())}
+                      >
+                        Generate Passkey
+                      </Button>
+                      <Box
+                      style={{
+                        border: " solid 1px grey",
+                        padding: "10px",
+                        backgroundColor: "white",
+                      }}
+                      >
+                        <Typography 
+                        fontSize="20px" 
+                        fontFamily="roboto mono"
+                        >{`"${value}"`}</Typography>
+                      </Box>
+                    </Stack>
+                  )}
+                />
+              </Grid>
+            </Grid>
 
-          <label>Dataset Instructions</label>
-          <Controller
-            control={methods.control}
-            name="instructions"
-            rules={{ required: true }}
-            render={({ field }) => (
-              <textarea
-                required
-                {...field}
-                style={{
-                  width: "400px",
-                  height: "150px",
-                  resize: "none",
-                }}
-              />
-            )}
-          />
-          <CSVReader />
-          <CreateResponses />
-          <CreateHighlighter />
-        </Stack>
-        <input type="submit" value="Submit" />
+            <Grid item container xs={12} spacing={2} paddingTop="10px" minHeight="40vh">
+              <Grid item xs={5}>
+                <label>Dataset Instructions</label>
+                <Controller
+                  control={methods.control}
+                  name="instructions"
+                  rules={{ required: true }}
+                  render={({ field }) => (
+                    <textarea
+                      required
+                      {...field}
+                      style={{
+                        width: "100%",
+                        height: "80%",
+                        resize: "none",
+                      }}
+                    />
+                  )}
+                />
+              </Grid>
+
+              <Grid item xs={2}>
+                <CreateResponses />
+              </Grid>
+              
+              <Grid item xs={4}>
+                <CreateHighlighter />
+              </Grid>
+            </Grid>
+
+            <Grid item container justifyContent="flex-start" xs={5}>
+              <CSVReader />
+            </Grid>
+
+            <Grid item container>
+              <Button 
+              type="submit" 
+              value="Submit" 
+              variant="contained" 
+              color="primary"
+              style={{
+                width: "41%"
+              }}
+              >Submit</Button>
+            </Grid>
+
+            <ErrorMessage errors={methods.formState.errors} name="text_samples" render={() =>
+              <Alert severity="error">
+                <AlertTitle>Text Samples</AlertTitle>
+                <Typography>No text samples uploaded</Typography>
+              </Alert>} />
+            <ErrorMessage errors={methods.formState.errors} name="response_options" render={() =>
+              <Alert severity="error">
+                <AlertTitle>Response Options</AlertTitle>
+                <Typography>Minimum of one response option required</Typography>
+              </Alert>} />
+            <ErrorMessage errors={methods.formState.errors} name="highlight_options" render={() =>
+              <Alert severity="error">
+                <AlertTitle>Highlight Options</AlertTitle>
+                <Typography>Minimum one highlight option required</Typography>
+              </Alert>} />
+          
+          </Grid>
+        </Grid>
       </form>
     </FormProvider>
   );

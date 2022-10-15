@@ -25,11 +25,6 @@ const CreateResponses = () => {
               alignItems="center"
               key={item.id}
               spacing={2}
-              sx={{
-                paddingLeft: "50px",
-                justifyContent: "center",
-                justifyItems: "center",
-              }}
             >
               <Grid item>
                 <input

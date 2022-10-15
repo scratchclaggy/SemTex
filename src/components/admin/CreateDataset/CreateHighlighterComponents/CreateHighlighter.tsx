@@ -19,14 +19,7 @@ const CreateHighlighter = () => {
       <Typography>Create Highlighters</Typography>
       <Grid>
         {fields.map((item, index) => (
-          <Grid
-            container
-            item
-            key={item.id}
-            spacing={2}
-            alignItems="center"
-            justifyContent="center"
-          >
+          <Grid container item key={item.id} spacing={2} alignItems="center">
             <Grid item>
               <ColorPicker index={index} />
             </Grid>

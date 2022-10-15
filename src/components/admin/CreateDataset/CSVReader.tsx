@@ -16,7 +16,7 @@ const CSVReader = () => {
       control={control}
       name="text_samples"
       rules={{required: true}}
-      render={({field: {name, value}}) => {
+      render={({field: {name}}) => {
         return <CSVReader
           onUploadAccepted={(results: any) => {
             const res = results.data.map((row: any) => {
@@ -28,15 +28,14 @@ const CSVReader = () => {
           {({
             getRootProps, acceptedFile, getRemoveFileProps, ProgressBar,
           }: any) => (
-            <Box>
+            <Box width="600px">
               <Grid
                 container
-                spacing={0}
-                direction="column"
+                spacing={2}
                 alignItems="center"
-                justifyContent="center"
+                justifyContent="flex-start"
               >
-                <Grid item xs={3}>
+                <Grid item >
                   <Button
                     type="button"
                     {...getRootProps()}
@@ -47,19 +46,7 @@ const CSVReader = () => {
                   </Button>
                 </Grid>
 
-                <div
-                  style={{
-                    border: "1px solid black",
-                    height: 45,
-                    lineHeight: 2.5,
-                    paddingLeft: 10,
-                    width: "80%",
-                  }}
-                >
-                  {acceptedFile && acceptedFile.name}
-                </div>
-
-                <Grid item xs={24}>
+                <Grid item>
                   <Button
                     {...getRemoveFileProps()}
                     variant="contained"
@@ -69,9 +56,17 @@ const CSVReader = () => {
                     Remove
                   </Button>
                 </Grid>
+
+                <Grid item xs={6} justifyItems="center">
+                 {acceptedFile && acceptedFile.name}
+                </Grid>
               </Grid>
 
-              <ProgressBar style={{ background: "#1e81b0" }} />
+              <Grid container paddingTop={1}>
+                <ProgressBar style={{ background: "#1e81b0" }} />
+              </Grid>
+
+      
             </Box>
           )}
         </CSVReader>;

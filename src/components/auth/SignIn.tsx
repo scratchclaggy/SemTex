@@ -33,7 +33,9 @@ const SignIn = () => {
   };
 
   if (user) {
-    router.push("/");
+    if (user.user_metadata.isAdmin) router.push("/admin");
+    else router.push("/");
+
     return null;
   }
 

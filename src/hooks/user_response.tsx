@@ -1,15 +1,12 @@
-import { PostgrestError, User } from "@supabase/supabase-js";
+import { PostgrestError } from "@supabase/supabase-js";
 import { useRouter } from "next/router";
 import { Highlight, UserResponse } from "src/types/client";
 import supabase from "src/utils/supabase";
 import useSWR, { useSWRConfig } from "swr";
 
-const useUserResponse = (
-  user: User | null,
-  userResponseID: string | undefined
-) => {
+const useUserResponse = (userResponseID: string | undefined) => {
   const { data, error, mutate } = useSWR(
-    user && userResponseID,
+    userResponseID,
     async () => {
       const { data, error } = await supabase
         .from("user_response")
@@ -22,7 +19,7 @@ const useUserResponse = (
             textSampleID:text_sample_id
           `
         )
-        .match({ id: userResponseID, user_id: user?.id })
+        .eq("id", userResponseID)
         .single();
 
       if (error) throw error;

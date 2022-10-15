@@ -1,15 +1,13 @@
 import { TextField } from "@mui/material";
 import { useAtomValue } from "jotai";
 import { useEffect, useState } from "react";
-import useAuth from "src/contexts/AuthContext";
 import useUserResponse from "src/hooks/user_response";
 import { useDebounce } from "usehooks-ts";
 import { userResponseIdAtom } from "./Semtex";
 
 const CommentInput = () => {
   const userResponseID = useAtomValue(userResponseIdAtom);
-  const { user } = useAuth();
-  const { userResponse, updateComment } = useUserResponse(user, userResponseID);
+  const { userResponse, updateComment } = useUserResponse(userResponseID);
 
   const [comment, setComment] = useState("");
 

@@ -145,22 +145,30 @@ const CreateDataset = () => {
               }}
               >Submit</Button>
             </Grid>
-
-            <ErrorMessage errors={methods.formState.errors} name="text_samples" render={() =>
-              <Alert severity="error">
-                <AlertTitle>Text Samples</AlertTitle>
-                <Typography>No text samples uploaded</Typography>
-              </Alert>} />
-            <ErrorMessage errors={methods.formState.errors} name="response_options" render={() =>
-              <Alert severity="error">
-                <AlertTitle>Response Options</AlertTitle>
-                <Typography>Minimum of one response option required</Typography>
-              </Alert>} />
-            <ErrorMessage errors={methods.formState.errors} name="highlight_options" render={() =>
-              <Alert severity="error">
-                <AlertTitle>Highlight Options</AlertTitle>
-                <Typography>Minimum one highlight option required</Typography>
-              </Alert>} />
+            
+            <Grid item container spacing={2}>
+              <Grid item>
+                <ErrorMessage errors={methods.formState.errors} name="text_samples" render={() =>
+                <Alert severity="error">
+                  <AlertTitle>Text Samples</AlertTitle>
+                  <Typography>No text samples uploaded</Typography>
+                </Alert>} />
+              </Grid>
+            <Grid item>
+              <ErrorMessage errors={methods.formState.errors} name="response_options" render={() =>
+                <Alert severity="error">
+                  <AlertTitle>Response Options</AlertTitle>
+                  <Typography>Minimum of one response option required</Typography>
+                </Alert>} />
+            </Grid>
+            <Grid item>
+              <ErrorMessage errors={methods.formState.errors} name="highlight_options" render={() =>
+                <Alert severity="error">
+                  <AlertTitle>Highlight Options</AlertTitle>
+                  <Typography>Minimum one highlight option required</Typography>
+                </Alert>} />
+            </Grid>
+            </Grid>
           
           </Grid>
         </Grid>

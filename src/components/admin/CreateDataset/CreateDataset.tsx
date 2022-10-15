@@ -73,10 +73,8 @@ const CreateDataset = () => {
               />
             )}
           />
-
           <CSVReader />
           <CreateResponses />
-
           <CreateHighlighter />
         </Stack>
         <input type="submit" value="Submit" />

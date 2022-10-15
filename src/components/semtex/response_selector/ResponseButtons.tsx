@@ -7,6 +7,7 @@ import {
 } from "@mui/material";
 import { useAtomValue } from "jotai";
 import { useRouter } from "next/router";
+import useAuth from "src/contexts/AuthContext";
 import useDataset from "src/hooks/dataset";
 import useUserResponse from "src/hooks/user_response";
 import { userResponseIdAtom } from "../Semtex";
@@ -17,8 +18,11 @@ const ResponseButtons = () => {
   const { dataset } = useDataset(datasetID);
 
   const userResponseID = useAtomValue(userResponseIdAtom);
-  const { userResponse, updateResponseOption } =
-    useUserResponse(userResponseID);
+  const { user } = useAuth();
+  const { userResponse, updateResponseOption } = useUserResponse(
+    user,
+    userResponseID
+  );
 
   const responseOptions = dataset?.responseOptions ?? [];
 

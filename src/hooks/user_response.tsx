@@ -1,12 +1,15 @@
-import { PostgrestError } from "@supabase/supabase-js";
+import { PostgrestError, User } from "@supabase/supabase-js";
 import { useRouter } from "next/router";
 import { Highlight, UserResponse } from "src/types/client";
 import supabase from "src/utils/supabase";
 import useSWR, { useSWRConfig } from "swr";
 
-const useUserResponse = (userResponseID: string | undefined) => {
+const useUserResponse = (
+  user: User | null,
+  userResponseID: string | undefined
+) => {
   const { data, error, mutate } = useSWR(
-    userResponseID,
+    user && userResponseID,
     async () => {
       const { data, error } = await supabase
         .from("user_response")
@@ -19,7 +22,7 @@ const useUserResponse = (userResponseID: string | undefined) => {
             textSampleID:text_sample_id
           `
         )
-        .eq("id", userResponseID)
+        .match({ id: userResponseID, user_id: user?.id })
         .single();
 
       if (error) throw error;
@@ -100,15 +103,18 @@ const useUserResponse = (userResponseID: string | undefined) => {
     userResponse: UserResponse | undefined,
     responseOptionID: string
   ) => {
-    if (userResponse === undefined) return
-    
-    await supabase
-      .from("user_response")
-      .update({
-        response_option_id: responseOptionID,
-      })
-      .eq("id", data?.id)
-      .single();
+    console.log(userResponse, responseOptionID);
+    if (userResponse === undefined) return;
+
+    console.log(
+      await supabase
+        .from("user_response")
+        .update({
+          response_option_id: responseOptionID,
+        })
+        .eq("id", data?.id)
+        .single()
+    );
 
     const newUserResponse = { ...userResponse, responseOptionID };
 
@@ -123,7 +129,7 @@ const useUserResponse = (userResponseID: string | undefined) => {
     userResponse: UserResponse | undefined,
     newComment: string
   ) => {
-    if (userResponse === undefined) return
+    if (userResponse === undefined) return;
 
     await supabase
       .from("user_response")

@@ -3,6 +3,7 @@ import { Box, Typography } from "@mui/material";
 import { useAtomValue } from "jotai";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import useAuth from "src/contexts/AuthContext";
 import useDataset from "src/hooks/dataset";
 import useUserResponse from "src/hooks/user_response";
 import { Highlight } from "src/types/client";
@@ -20,7 +21,8 @@ const TextSample = () => {
   );
 
   const userResponseID = useAtomValue(userResponseIdAtom);
-  const { userResponse, setHighlights } = useUserResponse(userResponseID);
+  const { user } = useAuth();
+  const { userResponse, setHighlights } = useUserResponse(user, userResponseID);
 
   const highlights = userResponse?.highlights;
 

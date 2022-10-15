@@ -2,6 +2,7 @@ import { Delete } from "@mui/icons-material";
 import { Box, Button, ClickAwayListener, Stack } from "@mui/material";
 import { atom, useAtom, useAtomValue } from "jotai";
 import { useRouter } from "next/router";
+import useAuth from "src/contexts/AuthContext";
 import useDataset from "src/hooks/dataset";
 import useUserResponse from "src/hooks/user_response";
 import { HighlightOption } from "src/types/client";
@@ -17,7 +18,11 @@ const Highlighters = () => {
   const HighlightOptions = dataset?.highlightOptions;
 
   const userResponseID = useAtomValue(userResponseIdAtom);
-  const { userResponse, clearHighlights } = useUserResponse(userResponseID);
+  const { user } = useAuth();
+  const { userResponse, clearHighlights } = useUserResponse(
+    user,
+    userResponseID
+  );
 
   const [active, setActive] = useAtom(highlightAtom);
 

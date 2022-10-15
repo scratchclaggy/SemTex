@@ -11,10 +11,8 @@ const AdminHome = () => {
       alignItems="center"
       paddingTop={10}
     >
-      <Typography
-      fontFamily={"Roboto Mono"}
-      fontSize={"36px"}
-      >Administrator Home
+      <Typography fontFamily={"Roboto Mono"} fontSize={"36px"}>
+        Administrator Home
       </Typography>
       <DeleteConfirmationDialog />
       <Search />

@@ -1,4 +1,4 @@
-import { Dataset, Submission } from "src/types/db";
+import { Submission } from "src/types/db";
 import supabase from "src/utils/supabase";
 
 export const insertDataset = async (newDataset: Submission) => {

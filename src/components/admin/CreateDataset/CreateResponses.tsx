@@ -5,13 +5,11 @@ import { useFieldArray, useFormContext } from "react-hook-form";
 
 const CreateResponses = () => {
   const { control, register } = useFormContext();
-  const { fields, append, remove } = useFieldArray(
-    {
-      control,
-      name: "response_options",
-      rules: {required: true, }
-    }
-  );
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: "response_options",
+    rules: { required: true },
+  });
 
   return (
     <Box>
@@ -19,16 +17,12 @@ const CreateResponses = () => {
       <Grid>
         {fields.map((item, index) => {
           return (
-            <Grid
-              container
-              item
-              alignItems="center"
-              key={item.id}
-              spacing={2}
-            >
+            <Grid container item alignItems="center" key={item.id} spacing={2}>
               <Grid item>
                 <input
-                  {...register(`response_options[${index}].label`, { required: true })}
+                  {...register(`response_options[${index}].label`, {
+                    required: true,
+                  })}
                   placeholder="Set Response Option"
                   required
                 />

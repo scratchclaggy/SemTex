@@ -23,10 +23,10 @@ export type Dataset = {
 };
 
 export type Submission = {
-  name: String,
-  instructions: String,
-  passkey: String,
-  text_samples: Object[],
-  response_options: Object[],
-  highlight_options: Object[]
+  name: String;
+  instructions: String;
+  passkey: String;
+  text_samples: Object[];
+  response_options: Object[];
+  highlight_options: Object[];
 };

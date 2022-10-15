@@ -9,7 +9,6 @@ const useUserResponseList = (
   const { data, error } = useSWR(
     user && datasetID,
     async () => {
-      console.log("USER + LIST", user, datasetID);
       const { data, error } = await supabase
         .from("user_response")
         .select(

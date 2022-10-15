@@ -103,18 +103,15 @@ const useUserResponse = (
     userResponse: UserResponse | undefined,
     responseOptionID: string
   ) => {
-    console.log(userResponse, responseOptionID);
     if (userResponse === undefined) return;
 
-    console.log(
-      await supabase
-        .from("user_response")
-        .update({
-          response_option_id: responseOptionID,
-        })
-        .eq("id", data?.id)
-        .single()
-    );
+    await supabase
+      .from("user_response")
+      .update({
+        response_option_id: responseOptionID,
+      })
+      .eq("id", data?.id)
+      .single();
 
     const newUserResponse = { ...userResponse, responseOptionID };
 

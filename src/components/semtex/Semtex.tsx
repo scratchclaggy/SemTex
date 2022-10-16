@@ -2,6 +2,7 @@ import { Alert, AlertTitle, Box, Grid, Stack, Typography } from "@mui/material";
 import { atom, useAtom, useAtomValue, useSetAtom } from "jotai";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
+import useAuth from "src/contexts/AuthContext";
 import useDataset from "src/hooks/dataset";
 import useUserResponseList from "src/hooks/user_response_list";
 import CommentInput from "./CommentInput";
@@ -22,8 +23,11 @@ const Semtex = () => {
   const router = useRouter();
   const datasetID = router.query.datasetID as string | undefined;
   const { dataset, datasetError } = useDataset(datasetID);
-  const { userResponseList, userResponseListError } =
-    useUserResponseList(datasetID);
+  const { user } = useAuth();
+  const { userResponseList, userResponseListError } = useUserResponseList(
+    user,
+    datasetID
+  );
 
   const navButtonIndex = useAtomValue(navButtonIndexAtom);
   const [textSampleID, setTextSampleID] = useAtom(textSampleIdAtom);

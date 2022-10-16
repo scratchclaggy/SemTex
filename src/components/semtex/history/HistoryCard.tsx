@@ -7,6 +7,7 @@ import {
 } from "@mui/material";
 import { useAtomValue, useSetAtom } from "jotai";
 import { useRouter } from "next/router";
+import useAuth from "src/contexts/AuthContext";
 import useDataset from "src/hooks/dataset";
 import useUserResponseList from "src/hooks/user_response_list";
 import type { TextSample } from "src/types/client";
@@ -16,7 +17,8 @@ const HistoryCard = (textSample: TextSample) => {
   const router = useRouter();
   const datasetID = router.query.datasetID as string | undefined;
   const { dataset } = useDataset(datasetID);
-  const { userResponseList } = useUserResponseList(datasetID);
+  const { user } = useAuth();
+  const { userResponseList } = useUserResponseList(user, datasetID);
   const setNavButtonIndex = useSetAtom(navButtonIndexAtom);
   const textSampleID = useAtomValue(textSampleIdAtom);
 

@@ -33,14 +33,16 @@ const SignIn = () => {
   };
 
   if (user) {
-    router.push("/");
+    if (user.user_metadata.isAdmin) router.push("/admin");
+    else router.push("/");
+
     return null;
   }
 
   return (
     <Stack
       marginTop={16}
-      marginLeft={22}
+      mx="auto"
       spacing={2}
       padding={5}
       width="30vw"

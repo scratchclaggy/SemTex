@@ -17,6 +17,8 @@ const ColorPicker: React.FC<{ index: number }> = ({ index }) => {
       control={control}
       name={`highlight_options[${index}].color`}
       render={({ field: { name, value } }) => {
+        const [prevColor, setPrevColor] = useState(value);
+
         return (
           <Stack direction="row" alignItems="center">
             <Typography>Select Color:</Typography>
@@ -34,8 +36,14 @@ const ColorPicker: React.FC<{ index: number }> = ({ index }) => {
                 <PhotoshopPicker
                   header="Highlighter Colour"
                   color={value}
-                  onAccept={handleDisplay}
-                  onCancel={handleDisplay}
+                  onAccept={() => {
+                    setPrevColor(value);
+                    handleDisplay();
+                  }}
+                  onCancel={() => {
+                    setValue(name, prevColor);
+                    handleDisplay();
+                  }}
                   onChange={(color) => setValue(name, color.hex)}
                 />
               </Box>

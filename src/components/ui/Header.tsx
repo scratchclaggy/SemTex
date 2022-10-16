@@ -14,14 +14,14 @@ import { useRouter } from "next/router";
 import useAuth from "src/contexts/AuthContext";
 
 const UserHeader = () => {
-  const { user, isAdmin, signOut } = useAuth();
+  const { user, signOut } = useAuth();
   return (
     <Stack
       direction="row"
       justifyContent="space-between"
       sx={{ padding: "3px" }}
     >
-      <Link href={isAdmin ? "/admin" : "/"}>
+      <Link href={user?.user_metadata.isAdmin ? "/admin" : "/"}>
         <ButtonBase>
           <Image src="/logo.png" alt="Home" width={150} height={65} />
         </ButtonBase>

@@ -2,11 +2,14 @@ import Box from "@mui/material/Box";
 import LinearProgress from "@mui/material/LinearProgress";
 import Typography from "@mui/material/Typography";
 import { useRouter } from "next/router";
+import useAuth from "src/contexts/AuthContext";
 import useUserResponseList from "src/hooks/user_response_list";
 
 const ProgressBar = () => {
   const router = useRouter();
+  const { user } = useAuth();
   const { userResponseList } = useUserResponseList(
+    user,
     router.query.datasetID as string | undefined
   );
 

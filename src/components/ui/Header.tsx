@@ -1,3 +1,5 @@
+import LoginIcon from "@mui/icons-material/Login";
+import LogoutIcon from "@mui/icons-material/Logout";
 import {
   Alert,
   Box,
@@ -6,13 +8,10 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import useAuth from "src/contexts/AuthContext";
-import Image from "next/image";
-import LogoutIcon from '@mui/icons-material/Logout';
-import { styled } from '@mui/material/styles';
-
 
 const UserHeader = () => {
   const { user, isAdmin, signOut } = useAuth();
@@ -20,24 +19,28 @@ const UserHeader = () => {
     <Stack
       direction="row"
       justifyContent="space-between"
-      sx={{ padding: "15px" }}
+      sx={{ padding: "3px" }}
     >
       <Link href={isAdmin ? "/admin" : "/"}>
-      <ButtonBase >
-        <Image src="/logo.png" alt="Home" width={222} height={105} />
+        <ButtonBase>
+          <Image src="/logo.png" alt="Home" width={150} height={65} />
         </ButtonBase>
       </Link>
       <Stack
-        direction="column"
-        justifyContent="center"
+        direction="row"
+        justifyContent="space-between"
+        alignItems="first baseline"
         spacing={3}
         sx={{ backgroundColor: "palette.background.default" }}
       >
-        <Typography  variant="h6">{user!.email}</Typography>
-        
-        
+        <Typography variant="h6">{user!.email}</Typography>
 
-        <Button variant="outlined"   size="small"  endIcon ={<LogoutIcon/>}onClick={signOut}>
+        <Button
+          variant="outlined"
+          size="small"
+          endIcon={<LogoutIcon />}
+          onClick={signOut}
+        >
           Sign Out
         </Button>
       </Stack>
@@ -53,13 +56,19 @@ const AnonymousHeader = () => {
   return (
     <Stack
       direction="row"
-      justifyContent="end"
+      justifyContent="space-between"
       spacing={2}
-      sx={{ backgroundColor: "palette.background.default", padding: "15px" }}
+      sx={{ backgroundColor: "palette.background.default", padding: "3px" }}
     >
+      <ButtonBase>
+        <Image src="/logo.png" alt="Home" width={150} height={65} />
+      </ButtonBase>
+
       {isSignIn ? (
         <Link href="/sign-up">
-          <Button variant="outlined">Sign Up</Button>
+          <Button variant="outlined" startIcon={<LoginIcon />}>
+            Sign Up
+          </Button>
         </Link>
       ) : (
         <Link href="/sign-in">

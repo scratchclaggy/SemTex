@@ -3,7 +3,6 @@ import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDiss
 import { Stack } from "@mui/material";
 import Link from "next/link";
 import React from "react";
-
 const FourOhFour = () => {
   return (
     <Stack

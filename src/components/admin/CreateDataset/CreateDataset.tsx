@@ -13,12 +13,14 @@ import RandomWords from "random-words";
 import { Controller, FormProvider, useForm } from "react-hook-form";
 import { Dataset, CreateDatasetFields } from "src/types/db";
 import { insertDataset } from "src/utils/dataset";
+import { useSWRConfig } from "swr";
 import CreateHighlighter from "./CreateHighlighterComponents/CreateHighlighter";
 import CreateResponses from "./CreateResponses";
 import CSVReader from "./CSVReader";
 
 const CreateDataset = () => {
   const router = useRouter();
+  const { mutate } = useSWRConfig();
 
   const generatePasskey = () => {
     return RandomWords({ exactly: 2 }).join(" ");
@@ -54,6 +56,7 @@ const CreateDataset = () => {
       <form
         onSubmit={methods.handleSubmit((data) => {
           cleanSubmit(data);
+          mutate("datasetList");
           router.push("/admin");
         })}
       >

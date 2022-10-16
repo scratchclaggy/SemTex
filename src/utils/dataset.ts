@@ -1,7 +1,7 @@
-import { Submission } from "src/types/db";
+import { CreateDatasetFields } from "src/types/db";
 import supabase from "src/utils/supabase";
 
-export const insertDataset = async (newDataset: Submission) => {
+export const insertDataset = async (newDataset: CreateDatasetFields) => {
   const res = await supabase.rpc("add_dataset", {
     datasetobj: newDataset,
   });

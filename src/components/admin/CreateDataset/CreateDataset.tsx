@@ -11,7 +11,7 @@ import {
 import { useRouter } from "next/router";
 import RandomWords from "random-words";
 import { Controller, FormProvider, useForm } from "react-hook-form";
-import { Dataset, Submission } from "src/types/db";
+import { Dataset, CreateDatasetFields } from "src/types/db";
 import { insertDataset } from "src/utils/dataset";
 import CreateHighlighter from "./CreateHighlighterComponents/CreateHighlighter";
 import CreateResponses from "./CreateResponses";
@@ -36,7 +36,7 @@ const CreateDataset = () => {
   });
 
   const cleanSubmit = (data: Dataset) => {
-    const submitData: Submission = {
+    const submitData: CreateDatasetFields = {
       name: data.name,
       instructions: data.instructions,
       passkey: data.passkey,
@@ -71,13 +71,13 @@ const CreateDataset = () => {
               paddingTop: "10px",
             }}
           >
-            <Grid container xs={12} justifyContent="center">
-              <Typography fontSize="36px" fontFamily="Roboto Mono">
+            <Grid container justifyContent="center" >
+              <Typography fontSize="36px" >
                 Create New Dataset
               </Typography>
             </Grid>
-
-            <Grid container alignItems="center" spacing={2}>
+            
+            <Grid container alignItems="center" spacing={4}>
               <Grid item>
                 <label>Dataset Name: </label>
                 <input
@@ -87,7 +87,7 @@ const CreateDataset = () => {
                 />
               </Grid>
 
-              <Grid item justifyContent="center">
+              <Grid container item justifyContent="flex-start" >
                 <Controller
                   name="passkey"
                   control={methods.control}
@@ -125,7 +125,7 @@ const CreateDataset = () => {
               item
               container
               xs={12}
-              spacing={2}
+              spacing={5}
               paddingTop="10px"
               minHeight="40vh"
             >
@@ -149,7 +149,7 @@ const CreateDataset = () => {
                 />
               </Grid>
 
-              <Grid item xs={2}>
+              <Grid item xs={3} >
                 <CreateResponses />
               </Grid>
 
@@ -162,14 +162,14 @@ const CreateDataset = () => {
               <CSVReader />
             </Grid>
 
-            <Grid item container>
+            <Grid item container justifyContent="flex-end" style={{marginRight:"100px"}}>
               <Button
                 type="submit"
                 value="Submit"
                 variant="contained"
                 color="primary"
                 style={{
-                  width: "41%",
+                  width: "20%",
                 }}
               >
                 Submit

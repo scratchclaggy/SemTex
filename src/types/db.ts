@@ -22,7 +22,7 @@ export type Dataset = {
   response_options: { label: string }[];
 };
 
-export type Submission = {
+export type CreateDatasetFields = {
   name: String;
   instructions: String;
   passkey: String;

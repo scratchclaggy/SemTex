@@ -4,7 +4,6 @@ import supabase from "src/utils/supabase";
 
 interface AuthContextInterface {
   user: User | null;
-  isAdmin: boolean | undefined;
   authError: ApiError | null;
   signIn: (email: string, password: string) => void;
   signOut: () => void;
@@ -18,7 +17,6 @@ const useAuth = () => useContext(AuthContext) as AuthContextInterface;
 export const AuthProvider = ({ children }: { children: JSX.Element }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [user, setUser] = useState<User | null>(null);
-  const [isAdmin, setAdmin] = useState<boolean | undefined>(undefined);
   const [authError, setAuthError] = useState<ApiError | null>(null);
 
   useEffect(() => {
@@ -33,7 +31,7 @@ export const AuthProvider = ({ children }: { children: JSX.Element }) => {
       .eq("user_id", user?.id)
       .maybeSingle();
 
-    setAdmin(admin !== null);
+    await supabase.auth.update({ data: { isAdmin: admin !== null } });
   };
 
   const signIn = async (email: string, password: string) => {
@@ -44,10 +42,7 @@ export const AuthProvider = ({ children }: { children: JSX.Element }) => {
   };
 
   useEffect(() => {
-    if (user === null) {
-      setAdmin(undefined);
-      return;
-    }
+    if (user === null) return;
 
     updateAdmin();
   }, [user]);
@@ -66,7 +61,6 @@ export const AuthProvider = ({ children }: { children: JSX.Element }) => {
 
   const authContext: AuthContextInterface = {
     user,
-    isAdmin,
     authError,
     signIn,
     signOut,

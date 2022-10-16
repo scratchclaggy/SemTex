@@ -1,14 +1,11 @@
-import Search from "../src/components/admin/Search"
-import {render, screen} from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
-import '@testing-library/jest-dom'
+import "@testing-library/jest-dom";
+import { render, screen } from "@testing-library/react";
+import Search from "../src/components/admin/Search";
 
-test('contain button console', async () => {
+test("contain button console", async () => {
   // ARRANGE
-  
-  render(<Search />)
+  render(<Search />);
 
-  const linkElement = screen.getByText('Search');
+  const linkElement = screen.getByText("Search");
   expect(linkElement).toBeInTheDocument();
-
-})
+});

@@ -1,6 +1,6 @@
 import { Alert, Box, Button, Stack, Typography } from "@mui/material";
 import Link from "next/link";
-import useAuth from "../../contexts/AuthContext";
+import useAuth from "src/contexts/AuthContext";
 
 const UserHeader = () => {
   const { user, signOut } = useAuth();

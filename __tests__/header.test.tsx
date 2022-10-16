@@ -1,19 +1,20 @@
-import Header from "../src/components/ui/Header"
-import {render, screen} from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
-import '@testing-library/jest-dom'
+import "@testing-library/jest-dom";
+import { render, screen } from "@testing-library/react";
+import Header from "../src/components/ui/Header.tsx"
 
+let mockFunction
+jest.mock('../src/contexts/AuthContext', () => () => {
+  mockFunction = jest.fn(() => 2)
+  return {
+      user:'user',
+      authError:null,
+      signOut:true
+  }
+});
 
-test('loads and displays greeting', async () => {
-  // ARRANGE
-  //render(<Header />)
+test("loads and displays Sign out", async () => {
+  render(<Header />)
+  const linkElement = screen.getByText("Sign Out");
+  expect(linkElement).toBeInTheDocument();
 
-  // ACT
-  //await userEvent.click(screen.getByText('Load Greeting'))
-  //await screen.findByRole('heading')
-
-  // ASSERT
-  //expect(screen.getByRole('href')).toHaveTextContent('/greeting')
- 
-  //expect(screen.getByRole('link')).toHaveAttribute('href', 'www.google.com')
-})
+});

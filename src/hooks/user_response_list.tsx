@@ -1,10 +1,13 @@
-import { PostgrestError } from "@supabase/supabase-js";
+import { PostgrestError, User } from "@supabase/supabase-js";
 import supabase from "src/utils/supabase";
 import useSWR from "swr";
 
-const useUserResponseList = (datasetID: string | undefined) => {
+const useUserResponseList = (
+  user: User | null,
+  datasetID: string | undefined
+) => {
   const { data, error } = useSWR(
-    datasetID,
+    user && datasetID,
     async () => {
       const { data, error } = await supabase
         .from("user_response")
@@ -18,7 +21,10 @@ const useUserResponseList = (datasetID: string | undefined) => {
           highlight(id)
         `
         )
-        .eq("text_sample.dataset_id", datasetID);
+        .match({
+          "text_sample.dataset_id": datasetID,
+          user_id: user?.id,
+        });
 
       if (error) throw error;
 

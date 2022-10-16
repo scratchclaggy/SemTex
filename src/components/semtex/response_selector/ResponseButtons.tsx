@@ -35,7 +35,7 @@ const ResponseButtons = () => {
           marginLeft: "5vw",
         }}
         onChange={(event) => {
-          updateResponseOption(event.target.value);
+          updateResponseOption(userResponse, event.target.value);
         }}
         row
       >

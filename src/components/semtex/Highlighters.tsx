@@ -75,7 +75,7 @@ const Highlighters = () => {
             </Button>
           ))}
           <Button
-            onClick={clearHighlights}
+            onClick={() => clearHighlights(userResponse)}
             variant="contained"
             fullWidth
             sx={{
@@ -94,7 +94,7 @@ const Highlighters = () => {
             }}
           >
             <Delete sx={{ marginRight: 2 }} />
-            Delete All
+            <span>Delete All</span>
           </Button>
         </Stack>
       </Box>

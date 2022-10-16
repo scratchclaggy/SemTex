@@ -10,8 +10,8 @@ export const insertDataset = async (newDataset: Dataset) => {
 };
 
 export const deleteDatasets = (datasetIDs: string[]) => {
-  datasetIDs.forEach((datasetID) => {
-    supabase.rpc("delete_dataset", {
+  datasetIDs.forEach(async (datasetID) => {
+    await supabase.rpc("delete_dataset", {
       deleted_dataset_id: datasetID,
     });
   });

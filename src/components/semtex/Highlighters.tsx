@@ -1,32 +1,34 @@
+import { Delete } from "@mui/icons-material";
 import { Box, Button, ClickAwayListener, Stack } from "@mui/material";
-import convert from "color-convert";
+import { atom, useAtom, useAtomValue } from "jotai";
 import { useRouter } from "next/router";
-import { useState } from "react";
 import useDataset from "src/hooks/dataset";
+import useUserResponse from "src/hooks/user_response";
+import { HighlightOption } from "src/types/client";
+import { isLight } from "src/utils/color";
+import { userResponseIdAtom } from "./Semtex";
+
+export const highlightAtom = atom<HighlightOption | undefined>(undefined);
 
 const Highlighters = () => {
   const router = useRouter();
   const datasetID = router.query.datasetID as string | undefined;
-  const { dataset, datasetError } = useDataset(datasetID);
+  const { dataset } = useDataset(datasetID);
   const HighlightOptions = dataset?.highlightOptions;
 
-  const [active, setActive] = useState<string | null>(null);
+  const userResponseID = useAtomValue(userResponseIdAtom);
+  const { userResponse, clearHighlights } = useUserResponse(userResponseID);
 
-  const handleClick = (color: string) => {
-    setActive(color);
+  const [active, setActive] = useAtom(highlightAtom);
+
+  const handleClick = (highlighter: HighlightOption) => {
+    setActive(highlighter);
   };
 
   const handleClickAway = () => {
-    setActive(null);
+    setActive(undefined);
   };
 
-  const isLight = (color: string) => {
-    const hsl = convert.hex.hsl(color);
-    if (hsl[2] > 50) {
-      return true;
-    }
-    return false;
-  };
   return (
     <ClickAwayListener onClickAway={handleClickAway}>
       <Box
@@ -46,34 +48,34 @@ const Highlighters = () => {
             padding: "10px",
           }}
         >
-          {HighlightOptions?.map((highlighters) => (
+          {HighlightOptions?.map((highlighter) => (
             <Button
-              key={highlighters.id}
-              onClick={() => handleClick(highlighters.color)}
+              key={highlighter.id}
+              onClick={() => handleClick(highlighter)}
               variant="contained"
               fullWidth
               sx={{
-                backgroundColor: highlighters.color,
+                backgroundColor: highlighter.color,
                 padding: "5px",
                 minHeight: "8vh",
-                color: isLight(highlighters.color) === true ? "black" : "white",
-                outline: highlighters.color === active ? "solid" : null,
+                color: isLight(highlighter.color) === true ? "black" : "white",
+                outline: highlighter === active ? "solid" : null,
                 outlineWidth: "1px",
                 outlineColor: "black",
                 outlineOffset: "3px",
-                borderStyle: highlighters.color === active ? "solid" : null,
+                borderStyle: highlighter === active ? "solid" : null,
                 borderWidth: "1px",
                 borderColor: "black",
                 "&:hover": {
-                  backgroundColor: highlighters.color,
+                  backgroundColor: highlighter.color,
                 },
               }}
             >
-              {highlighters.label}
+              {highlighter.label}
             </Button>
           ))}
           <Button
-            onClick={() => handleClick("delete")}
+            onClick={() => clearHighlights(userResponse)}
             variant="contained"
             fullWidth
             sx={{
@@ -81,11 +83,9 @@ const Highlighters = () => {
               minHeight: "8vh",
               color: "black",
               backgroundColor: "white",
-              outline: "delete" === active ? "solid" : null,
               outlineWidth: "1px",
               outlineColor: "black",
               outlineOffset: "3px",
-              borderStyle: "delete" === active ? "solid" : null,
               borderWidth: "1px",
               borderColor: "black",
               "&:hover": {
@@ -93,7 +93,8 @@ const Highlighters = () => {
               },
             }}
           >
-            Delete Highlight
+            <Delete sx={{ marginRight: 2 }} />
+            <span>Delete All</span>
           </Button>
         </Stack>
       </Box>

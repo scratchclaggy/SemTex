@@ -1,28 +1,18 @@
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import { useAtomValue } from "jotai";
 import { useRouter } from "next/router";
-import { useEffect, useMemo, useState } from "react";
 import useDataset from "src/hooks/dataset";
-import useUserResponses from "src/hooks/user_responses";
-import { responseOptionDbAccess } from "src/utils/user_response";
-import { textSampleIdAtom } from "../Semtex";
+import useUserResponse from "src/hooks/user_response";
+import { userResponseIdAtom } from "../Semtex";
 
 const ResponseDropdown = () => {
   const router = useRouter();
   const datasetID = router.query.datasetID as string | undefined;
   const { dataset } = useDataset(datasetID);
-  const { userResponses, mutate } = useUserResponses(datasetID);
 
-  const textSampleID = useAtomValue(textSampleIdAtom);
-  const { responseOption, updateResponseOption } = useMemo(
-    () => responseOptionDbAccess(userResponses, textSampleID, mutate),
-    [userResponses, textSampleID, mutate]
-  );
-  const [selection, setSelection] = useState<string>(responseOption?.id ?? "");
-  useEffect(
-    () => setSelection(responseOption?.id ?? ""),
-    [textSampleID, responseOption?.id]
-  );
+  const userResponseID = useAtomValue(userResponseIdAtom);
+  const { userResponse, updateResponseOption } =
+    useUserResponse(userResponseID);
 
   const responseOptions = dataset?.responseOptions ?? [];
 
@@ -32,11 +22,10 @@ const ResponseDropdown = () => {
       <Select
         labelId="response-dropdown-label"
         id="response-dropdown"
-        value={selection}
+        value={userResponse?.response?.id ?? ""}
         label="Response"
         onChange={(event) => {
-          setSelection(event.target.value);
-          updateResponseOption(event.target.value);
+          updateResponseOption(userResponse, event.target.value);
         }}
       >
         {responseOptions.map((responseOption) => {

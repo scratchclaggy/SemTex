@@ -1,4 +1,4 @@
-import { LockOutlined } from "@mui/icons-material";
+import { LockOutlined, Person } from "@mui/icons-material";
 import {
   Alert,
   Avatar,
@@ -18,8 +18,7 @@ type FormInput = {
 };
 
 const SignUp = () => {
-  // Redirect to home page if user already exists
-  const { user, authError, signUp, setUserMetadata } = useAuth();
+  const { user, authError, signUp } = useAuth();
   const router = useRouter();
 
   const {
@@ -33,9 +32,6 @@ const SignUp = () => {
   };
 
   if (user) {
-    // HACK: Temporary fix to set the dataset until the Codebox component is complete
-    setUserMetadata({ dataset: "8b5a92ba-aaae-4223-83d2-4eab40e7a22e" });
-
     router.push("/");
     return null;
   }
@@ -43,10 +39,11 @@ const SignUp = () => {
   return (
     <Stack
       marginTop={16}
-      marginLeft={22}
+      mx="auto"
       spacing={2}
       padding={5}
       width="30vw"
+      minWidth={700}
       alignItems="center"
       style={{ backgroundColor: "#F5F5F0" }}
     >
@@ -117,6 +114,7 @@ const SignUp = () => {
           type="submit"
           fullWidth
           variant="contained"
+          startIcon={<Person />}
           sx={{ mt: 3, mb: 2 }}
         >
           Sign Up

@@ -1,4 +1,4 @@
-import { Stack } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 import ButtonConsole from "./ButtonConsole";
 import DatasetList from "./DatasetList";
 import DeleteConfirmationDialog from "./DeleteConfirmationModal";
@@ -11,6 +11,9 @@ const AdminHome = () => {
       alignItems="center"
       paddingTop={10}
     >
+      <Typography fontSize={"36px"}>
+        Administrator Home
+      </Typography>
       <DeleteConfirmationDialog />
       <Search />
       <ButtonConsole />

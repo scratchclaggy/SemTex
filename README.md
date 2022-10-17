@@ -2,7 +2,7 @@
 
 ![image](https://user-images.githubusercontent.com/34858205/196072281-47c72595-9023-4c46-b990-74e21c30c314.png)
 
-Semtex is short for Semantic Text Analysis, and is a tool design to allow researchers to easily attach semantic labeling and responses to a collection of text samples. The application has both: 
+Semtex is short for Semantic Text Analysis, and is a tool design to allow researchers to easily attach semantic labeling and responses to a collection of text samples. The application has both:
 
 - an administrator portal to allow researchers to add new data sets with their respective text samples and semantic responses, and
 - a user portal where an analyst can respond to all the given text samples

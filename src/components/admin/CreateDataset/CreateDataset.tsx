@@ -11,7 +11,7 @@ import {
 import { useRouter } from "next/router";
 import RandomWords from "random-words";
 import { Controller, FormProvider, useForm } from "react-hook-form";
-import { Dataset, CreateDatasetFields } from "src/types/db";
+import { CreateDatasetFields, Dataset } from "src/types/db";
 import { insertDataset } from "src/utils/dataset";
 import { useSWRConfig } from "swr";
 import CreateHighlighter from "./CreateHighlighterComponents/CreateHighlighter";
@@ -74,12 +74,10 @@ const CreateDataset = () => {
               paddingTop: "10px",
             }}
           >
-            <Grid container justifyContent="center" >
-              <Typography fontSize="36px" >
-                Create New Dataset
-              </Typography>
+            <Grid container justifyContent="center">
+              <Typography fontSize="36px">Create New Dataset</Typography>
             </Grid>
-            
+
             <Grid container alignItems="center" spacing={4}>
               <Grid item>
                 <label>Dataset Name: </label>
@@ -90,7 +88,7 @@ const CreateDataset = () => {
                 />
               </Grid>
 
-              <Grid container item justifyContent="flex-start" >
+              <Grid container item justifyContent="flex-start">
                 <Controller
                   name="passkey"
                   control={methods.control}
@@ -152,7 +150,7 @@ const CreateDataset = () => {
                 />
               </Grid>
 
-              <Grid item xs={3} >
+              <Grid item xs={3}>
                 <CreateResponses />
               </Grid>
 
@@ -165,7 +163,12 @@ const CreateDataset = () => {
               <CSVReader />
             </Grid>
 
-            <Grid item container justifyContent="flex-end" style={{marginRight:"100px"}}>
+            <Grid
+              item
+              container
+              justifyContent="flex-end"
+              style={{ marginRight: "100px" }}
+            >
               <Button
                 type="submit"
                 value="Submit"

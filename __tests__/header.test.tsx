@@ -6,7 +6,7 @@ let mockFunction
 jest.mock('../src/contexts/AuthContext', () => () => {
   mockFunction = jest.fn(() => 2)
   return {
-      user:'user',
+      user:{user_metadata:{isAdmin:false}},
       authError:null,
       signOut:true
   }

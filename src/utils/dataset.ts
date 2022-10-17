@@ -1,7 +1,7 @@
-import { CreateDatasetFields } from "src/types/db";
+import { Dataset } from "src/types/db";
 import supabase from "src/utils/supabase";
 
-export const insertDataset = async (newDataset: CreateDatasetFields) => {
+export const insertDataset = async (newDataset: Dataset) => {
   const res = await supabase.rpc("add_dataset", {
     datasetobj: newDataset,
   });
@@ -10,9 +10,9 @@ export const insertDataset = async (newDataset: CreateDatasetFields) => {
 };
 
 export const deleteDatasets = (datasetIDs: string[]) => {
-  datasetIDs.forEach(async (datasetID) => {
-    await supabase.rpc("delete_dataset", {
-      dataset_id: datasetID,
+  datasetIDs.forEach((datasetID) => {
+    supabase.rpc("delete_dataset", {
+      deleted_dataset_id: datasetID,
     });
   });
 };

@@ -1,6 +1,6 @@
 import "@testing-library/jest-dom";
 import { render, screen } from "@testing-library/react";
-import Header from "../src/components/ui/Header.tsx"
+import Header from "../src/components/ui/Header"
 
 let mockFunction
 jest.mock('../src/contexts/AuthContext', () => () => {

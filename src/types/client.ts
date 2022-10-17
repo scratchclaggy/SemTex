@@ -44,9 +44,7 @@ export type TextSample = {
 export type Highlight = {
   id: string;
   selection: string;
-  startIndex: number;
-  endIndex: number;
-  highlightOption: HighlightOption | undefined;
+  highlightOption: HighlightOption;
 };
 
 export type UserResponse = {

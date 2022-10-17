@@ -6,7 +6,7 @@ type LinkProps = {
   label: string;
 };
 
-const Link: React.FC<LinkProps> = ({ href, label }) => {
+const Link = ({ href, label }: LinkProps) => {
   return (
     <NextLink href={href} passHref>
       <MuiLink>{label}</MuiLink>

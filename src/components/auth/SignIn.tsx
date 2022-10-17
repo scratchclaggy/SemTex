@@ -1,4 +1,4 @@
-import { LockOutlined, Login } from "@mui/icons-material";
+import { LockOutlined } from "@mui/icons-material";
 import {
   Alert,
   Avatar,
@@ -33,16 +33,14 @@ const SignIn = () => {
   };
 
   if (user) {
-    if (user.user_metadata.isAdmin) router.push("/admin");
-    else router.push("/");
-
+    router.push("/");
     return null;
   }
 
   return (
     <Stack
       marginTop={16}
-      mx="auto"
+      marginLeft={22}
       spacing={2}
       padding={5}
       width="30vw"
@@ -109,7 +107,6 @@ const SignIn = () => {
           type="submit"
           fullWidth
           variant="contained"
-          startIcon={<Login />}
           sx={{ mt: 3, mb: 2 }}
         >
           Sign In

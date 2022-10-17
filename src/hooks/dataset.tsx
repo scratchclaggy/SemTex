@@ -1,10 +1,10 @@
 import { PostgrestError } from "@supabase/supabase-js";
 import { Dataset } from "src/types/client";
 import supabase from "src/utils/supabase";
-import useSWRImmutable from "swr/immutable";
+import useSWR from "swr";
 
 const useDataset = (datasetID: string | undefined) => {
-  const { data, error } = useSWRImmutable(datasetID && "dataset", async () => {
+  const { data, error } = useSWR(datasetID && "dataset", async () => {
     const { data, error } = await supabase
       .from("dataset")
       .select(

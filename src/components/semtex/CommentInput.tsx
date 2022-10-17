@@ -1,34 +1,46 @@
 import { TextField } from "@mui/material";
 import { useAtomValue } from "jotai";
-import { useEffect, useState } from "react";
-import useUserResponse from "src/hooks/user_response";
-import { useDebounce } from "usehooks-ts";
-import { userResponseIdAtom } from "./Semtex";
+import { debounce } from "lodash";
+import { useRouter } from "next/router";
+import { useEffect, useMemo, useState } from "react";
+import useUserResponses from "src/hooks/user_responses";
+import { commentDbAccess } from "src/utils/user_response";
+import { textSampleIdAtom } from "./Semtex";
 
 const CommentInput = () => {
-  const userResponseID = useAtomValue(userResponseIdAtom);
-  const { userResponse, updateComment } = useUserResponse(userResponseID);
+  const router = useRouter();
+  const { userResponses, mutate } = useUserResponses(
+    router.query.datasetID as string | undefined
+  );
 
-  const [comment, setComment] = useState("");
+  const textSampleID = useAtomValue(textSampleIdAtom);
+  const { comment, updateComment } = useMemo(
+    () => commentDbAccess(userResponses, textSampleID, mutate),
+    [userResponses, textSampleID, mutate]
+  );
+  const [textFieldVal, setTextFieldVal] = useState(comment);
 
-  useEffect(() => {
-    setComment(userResponse?.comments ?? "");
-  }, [userResponseID]);
+  useEffect(() => setTextFieldVal(comment), [comment]);
+
+  const debounceInput = useMemo(() => {
+    return debounce(
+      (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+        updateComment(event.target.value);
+      },
+      500,
+      { leading: false, trailing: true }
+    );
+  }, [updateComment]);
 
   const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setComment(event.target.value);
+    setTextFieldVal(event.target.value);
+    debounceInput(event);
   };
-
-  const debouncedComment = useDebounce(comment, 500);
-
-  useEffect(() => {
-    updateComment(userResponse, debouncedComment);
-  }, [debouncedComment]);
 
   return (
     <TextField
       onChange={handleChange}
-      value={comment}
+      value={textFieldVal}
       multiline
       fullWidth
       placeholder="additional comments"

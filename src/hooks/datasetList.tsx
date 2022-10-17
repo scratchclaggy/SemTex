@@ -4,19 +4,15 @@ import supabase from "src/utils/supabase";
 import useSWR from "swr";
 
 const useDatasetList = () => {
-  const { data, error } = useSWR(
-    "datasetList",
-    async () => {
-      const { data, error } = await supabase
-        .from("dataset")
-        .select("id, name, created, passkey");
+  const { data, error } = useSWR("datasetList", async () => {
+    const { data, error } = await supabase
+      .from("dataset")
+      .select("id, name, created");
 
-      if (error !== null) throw error;
+    if (error !== null) throw error;
 
-      return data;
-    },
-    { revalidateOnFocus: false }
-  );
+    return data;
+  });
 
   return {
     datasetList: data?.map((dataset) => {

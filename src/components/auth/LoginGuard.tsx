@@ -8,12 +8,6 @@ const LoginGuard = ({ children }: { children: JSX.Element }) => {
   const unprotectedPaths = ["/sign-in", "/sign-up"];
 
   if (user || unprotectedPaths.some((path) => path === router.pathname)) {
-    if (!user?.user_metadata.isAdmin && router.pathname.startsWith("/admin")) {
-      router.push("/");
-
-      return null;
-    }
-
     return <>{children}</>;
   }
 

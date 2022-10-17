@@ -26,7 +26,8 @@ module.exports = {
   // Matches parent folder `__tests__` and filename
   // should contain `test` or `spec`.
   testRegex: "(<rootDir>/__tests__/.*|(\\.|/)(test|spec))\\.tsx?$",
-
+  'moduleNameMapper': { 'src/(.*)': '<rootDir>/src/$1' },
+  'moduleDirectories': ['node_modules', 'src'],
   // Module file extensions for importing
   moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json", "node"]
 };

@@ -21,12 +21,3 @@ export type Dataset = {
   highlight_options: { label: string; color: string }[];
   response_options: { label: string }[];
 };
-
-export type CreateDatasetFields = {
-  name: String;
-  instructions: String;
-  passkey: String;
-  text_samples: Object[];
-  response_options: Object[];
-  highlight_options: Object[];
-};

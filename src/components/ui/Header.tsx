@@ -40,11 +40,7 @@ const UserHeader = () => {
       >
         <Typography variant="h6">{user!.email}</Typography>
 
-        <Button
-          variant="contained"
-          endIcon={<LogoutIcon />}
-          onClick={signOut}
-        >
+        <Button variant="contained" endIcon={<LogoutIcon />} onClick={signOut}>
           Sign Out
         </Button>
       </Stack>
@@ -74,17 +70,13 @@ const AnonymousHeader = () => {
 
       {isSignIn ? (
         <Link href="/sign-up">
-          <Button variant="outlined"
-          startIcon={<Person />}
-          >
+          <Button variant="outlined" startIcon={<Person />}>
             Sign Up
           </Button>
         </Link>
       ) : (
         <Link href="/sign-in">
-          <Button variant="outlined"
-          startIcon={<Login />}
-          >
+          <Button variant="outlined" startIcon={<Login />}>
             Sign In
           </Button>
         </Link>

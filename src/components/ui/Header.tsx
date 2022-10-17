@@ -1,4 +1,4 @@
-import LoginIcon from "@mui/icons-material/Login";
+import { Login, Person } from "@mui/icons-material";
 import LogoutIcon from "@mui/icons-material/Logout";
 import {
   Alert,
@@ -19,7 +19,12 @@ const UserHeader = () => {
     <Stack
       direction="row"
       justifyContent="space-between"
-      sx={{ padding: "3px" }}
+      alignItems="center"
+      sx={{
+        backgroundColor: "palette.background.default",
+        paddingX: "2rem",
+        paddingY: "1rem",
+      }}
     >
       <Link href={user?.user_metadata.isAdmin ? "/admin" : "/"}>
         <ButtonBase>
@@ -36,8 +41,7 @@ const UserHeader = () => {
         <Typography variant="h6">{user!.email}</Typography>
 
         <Button
-          variant="outlined"
-          size="small"
+          variant="contained"
           endIcon={<LogoutIcon />}
           onClick={signOut}
         >
@@ -57,8 +61,12 @@ const AnonymousHeader = () => {
     <Stack
       direction="row"
       justifyContent="space-between"
-      spacing={2}
-      sx={{ backgroundColor: "palette.background.default", padding: "3px" }}
+      alignItems="center"
+      sx={{
+        backgroundColor: "palette.background.default",
+        paddingX: "2rem",
+        paddingY: "1rem",
+      }}
     >
       <ButtonBase>
         <Image src="/logo.png" alt="Home" width={150} height={65} />
@@ -66,13 +74,19 @@ const AnonymousHeader = () => {
 
       {isSignIn ? (
         <Link href="/sign-up">
-          <Button variant="outlined" startIcon={<LoginIcon />}>
+          <Button variant="outlined"
+          startIcon={<Person />}
+          >
             Sign Up
           </Button>
         </Link>
       ) : (
         <Link href="/sign-in">
-          <Button variant="contained">Sign In</Button>
+          <Button variant="outlined"
+          startIcon={<Login />}
+          >
+            Sign In
+          </Button>
         </Link>
       )}
     </Stack>
@@ -82,12 +96,7 @@ const AnonymousHeader = () => {
 const Header = () => {
   const { user, authError } = useAuth();
   return (
-    <Box
-      sx={{
-        borderBottom: "solid",
-        borderWidth: "1px",
-      }}
-    >
+    <Box>
       {user ? <UserHeader /> : <AnonymousHeader />}
       {authError && <Alert severity="error">{authError?.message}</Alert>}
     </Box>

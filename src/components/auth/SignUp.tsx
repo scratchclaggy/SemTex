@@ -1,4 +1,4 @@
-import { LockOutlined } from "@mui/icons-material";
+import { LockOutlined, Person } from "@mui/icons-material";
 import {
   Alert,
   Avatar,
@@ -114,6 +114,7 @@ const SignUp = () => {
           type="submit"
           fullWidth
           variant="contained"
+          startIcon={<Person />}
           sx={{ mt: 3, mb: 2 }}
         >
           Sign Up

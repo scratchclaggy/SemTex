@@ -35,3 +35,4 @@ Navigate to this repo in your terminal and enter `yarn`
 - `yarn start` - hosts the build files locally
 - `yarn lint` - lints and checks the application
 - `yarn format` - performs auto-formatting on the application
+- `yarn test` - runs test suite

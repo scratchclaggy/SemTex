@@ -36,3 +36,12 @@ Navigate to this repo in your terminal and enter `yarn`
 - `yarn lint` - lints and checks the application
 - `yarn format` - performs auto-formatting on the application
 - `yarn test` - runs test suite
+
+## Authors:
+
+- Tyler Condit
+- Michael Downing
+- Mehwish Nasim
+- James van de Ven
+- Aswin Vinod
+- Yanghai Yu
